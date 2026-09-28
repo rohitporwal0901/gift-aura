@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/fruit-chat/browser",
+    "public": "dist/gift-aura/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

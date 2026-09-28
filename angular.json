@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "fruit-chat": {
+    "gift-aura": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -88,10 +88,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "fruit-chat:build:production"
+              "buildTarget": "gift-aura:build:production"
             },
             "development": {
-              "buildTarget": "fruit-chat:build:development"
+              "buildTarget": "gift-aura:build:development"
             }
           },
           "defaultConfiguration": "development"
