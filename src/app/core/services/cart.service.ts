@@ -15,6 +15,15 @@ export class CartService {
 
   private _items = signal<CartItem[]>(this.loadStoredItems());
   appliedCoupon = signal<AppliedCoupon | null>(this.loadStoredCoupon());
+  isOpenDrawer = signal<boolean>(false);
+
+  openDrawer(): void {
+    this.isOpenDrawer.set(true);
+  }
+
+  closeDrawer(): void {
+    this.isOpenDrawer.set(false);
+  }
 
   // ── Map / Distance signals ────────────────────────────────
   deliveryDistanceKm = signal<number>(0);

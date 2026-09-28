@@ -680,7 +680,7 @@ export class MyOrdersComponent {
           name: it.productName,
           price: it.price,
           image: it.productImage || 'assets/images/mix-fruit-chaat.jpg',
-          category: 'fruit-chaat',
+          category: 'corporate-kits',
           rating: 4.8,
           ratingCount: 50,
           isVeg: true,

@@ -12,487 +12,360 @@ import { Product } from '../../core/models/product.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, ProductCardComponent],
   template: `
-    <div class="menu-page">
-      <!-- STICKY HEADER (Swiggy / Zomato Style) -->
-      <div class="menu-header">
+    <div class="collections-page">
+      <!-- HEADER BANNER -->
+      <div class="collections-hero">
         <div class="container">
-          <!-- Top Row: Back button, Title & Info, Cart button -->
-          <div class="header-top-row">
-            <a routerLink="/" class="back-btn" title="Back to Home">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-            </a>
-            <div class="header-title-wrap">
-              <h1 class="menu-title">Our Menu</h1>
-            </div>
-            <a routerLink="/cart" class="header-cart-btn">
-              <div class="cart-icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                </svg>
-                @if (cartService.totalItems() > 0) {
-                  <span class="cart-badge">{{ cartService.totalItems() }}</span>
-                }
-              </div>
-            </a>
+          <div class="breadcrumbs">
+            <a routerLink="/">Home</a>
+            <span class="bc-sep">/</span>
+            <span>Collections</span>
+            @if (activeCategory() !== 'all') {
+              <span class="bc-sep">/</span>
+              <span class="active-crumb">{{ getCategoryTitle() }}</span>
+            }
           </div>
-
-          <!-- Search Bar -->
-         
-        </div>
-
-        <!-- Filter Chips integrated into the header -->
-        <div class="filter-strip">
-          <div class="container">
-            <div class="chip-filter">
-              @for (cat of categories; track cat.id) {
-                <button class="chip" [class.active]="activeCategory() === cat.id" (click)="setCategory(cat.id)">
-                  <span>{{ cat.emoji }}</span> {{ cat.label }}
-                </button>
-              }
-            </div>
-          </div>
+          <h1 class="col-title">{{ getCategoryTitle() }}</h1>
+          <p class="col-desc">
+            Discover precision laser engraved gifts, customized corporate polo uniforms, executive welcome kits, and magnetic name badges.
+          </p>
         </div>
       </div>
 
-      <!-- PRODUCT LIST -->
-      <div class="container product-list-section">
-        @if (filteredProducts().length === 0) {
-          <div class="empty-state">
+      <!-- MAIN CONTENT AREA -->
+      <div class="container col-container">
+        <!-- FILTER BAR -->
+        <div class="col-filter-bar">
+          <div class="categories-scroll-row">
+            @for (cat of categories; track cat.id) {
+              <button class="cat-pill-btn" 
+                      [class.active]="activeCategory() === cat.id" 
+                      (click)="setCategory(cat.id)">
+                <span>{{ cat.icon }}</span> {{ cat.label }}
+              </button>
+            }
+          </div>
+
+          <!-- SEARCH & SORT -->
+          <div class="filter-actions-row">
+            <div class="search-input-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" placeholder="Search in collection..." [(ngModel)]="searchQuery">
+              @if (searchQuery) {
+                <button class="clear-search-btn" (click)="searchQuery = ''">✕</button>
+              }
+            </div>
+
+            <div class="sort-box">
+              <label for="sortSelect">Sort:</label>
+              <select id="sortSelect" [(ngModel)]="sortBy">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCTS COUNT -->
+        <div class="col-results-count">
+          Showing <strong>{{ processedProducts().length }}</strong> products
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        @if (processedProducts().length === 0) {
+          <div class="empty-col-state">
             <div class="empty-icon">🔍</div>
-            <h3>No items found</h3>
-            <p>Try a different search or category</p>
+            <h3>No products found</h3>
+            <p>Try clearing your search query or selecting a different category.</p>
+            <button class="gl-btn-primary" (click)="activeCategory.set('all'); searchQuery = ''">
+              Show All Products
+            </button>
           </div>
         } @else {
-          <p class="result-count">{{ filteredProducts().length }} items</p>
-          <div class="product-list">
-            @for (product of filteredProducts(); track product.id; let i = $index) {
-              <div [style.animation-delay]="(i * 0.06) + 's'" class="list-item-wrap animate-fadeInUp">
-                <app-product-card [product]="product" mode="list"></app-product-card>
-              </div>
+          <div class="col-products-grid">
+            @for (product of processedProducts(); track product.id) {
+              <app-product-card [product]="product"></app-product-card>
             }
           </div>
         }
       </div>
-
-      <!-- FLOATING VIEW CART TOASTER -->
-      @if (cartService.totalItems() > 0) {
-        <a routerLink="/cart" class="floating-cart" aria-label="View Cart">
-          <div class="fc-left">
-            <div class="fc-cart-pill">
-              <svg class="fc-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-              </svg>
-              <span class="fc-count">{{ cartService.totalItems() }} {{ cartService.totalItems() === 1 ? 'item' : 'items' }}</span>
-            </div>
-            <div class="fc-divider"></div>
-            <span class="fc-price">₹{{ cartService.grandTotal() }}</span>
-          </div>
-          <div class="fc-right">
-            <span class="fc-label">View Cart</span>
-            <div class="fc-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"/>
-                <polyline points="12 5 19 12 12 19"/>
-              </svg>
-            </div>
-          </div>
-        </a>
-      }
     </div>
   `,
   styles: [`
-    .menu-page { background: #F8F9FA; min-height: 100vh; }
-
-    .menu-header {
-      background: #fff;
-      padding: 12px 0 0;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid #EFEFEF;
-
-      @media (min-width: 768px) { top: 72px; }
+    .collections-page {
+      background: var(--color-bg-canvas);
+      min-height: 100vh;
+      padding-bottom: 80px;
     }
 
-    .header-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
+    .collections-hero {
+      background: #faf8f5;
+      border-bottom: 1px solid var(--color-border);
+      padding: 36px 0 32px;
+      text-align: center;
     }
 
-    .back-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #F4F4F5;
+    .breadcrumbs {
       display: flex;
       align-items: center;
       justify-content: center;
-      text-decoration: none;
-      flex-shrink: 0;
-      transition: all 0.2s;
-    }
-    .back-btn:active { background: #E4E4E7; transform: scale(0.95); }
+      gap: 8px;
+      font-size: 12.5px;
+      color: #777777;
+      margin-bottom: 12px;
 
-    .header-title-wrap {
-      flex: 1;
-      min-width: 0;
-    }
+      a {
+        color: #555555;
+        &:hover { color: #111111; text-decoration: underline; }
+      }
 
-    .menu-title {
-      font-size: 17px;
-      font-weight: 800;
-      color: #1A1A1A;
-      line-height: 1.15;
-      margin: 0;
-      letter-spacing: -0.3px;
+      .bc-sep { color: #ccc; }
+      .active-crumb { color: #111111; font-weight: 700; }
     }
 
-    .menu-subtitle {
-      font-size: 10px;
-      font-weight: 600;
-      color: #2E7D32;
-      display: block;
-      margin-top: 2px;
-      letter-spacing: 0.1px;
+    .col-title {
+      font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 900;
+      color: #111111;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
     }
 
-    .header-cart-btn {
-      text-decoration: none;
-      flex-shrink: 0;
+    .col-desc {
+      font-size: 14px;
+      color: #666666;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.55;
     }
 
-    .cart-icon-box {
-      position: relative;
-      width: 36px;
-      height: 36px;
-      background: #F1F8E9;
-      border-radius: 10px;
+    .col-container {
+      margin-top: 32px;
+    }
+
+    .col-filter-bar {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-    .cart-icon-box:active { background: #DCEDC8; transform: scale(0.95); }
-
-    .cart-badge {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: #FF6B35;
-      color: #fff;
-      font-size: 9px;
-      font-weight: 700;
-      width: 17px;
-      height: 17px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(255,107,53,0.4);
-    }
-
-    /* SEARCH BAR (Zomato / Swiggy search box) */
-    .menu-search-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #F4F5F7;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 24px;
+      background: #ffffff;
+      padding: 16px 20px;
       border-radius: 12px;
-      padding: 9px 14px;
-      border: 1.5px solid #E5E7EB;
-      transition: all 0.25s;
-      margin-bottom: 10px;
-    }
-    .menu-search-bar:focus-within {
-      border-color: #2E7D32;
-      background: #fff;
-      box-shadow: 0 0 0 3px rgba(46,125,50,0.12);
-    }
-    .menu-search-bar .search-icon {
-      flex-shrink: 0;
-    }
-    .menu-search-bar input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-family: inherit;
-      font-size: 13px;
-      color: #1A1A1A;
-      background: transparent;
-    }
-    .menu-search-bar input::placeholder { color: #9CA3AF; }
-    .menu-search-bar .clear-btn {
-      background: #E5E7EB;
-      border: none;
-      color: #6B7280;
-      font-size: 10px;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      padding: 0;
-    }
-    .menu-search-bar .clear-btn:hover { background: #D1D5DB; color: #111; }
-
-    /* FILTER STRIP */
-    .filter-strip {
-      background: #fff;
-      padding-bottom: 10px;
-      border-top: 1px solid #F3F4F6;
-      padding-top: 9px;
+      border: 1px solid var(--color-border);
     }
 
-    .chip-filter {
+    .categories-scroll-row {
       display: flex;
       gap: 8px;
       overflow-x: auto;
+      padding-bottom: 4px;
       scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-    }
-    .chip-filter::-webkit-scrollbar { display: none; }
+      &::-webkit-scrollbar { display: none; }
 
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 1.5px solid #E5E7EB;
-      background: #fff;
-      color: #4B5563;
-      font-family: inherit;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .chip.active {
-      background: #2E7D32;
-      color: #fff;
-      border-color: #2E7D32;
-      box-shadow: 0 3px 10px rgba(46,125,50,0.25);
-    }
-    .chip:hover:not(.active) {
-      border-color: #4CAF50;
-      color: #2E7D32;
-    }
+      .cat-pill-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #f7f5f2;
+        color: #333333;
+        border: 1px solid #e2ddd5;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: all 0.2s;
 
-    .product-list-section { padding-top: 20px; padding-bottom: 32px; }
+        &:hover {
+          background: #eae5dc;
+          border-color: #111;
+        }
 
-    .result-count { font-size: 13px; color: #999; margin-bottom: 12px; }
-
-    .product-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .list-item-wrap { animation: fadeInUp 0.4s ease both; }
-
-    .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 60px 20px;
-      text-align: center;
-      .empty-icon { font-size: 56px; margin-bottom: 16px; }
-      h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-      p { color: #999; font-size: 14px; }
-    }
-
-    /* FLOATING VIEW CART TOASTER */
-    .floating-cart {
-      position: fixed;
-      bottom: 74px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 24px);
-      max-width: 440px;
-      background: linear-gradient(135deg, #155523 0%, #1e702e 52%, #24963F 100%);
-      color: #fff;
-      border-radius: 16px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      text-decoration: none;
-      box-shadow: 0 10px 28px -4px rgba(21, 85, 35, 0.48), 0 4px 12px rgba(0, 0, 0, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 990;
-      animation: slideUpFloat 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
-
-      &:hover {
-        transform: translateX(-50%) translateY(-2px);
-        box-shadow: 0 14px 34px -4px rgba(21, 85, 35, 0.58), 0 6px 16px rgba(0, 0, 0, 0.15);
-
-        .fc-arrow {
-          transform: translateX(3px);
-          background: rgba(255, 255, 255, 0.32);
+        &.active {
+          background: #111111;
+          color: #ffffff;
+          border-color: #111111;
         }
       }
+    }
 
-      &:active {
-        transform: translateX(-50%) scale(0.98);
+    .filter-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-top: 1px solid #f4f0eb;
+      padding-top: 14px;
+    }
+
+    .search-input-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #faf8f5;
+      border: 1px solid #dcd7cf;
+      border-radius: 6px;
+      padding: 7px 12px;
+      flex: 1;
+      max-width: 380px;
+
+      input {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-family: inherit;
+        font-size: 13.5px;
+        color: #111;
+        width: 100%;
       }
+
+      .clear-search-btn {
+        color: #888;
+        font-size: 12px;
+        &:hover { color: #111; }
+      }
+    }
+
+    .sort-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #666;
+
+      select {
+        border: 1px solid #dcd7cf;
+        border-radius: 6px;
+        padding: 7px 12px;
+        font-family: inherit;
+        font-size: 13px;
+        color: #111;
+        background: #faf8f5;
+        outline: none;
+        cursor: pointer;
+      }
+    }
+
+    .col-results-count {
+      font-size: 13px;
+      color: #777777;
+      margin-bottom: 20px;
+    }
+
+    .col-products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
 
       @media (min-width: 768px) {
-        bottom: 24px;
-        max-width: 420px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      @media (min-width: 1024px) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 28px;
       }
     }
 
-    .fc-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .empty-col-state {
+      text-align: center;
+      padding: 80px 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
 
-    .fc-cart-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      padding: 4px 9px;
-      border-radius: 999px;
-      backdrop-filter: blur(4px);
-    }
-
-    .fc-cart-icon {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-      stroke: #fff;
-    }
-
-    .fc-count {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
-    }
-
-    .fc-divider {
-      width: 1px;
-      height: 16px;
-      background: rgba(255, 255, 255, 0.28);
-    }
-
-    .fc-price {
-      font-size: 15px;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.2px;
-    }
-
-    .fc-right {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .fc-label {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.3px;
-    }
-
-    .fc-arrow {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-
-      svg {
-        stroke: #fff;
+      .empty-icon {
+        font-size: 50px;
+        margin-bottom: 12px;
       }
-    }
 
-    @keyframes slideUpFloat {
-      from {
-        transform: translateX(-50%) translateY(40px);
-        opacity: 0;
+      h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 6px;
       }
-      to {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-      }
-    }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
+      p {
+        font-size: 13.5px;
+        color: #666;
+        margin-bottom: 20px;
+      }
     }
   `]
 })
 export class MenuComponent implements OnInit {
   private productService = inject(ProductService);
   private route = inject(ActivatedRoute);
-  cartService = inject(CartService);
 
-  activeCategory = signal<string>('all');
+  readonly activeCategory = signal<string>('all');
   searchQuery = '';
+  sortBy = 'featured';
 
-  ngOnInit(): void {
+  categories = [
+    { id: 'all', label: 'All Products', icon: '✦' },
+    { id: 't-shirts', label: 'Customized T-Shirts', icon: '👕' },
+    { id: 'welcome-kits', label: 'Welcome Kits', icon: '🎁' },
+    { id: 'corporate-gifts', label: 'Pens & Diaries', icon: '✒️' },
+    { id: 'keychains-badges', label: 'Keychains & Badges', icon: '🏷️' },
+    { id: 'office-essentials', label: 'Office Essentials', icon: '📱' },
+    { id: 'drinkware', label: 'Vacuum Flasks', icon: '🧊' }
+  ];
+
+  allProducts = computed(() => this.productService.getAll());
+
+  processedProducts = computed(() => {
+    let list = this.allProducts();
+
+    // Category filter
+    const cat = this.activeCategory();
+    if (cat !== 'all') {
+      list = list.filter(p => p.category === cat);
+    }
+
+    // Search query filter
+    const q = this.searchQuery.trim().toLowerCase();
+    if (q) {
+      list = list.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q)
+      );
+    }
+
+    // Sort
+    const sorted = [...list];
+    if (this.sortBy === 'price-low') {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (this.sortBy === 'price-high') {
+      sorted.sort((a, b) => b.price - a.price);
+    } else if (this.sortBy === 'rating') {
+      sorted.sort((a, b) => b.rating - a.rating);
+    }
+
+    return sorted;
+  });
+
+  ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params['category']) {
-        this.activeCategory.set(params['category']);
+      if (params['cat']) {
+        this.activeCategory.set(params['cat']);
       }
     });
   }
 
-  categories = [
-    { id: 'all', label: 'All', emoji: '🍽️' },
-    { id: 'fruit-chaat', label: 'Fruit Chaat', emoji: '🍎' },
-    { id: 'sprouts', label: 'Sprouts', emoji: '🌱' },
-    { id: 'juices', label: 'Juices', emoji: '🥤' },
-    { id: 'combo', label: 'Combos', emoji: '🥗' },
-  ];
-
-  filteredProducts = computed<Product[]>(() => {
-    let products = this.productService.getByCategory(this.activeCategory());
-    if (this.searchQuery.trim()) {
-      const q = this.searchQuery.toLowerCase();
-      products = products.filter(p =>
-        p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
-      );
-    }
-    return products;
-  });
-
-  setCategory(id: string): void {
+  setCategory(id: string) {
     this.activeCategory.set(id);
   }
 
-  onSearch(): void {
-    // computed automatically updates
-  }
-
-  clearSearch(): void {
-    this.searchQuery = '';
+  getCategoryTitle(): string {
+    const cat = this.categories.find(c => c.id === this.activeCategory());
+    return cat ? cat.label : 'All Corporate Products';
   }
 }

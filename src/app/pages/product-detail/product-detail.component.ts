@@ -11,112 +11,513 @@ import { Product } from '../../core/models/product.model';
   imports: [CommonModule, RouterLink],
   template: `
     @if (product()) {
-    <div class="detail-page">
-      <button class="back-btn" (click)="goBack()">← Back</button>
-      <div class="detail-hero">
-        <img [src]="product()!.image" [alt]="product()!.name" class="detail-img">
-        <button class="wishlist-btn">♡</button>
-      </div>
-      <div class="detail-content">
-        <div class="detail-top">
-          <div class="detail-meta-row">
-            <span class="veg-badge">🌱 Veg</span>
-            @if (product()!.isBestseller) {
-              <span class="bestseller-badge">⭐ Bestseller</span>
-            }
-            <div class="rating-pill">★ {{ product()!.rating }} ({{ product()!.ratingCount }})</div>
-          </div>
-          <h1 class="detail-name">{{ product()!.name }}</h1>
-          <div class="detail-price-row">
-            <span class="detail-price">₹{{ product()!.price }}</span>
-            @if (product()!.originalPrice) {
-              <span class="detail-orig-price">₹{{ product()!.originalPrice }}</span>
-              <span class="discount-chip">{{ getDiscount() }}% OFF</span>
-            }
+      <div class="product-page">
+        <!-- BREADCRUMBS -->
+        <div class="product-breadcrumb-wrap">
+          <div class="container">
+            <div class="breadcrumbs">
+              <a routerLink="/">Home</a>
+              <span class="sep">/</span>
+              <a routerLink="/menu">Products</a>
+              <span class="sep">/</span>
+              <span class="active-crumb">{{ product()!.name }}</span>
+            </div>
           </div>
         </div>
-        <p class="detail-desc">{{ product()!.description }}</p>
-        <div class="info-pills">
-          @if (product()!.preparationTime) {
-            <div class="info-pill"><span>⏱️</span> {{ product()!.preparationTime }} min prep</div>
+
+        <div class="container product-container">
+          <div class="product-detail-grid">
+            <!-- LEFT: IMAGE GALLERY -->
+            <div class="gallery-col">
+              <div class="main-image-wrap">
+                <img [src]="activeImage()" [alt]="product()!.name" class="main-img">
+                @if (product()!.isBestseller) {
+                  <span class="badge-bestseller">⭐ BESTSELLER</span>
+                }
+              </div>
+
+              <!-- THUMBNAILS -->
+              @if (galleryImages().length > 1) {
+                <div class="thumbs-row">
+                  @for (img of galleryImages(); track img) {
+                    <button class="thumb-btn" 
+                            [class.active]="activeImage() === img"
+                            (click)="activeImage.set(img)">
+                      <img [src]="img" [alt]="product()!.name">
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- RIGHT: PURCHASE DETAILS -->
+            <div class="info-col">
+              <span class="cat-pill">{{ getCategoryName(product()!.category) }}</span>
+              <h1 class="prod-title">{{ product()!.name }}</h1>
+
+              <!-- RATING & REVIEWS -->
+              <div class="prod-rating-row">
+                <div class="stars-gold">★★★★★</div>
+                <span class="rating-num">{{ product()!.rating }}</span>
+                <span class="reviews-count">({{ product()!.ratingCount }} customer reviews)</span>
+              </div>
+
+              <!-- PRICE ROW -->
+              <div class="prod-price-row">
+                <span class="price-val">Rs. {{ product()!.price }}.00</span>
+                @if (product()!.originalPrice && product()!.originalPrice! > product()!.price) {
+                  <span class="orig-val">Rs. {{ product()!.originalPrice }}.00</span>
+                  <span class="save-chip">Save {{ getDiscount() }}%</span>
+                }
+              </div>
+              <p class="tax-note">Inclusive of all taxes. Free shipping on prepaid orders above ₹999.</p>
+
+              <div class="divider"></div>
+
+              <!-- SHORT DESCRIPTION -->
+              <p class="prod-desc">{{ product()!.description }}</p>
+
+              <!-- BRANDING OPTIONS -->
+              <div class="branding-options">
+                <h4 class="opt-title">Custom Branding Included:</h4>
+                <div class="opt-pills">
+                  <div class="opt-pill">✔ Laser Engraved Company Logo</div>
+                  <div class="opt-pill">✔ Individual Name Personalization</div>
+                  <div class="opt-pill">✔ Presentation Gift Box</div>
+                </div>
+              </div>
+
+              <!-- QUANTITY & CTA -->
+              <div class="purchase-action-box">
+                <div class="qty-selector">
+                  <span class="qty-label">Quantity:</span>
+                  <div class="stepper-box">
+                    <button class="step-btn" (click)="decrement()" [disabled]="qty() <= (product()!.minQty || 1)">−</button>
+                    <span class="step-val">{{ qty() }}</span>
+                    <button class="step-btn" (click)="increment()">+</button>
+                  </div>
+                </div>
+
+                <div class="btn-group">
+                  <button class="gl-btn-primary add-cart-btn" (click)="addToCart()">
+                    Add to Cart • Rs. {{ computeTotal() }}.00
+                  </button>
+                  <a [href]="getWhatsAppInquiryUrl()" target="_blank" rel="noopener" class="gl-btn-outline bulk-quote-btn">
+                    💬 Bulk WhatsApp Quote
+                  </a>
+                </div>
+              </div>
+
+              <!-- TRUST BADGES -->
+              <div class="trust-features-list">
+                <div class="tf-item">
+                  <span>🏭</span>
+                  <div>
+                    <strong>In-House Manufacturing</strong>
+                    <p>Precision CNC laser engraving & HD screen printing.</p>
+                  </div>
+                </div>
+                <div class="tf-item">
+                  <span>🚚</span>
+                  <div>
+                    <strong>Pan-India Express Dispatch</strong>
+                    <p>Direct tracked shipping with safe protective packaging.</p>
+                  </div>
+                </div>
+                <div class="tf-item">
+                  <span>📋</span>
+                  <div>
+                    <strong>GST Invoicing & Digital Mockup</strong>
+                    <p>Free sample design mockup before mass production.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EXTENDED SPECIFICATIONS & DESCRIPTION -->
+          @if (product()!.fullDescription) {
+            <div class="product-extended-section">
+              <h3 class="section-title">Product Description & Branding Details</h3>
+              <div class="full-desc-content">
+                {{ product()!.fullDescription }}
+              </div>
+            </div>
           }
-          @if (product()!.calories) {
-            <div class="info-pill"><span>🔥</span> {{ product()!.calories }} kcal</div>
-          }
-        </div>
-        <div class="divider"></div>
-        @if (product()!.ingredients?.length) {
-          <div class="detail-section">
-            <h3 class="section-heading">Ingredients</h3>
-            <p class="ingredients-text">{{ product()!.ingredients!.join(', ') }}</p>
-          </div>
-          <div class="divider"></div>
-        }
-       
-         
-        <div class="qty-section">
-          <h3 class="section-heading">Quantity</h3>
-          <div class="qty-stepper">
-            <button class="qty-btn" (click)="decrement()" [disabled]="qty() === 1">−</button>
-            <span class="qty-val">{{ qty() }}</span>
-            <button class="qty-btn" (click)="increment()">+</button>
-          </div>
         </div>
       </div>
-      <div class="detail-cta">
-        <button class="btn-add-cart" (click)="addToCart()">
-          Add to Cart • ₹{{ computeTotal() }}
-        </button>
-      </div>
-      @if (showToast()) {
-        <div class="toast">✅ Added to cart!</div>
-      }
-    </div>
     } @else {
-      <div class="not-found">
-        <p>Product not found</p>
-        <a routerLink="/menu">← Back to Menu</a>
+      <div class="container not-found-state">
+        <p>Product not found.</p>
+        <a routerLink="/menu" class="gl-btn-primary">Browse All Products</a>
       </div>
     }
   `,
   styles: [`
-    .detail-page { background: #fff; min-height: 100vh; position: relative; max-width: 600px; margin: 0 auto; }
-    .back-btn { position: absolute; top: 16px; left: 16px; z-index: 10; background: rgba(255,255,255,0.92); border: none; border-radius: 999px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; backdrop-filter: blur(8px); box-shadow: 0 2px 8px rgba(0,0,0,0.12); font-family: 'Poppins', sans-serif; transition: all 0.2s; &:hover { background: #fff; transform: translateX(-2px); } }
-    .detail-hero { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-    .detail-img { width: 100%; height: 100%; object-fit: cover; }
-    .wishlist-btn { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.92); border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.12); transition: all 0.2s; &:hover { transform: scale(1.1); } }
-    .detail-content { padding: 20px 20px 100px; }
-    .detail-meta-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
-    .veg-badge { font-size: 11px; font-weight: 600; color: #2E7D32; background: #F1F8E9; padding: 3px 10px; border-radius: 999px; border: 1px solid #C8E6C9; }
-    .bestseller-badge { font-size: 11px; font-weight: 600; color: #E65100; background: #FFF3E0; padding: 3px 10px; border-radius: 999px; }
-    .rating-pill { font-size: 11px; font-weight: 600; color: #F57F17; background: #FFFDE7; padding: 3px 10px; border-radius: 999px; }
-    .detail-name { font-size: 22px; font-weight: 800; color: #1A1A1A; margin-bottom: 8px; line-height: 1.2; }
-    .detail-price-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .detail-price { font-size: 24px; font-weight: 800; color: #1A1A1A; }
-    .detail-orig-price { font-size: 15px; color: #bbb; text-decoration: line-through; }
-    .discount-chip { background: #FF6B35; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; }
-    .detail-desc { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 16px; }
-    .info-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
-    .info-pill { display: flex; align-items: center; gap: 5px; background: #F8F9FA; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 500; color: #555; border: 1px solid #EEE; }
-    .divider { height: 1px; background: #EEE; margin: 16px 0; }
-    .detail-section { margin-bottom: 4px; }
-    .section-heading { font-size: 15px; font-weight: 700; color: #1A1A1A; margin-bottom: 12px; }
-    .ingredients-text { font-size: 13px; color: #666; line-height: 1.6; }
-    .customization-list { display: flex; flex-direction: column; gap: 10px; }
-    .custom-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #F8F9FA; border-radius: 12px; cursor: pointer; transition: all 0.2s; border: 1.5px solid transparent; &:hover { border-color: #C8E6C9; background: #F1F8E9; } input[type="checkbox"] { display: none; } }
-    .custom-check-wrap { position: relative; }
-    .custom-checkmark { width: 22px; height: 22px; border-radius: 6px; border: 2px solid #C8E6C9; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #2E7D32; transition: all 0.2s; }
-    .custom-name { flex: 1; font-size: 14px; font-weight: 500; color: #1A1A1A; }
-    .custom-price { font-size: 13px; font-weight: 600; color: #2E7D32; }
-    .qty-section { display: flex; align-items: center; justify-content: space-between; }
-    .qty-stepper { display: flex; align-items: center; gap: 20px; background: #F8F9FA; border-radius: 999px; padding: 8px 20px; border: 1.5px solid #EEE; }
-    .qty-btn { width: 32px; height: 32px; border-radius: 50%; background: #2E7D32; color: #fff; border: none; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; line-height: 1; font-family: inherit; &:hover { background: #1B5E20; transform: scale(1.1); } &:disabled { background: #CCC; cursor: not-allowed; transform: none; } }
-    .qty-val { font-size: 18px; font-weight: 700; min-width: 24px; text-align: center; }
-    .detail-cta { position: fixed; bottom: 80px; left: 0; right: 0; padding: 12px 20px; background: linear-gradient(to top, #fff 80%, transparent); @media (min-width: 768px) { bottom: 0; max-width: 600px; margin: 0 auto; left: 50%; transform: translateX(-50%); } }
-    .btn-add-cart { width: 100%; background: #2E7D32; color: #fff; border: none; border-radius: 14px; padding: 16px; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 6px 20px rgba(46,125,50,0.35); &:hover { background: #1B5E20; transform: translateY(-2px); } &:active { transform: translateY(0); } }
-    .toast { position: fixed; bottom: 150px; left: 50%; transform: translateX(-50%); background: #1A1A1A; color: #fff; padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600; z-index: 9999; white-space: nowrap; animation: fadeToast 0.3s ease; }
-    .not-found { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; gap: 16px; }
-    @keyframes fadeToast { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+    .product-page {
+      background: var(--color-bg-canvas);
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    .product-breadcrumb-wrap {
+      background: #faf8f5;
+      border-bottom: 1px solid var(--color-border);
+      padding: 14px 0;
+
+      .breadcrumbs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #777;
+
+        a {
+          color: #444;
+          &:hover { color: #111; text-decoration: underline; }
+        }
+
+        .sep { color: #bbb; }
+        .active-crumb { color: #111; font-weight: 700; }
+      }
+    }
+
+    .product-container {
+      margin-top: 36px;
+    }
+
+    .product-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+
+      @media (min-width: 900px) {
+        grid-template-columns: 1fr 1.15fr;
+        gap: 48px;
+      }
+    }
+
+    /* ── GALLERY ── */
+    .gallery-col {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .main-image-wrap {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+
+      .main-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .badge-bestseller {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: #111111;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        padding: 4px 10px;
+        border-radius: 4px;
+      }
+    }
+
+    .thumbs-row {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+
+      .thumb-btn {
+        width: 72px;
+        height: 72px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 2px solid transparent;
+        background: #fff;
+        flex-shrink: 0;
+        transition: border-color 0.2s;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        &.active {
+          border-color: #111111;
+        }
+      }
+    }
+
+    /* ── INFO ── */
+    .info-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cat-pill {
+      display: inline-block;
+      align-self: flex-start;
+      background: rgba(166, 137, 59, 0.12);
+      color: var(--color-accent);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .prod-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 900;
+      color: #111111;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .prod-rating-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      margin-bottom: 16px;
+
+      .stars-gold {
+        color: #f59e0b;
+        letter-spacing: 1px;
+      }
+
+      .rating-num {
+        font-weight: 800;
+        color: #111;
+      }
+
+      .reviews-count {
+        color: #777;
+      }
+    }
+
+    .prod-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 4px;
+
+      .price-val {
+        font-size: 28px;
+        font-weight: 900;
+        color: #111111;
+      }
+
+      .orig-val {
+        font-size: 16px;
+        color: #999999;
+        text-decoration: line-through;
+      }
+
+      .save-chip {
+        background: #e84e4e;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 4px;
+      }
+    }
+
+    .tax-note {
+      font-size: 12.5px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: 16px 0 20px;
+    }
+
+    .prod-desc {
+      font-size: 14.5px;
+      color: #555555;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .branding-options {
+      background: #faf8f5;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 24px;
+
+      .opt-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #111;
+        margin-bottom: 10px;
+      }
+
+      .opt-pills {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .opt-pill {
+          font-size: 13px;
+          color: #27ae60;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .purchase-action-box {
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 28px;
+
+      .qty-selector {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+
+        .qty-label {
+          font-size: 14px;
+          font-weight: 700;
+          color: #333;
+        }
+
+        .stepper-box {
+          display: flex;
+          align-items: center;
+          border: 1px solid #dcd7cf;
+          border-radius: 6px;
+          overflow: hidden;
+
+          .step-btn {
+            width: 36px;
+            height: 36px;
+            background: #faf8f5;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover { background: #eeebe6; }
+          }
+
+          .step-val {
+            min-width: 44px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 800;
+          }
+        }
+      }
+
+      .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .add-cart-btn {
+          width: 100%;
+          padding: 14px;
+          font-size: 15px;
+        }
+
+        .bulk-quote-btn {
+          width: 100%;
+          padding: 12px;
+          font-size: 14px;
+          text-align: center;
+        }
+      }
+    }
+
+    .trust-features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+
+      .tf-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+
+        span {
+          font-size: 20px;
+        }
+
+        strong {
+          display: block;
+          font-size: 13.5px;
+          color: #111;
+        }
+
+        p {
+          font-size: 12px;
+          color: #777;
+          margin: 0;
+        }
+      }
+    }
+
+    .product-extended-section {
+      margin-top: 60px;
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 36px;
+
+      .section-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #111;
+        margin-bottom: 16px;
+        position: relative;
+        padding-bottom: 8px;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 40px;
+          height: 2px;
+          background: #111;
+        }
+      }
+
+      .full-desc-content {
+        font-size: 14.5px;
+        color: #555555;
+        line-height: 1.8;
+      }
+    }
+
+    .not-found-state {
+      padding: 100px 20px;
+      text-align: center;
+      p { font-size: 18px; margin-bottom: 20px; }
+    }
   `]
 })
 export class ProductDetailComponent implements OnInit {
@@ -125,58 +526,74 @@ export class ProductDetailComponent implements OnInit {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
 
-  product = signal<Product | undefined>(undefined);
-  qty = signal(1);
-  selectedCustoms = signal<string[]>([]);
-  showToast = signal(false);
+  readonly product = signal<Product | null>(null);
+  readonly activeImage = signal<string>('');
+  readonly galleryImages = signal<string[]>([]);
+  readonly qty = signal<number>(1);
 
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.product.set(this.productService.getById(id));
-    }
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        const found = this.productService.getById(id);
+        if (found) {
+          this.product.set(found);
+          this.activeImage.set(found.image);
+          const imgs = found.images && found.images.length > 0 ? found.images : [found.image];
+          this.galleryImages.set(imgs);
+          this.qty.set(found.minQty || 1);
+        } else {
+          this.product.set(null);
+        }
+      }
+    });
   }
 
-  computeTotal(): number {
-    const p = this.product();
-    if (!p) return 0;
-    const base = p.price * this.qty();
-    const extras = p.customizations
-      ?.filter(c => this.selectedCustoms().includes(c.id))
-      .reduce((sum, c) => sum + c.extraPrice, 0) ?? 0;
-    return base + extras;
+  increment() {
+    this.qty.update(q => q + 1);
+  }
+
+  decrement() {
+    const min = this.product()?.minQty || 1;
+    if (this.qty() > min) {
+      this.qty.update(q => q - 1);
+    }
   }
 
   getDiscount(): number {
     const p = this.product();
-    if (!p?.originalPrice) return 0;
-    return Math.round((1 - p.price / p.originalPrice) * 100);
+    if (!p || !p.originalPrice || p.originalPrice <= p.price) return 0;
+    return Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100);
   }
 
-  increment(): void { this.qty.update(v => v + 1); }
-  decrement(): void { if (this.qty() > 1) this.qty.update(v => v - 1); }
-
-  toggleCustom(id: string): void {
-    const current = this.selectedCustoms();
-    if (current.includes(id)) {
-      this.selectedCustoms.set(current.filter(c => c !== id));
-    } else {
-      this.selectedCustoms.set([...current, id]);
-    }
+  computeTotal(): number {
+    const p = this.product();
+    return p ? p.price * this.qty() : 0;
   }
 
-  addToCart(): void {
+  addToCart() {
     const p = this.product();
     if (!p) return;
-    this.cartService.addToCart(p, this.qty(), this.selectedCustoms());
-    this.showToast.set(true);
-    setTimeout(() => {
-      this.showToast.set(false);
-      this.router.navigate(['/cart']);
-    }, 1200);
+    this.cartService.addToCart(p, this.qty());
+    this.cartService.openDrawer();
   }
 
-  goBack(): void {
-    this.router.navigate(['/menu']);
+  getCategoryName(catKey: string): string {
+    const map: any = {
+      't-shirts': 'Customized T-Shirts',
+      'welcome-kits': 'Welcome Kits & Combo',
+      'corporate-gifts': 'Pens & Corporate Gifts',
+      'keychains-badges': 'Keychains & Badges',
+      'office-essentials': 'Office Essentials',
+      'drinkware': 'Drinkware & Flasks'
+    };
+    return map[catKey] || 'Corporate Product';
+  }
+
+  getWhatsAppInquiryUrl(): string {
+    const p = this.product();
+    if (!p) return 'https://wa.me/917877605311';
+    const text = `Hi Graphic Line, I want to inquire about bulk ordering ${p.name} (Quantity: ${this.qty()} units).`;
+    return `https://wa.me/917877605311?text=${encodeURIComponent(text)}`;
   }
 }

@@ -38,26 +38,27 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/auth/auth.component').then(m => m.AuthComponent)
   },
   {
+    // Public — no auth required to browse
     path: '',
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
-    canActivate: [authGuard]
   },
   {
+    // Public — browse products without login
     path: 'menu',
     loadComponent: () => import('./pages/menu/menu.component').then(m => m.MenuComponent),
-    canActivate: [authGuard]
   },
   {
+    // Public — view product detail without login
     path: 'product/:id',
     loadComponent: () => import('./pages/product-detail/product-detail.component').then(m => m.ProductDetailComponent),
-    canActivate: [authGuard]
   },
   {
+    // Public — cart without login
     path: 'cart',
     loadComponent: () => import('./pages/cart/cart.component').then(m => m.CartComponent),
-    canActivate: [authGuard]
   },
   {
+    // Protected — login required at checkout
     path: 'checkout',
     loadComponent: () => import('./pages/checkout/checkout.component').then(m => m.CheckoutComponent),
     canActivate: [authGuard]

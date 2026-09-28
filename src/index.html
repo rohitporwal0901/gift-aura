@@ -3,74 +3,33 @@
 
 <head>
   <meta charset="utf-8">
-  <title>FruitChat - Fresh Fruits & Healthy Sprouts</title>
+  <title>Graphic Line | Premium Corporate Gifts & Customized Branding Solutions</title>
   <base href="/">
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
   <meta name="description"
-    content="FruitChat - Order fresh fruit chaat, masala sprouts, and healthy juices. Fast delivery, pure freshness.">
-  <meta name="theme-color" content="#2E7D32">
+    content="Graphic Line offers premium corporate gifts, welcome kits, magnetic badges, customized polo t-shirts, laser engraved products & branding solutions across India. Trusted by 1000+ corporate clients.">
+  <meta name="theme-color" content="#f3efea">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="shortcut icon" href="favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="icon" type="image/webp" href="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/10_2770576c-f5d9-44d5-bb02-476af09f6010.webp?v=1778942276">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
 <body>
   <app-root></app-root>
   <script>
-    // 1. Prevent double-click zoom
+    // Prevent double-click zoom
     document.addEventListener('dblclick', function (e) {
       e.preventDefault();
-    }, { passive: false });
-
-    // 2. Prevent gesture zoom (pinch zoom)
-    document.addEventListener('gesturestart', function (e) {
-      e.preventDefault();
-    }, { passive: false });
-    document.addEventListener('gesturechange', function (e) {
-      e.preventDefault();
-    }, { passive: false });
-    document.addEventListener('gestureend', function (e) {
-      e.preventDefault();
-    }, { passive: false });
-
-    // 3. Prevent double-tap zoom on iOS Safari and Android browsers
-    var lastTouchTime = 0;
-    document.addEventListener('touchend', function (e) {
-      var now = Date.now();
-      if (now - lastTouchTime <= 450) {
-        e.preventDefault();
-        // Trigger click programmatically so buttons/links still respond immediately
-        if (e.target) {
-          var clickable = e.target.closest ? e.target.closest('button, a, input, textarea, select, [tabindex]') : e.target;
-          if (clickable && typeof clickable.click === 'function') {
-            clickable.click();
-          }
-        }
-      }
-      lastTouchTime = now;
-    }, { passive: false });
-
-    // 4. Prevent multi-finger pinch zoom
-    document.addEventListener('touchstart', function (e) {
-      if (e.touches && e.touches.length > 1) {
-        e.preventDefault();
-      }
     }, { passive: false });
   </script>
 </body>
