@@ -86,7 +86,7 @@ interface ReelItem {
               @for (reel of reelsList; track reel.id) {
                 <div class="reel-card" (click)="openVideoModal(reel)">
                   <div class="reel-thumb-frame">
-                    <img [src]="reel.thumbnail" [alt]="reel.title" class="reel-img">
+                    <video [src]="reel.videoUrl" class="reel-img" autoplay muted loop playsinline></video>
                     <div class="reel-play-overlay">
                       <div class="play-circle">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
@@ -1357,27 +1357,31 @@ interface ReelItem {
       }
     }
 
-    /* ── VIDEO MODAL ── */
+    /* ── VIDEO MODAL (SLIDE PANEL) ── */
     .video-modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
       z-index: 99999;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      justify-content: flex-end; /* Align right */
     }
 
     .video-modal-content {
       position: relative;
       width: 100%;
       max-width: 420px;
+      height: 100%;
       background: #111111;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+      overflow-y: auto;
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+      animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+      @keyframes slideInRight {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+      }
 
       .vm-close-btn {
         position: absolute;
