@@ -146,39 +146,38 @@ interface ReelItem {
             @for (product of filteredProducts(); track product.id) {
               <div class="gl-product-card">
                 <!-- BADGES -->
-                <div class="pcard-badges">
-                  @if (product.isBestseller) {
-                    <span class="pcard-badge badge-bestseller">BESTSELLER</span>
-                  }
-                  @if (product.originalPrice && product.originalPrice > product.price) {
-                    <span class="pcard-badge badge-discount">
-                      {{ getDiscountPercent(product.price, product.originalPrice) }}% OFF
-                    </span>
-                  }
-                </div>
+                @if (product.isBestseller) {
+                  <span class="badge-bestseller">BESTSELLER</span>
+                }
+                @if (product.originalPrice && product.originalPrice > product.price) {
+                  <span class="badge-discount">
+                    {{ getDiscountPercent(product.price, product.originalPrice) }}% OFF
+                  </span>
+                }
 
-                <!-- IMAGE CONTAINER WITH DUAL-IMAGE HOVER -->
-                <a [routerLink]="['/product', product.id]" class="pcard-img-link">
-                  <div class="pcard-img-wrap">
-                    <img [src]="product.image" [alt]="product.name" class="pcard-img main-img">
-                    @if (product.secondaryImage && product.secondaryImage !== product.image) {
-                      <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img">
-                    }
+                <!-- MEDIA BOX (Image + Overlay Actions) -->
+                <div class="pcard-media-box">
+                  <!-- IMAGE CONTAINER WITH DUAL-IMAGE HOVER -->
+                  <a [routerLink]="['/product', product.id]" class="pcard-img-link">
+                    <div class="pcard-img-wrap">
+                      <img [src]="product.image" [alt]="product.name" class="pcard-img main-img">
+                      @if (product.secondaryImage && product.secondaryImage !== product.image) {
+                        <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img">
+                      }
+                    </div>
+                  </a>
+
+                  <!-- QUICK ACTIONS -->
+                  <div class="pcard-quick-actions">
+                    <button class="quick-add-btn" (click)="addToCart(product)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                      </svg>
+                      Add to Cart
+                    </button>
                   </div>
-                </a>
-
-                <!-- QUICK ACTIONS -->
-                <div class="pcard-quick-actions">
-                  <button class="quick-view-btn" (click)="openQuickView(product)">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                    Quick View
-                  </button>
-                  <button class="quick-add-btn" (click)="addToCart(product)">
-                    Add to Cart
-                  </button>
                 </div>
 
                 <!-- CARD BODY -->
@@ -218,70 +217,17 @@ interface ReelItem {
       <section class="gl-section feature-cards-section">
         <div class="container">
           <div class="feature-cards-grid">
-            <div class="feature-card fcard-large">
+            <div class="feature-card">
               <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphic-line-3_83fd0b55-0b03-495f-b0b3-d60e41ccabb6.webp?v=1780416698&width=2000" alt="Corporate T-Shirt Branding" class="fc-bg-img">
-              <div class="fc-overlay"></div>
-              <div class="fc-content">
-                <span class="fc-pill">CORPORATE UNIFORMS</span>
-                <h3 class="fc-title">Customized Polo T-Shirts</h3>
-                <p class="fc-desc">14 Color Options, 220 GSM Bio-washed Fabric & Heavy Embroidery</p>
-                <a [routerLink]="['/menu']" [queryParams]="{cat: 't-shirts'}" class="fc-cta-btn">Explore T-Shirts →</a>
-              </div>
             </div>
 
             <div class="feature-card">
               <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphic-line_21257e89-1af5-4888-82ba-77a81f87d737.webp?v=1780414367&width=2000" alt="Precision Laser Engraving" class="fc-bg-img">
-              <div class="fc-overlay"></div>
-              <div class="fc-content">
-                <span class="fc-pill">PRECISION BRANDING</span>
-                <h3 class="fc-title">Laser Engraved Pens & Stands</h3>
-                <a [routerLink]="['/menu']" [queryParams]="{cat: 'corporate-gifts'}" class="fc-cta-btn">View Gifts →</a>
-              </div>
             </div>
 
             <div class="feature-card">
               <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphic-line-2.webp?v=1780414367&width=2000" alt="Executive Welcome Kits" class="fc-bg-img">
-              <div class="fc-overlay"></div>
-              <div class="fc-content">
-                <span class="fc-pill">ONBOARDING KITS</span>
-                <h3 class="fc-title">Premium Welcome Gift Sets</h3>
-                <a [routerLink]="['/menu']" [queryParams]="{cat: 'welcome-kits'}" class="fc-cta-btn">Explore Sets →</a>
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5. WATCH & BUY (Shoppable Reels) -->
-      <section class="gl-section watch-buy-section">
-        <div class="container">
-          <div class="gl-section-header">
-            <span class="gl-section-pill gl-badge-pill">VIDEO SHOWCASE</span>
-            <h2 class="gl-section-title">Watch & Buy</h2>
-            <p class="gl-section-subtitle">See products in real hands before you order for your team.</p>
-          </div>
-
-          <div class="watch-buy-grid">
-            @for (reel of shoppableReels; track reel.id) {
-              <div class="shoppable-card">
-                <div class="shoppable-video-frame" (click)="openVideoModal(reel)">
-                  <img [src]="reel.thumbnail" [alt]="reel.title" class="shoppable-thumb">
-                  <div class="shoppable-badge">Shoppable Reel</div>
-                  <div class="shoppable-play-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                  </div>
-                </div>
-                <div class="shoppable-bottom">
-                  <div class="sh-details">
-                    <span class="sh-title">{{ reel.productName }}</span>
-                    <span class="sh-price">Rs. {{ reel.price }}.00</span>
-                  </div>
-                  <a [routerLink]="['/product', reel.productId]" class="sh-btn">Buy Now</a>
-                </div>
-              </div>
-            }
           </div>
         </div>
       </section>
@@ -335,64 +281,93 @@ interface ReelItem {
       <!-- 7. WHY CHOOSE GRAPHIC LINE -->
       <section class="gl-section why-choose-section" id="why-choose">
         <div class="container">
-          <div class="gl-section-header">
-            <span class="gl-section-pill gl-badge-pill">OUR ADVANTAGE</span>
-            <h2 class="gl-section-title">“Why Choose Graphic Line?”</h2>
-            <p class="gl-section-subtitle">We build credibility for your brand through high-end finishing, rapid turnaround, and dedicated project managers.</p>
+          <div class="gl-section-header left-aligned">
+            <h2 class="gl-section-title">Why Choose Graphic Line?</h2>
           </div>
 
           <div class="why-grid">
             <div class="why-card">
-              <div class="why-icon-box">🎨</div>
-              <h3 class="why-card-title">✅ Premium Quality Printing</h3>
-              <p class="why-card-desc">High-quality printing & laser engraving with razor-sharp finishing — engineered specifically for elite corporate branding.</p>
+              <div class="why-icon-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <h3 class="why-card-title">Premium Quality</h3>
+              <p class="why-card-desc">Top-notch materials & print quality.</p>
             </div>
             <div class="why-card">
-              <div class="why-icon-box">📦</div>
-              <h3 class="why-card-title">✅ Bulk Orders Specialist</h3>
-              <p class="why-card-desc">500 se 5000+ units tak fast production — trusted by leading coaching institutes, corporate colleges & MNCs.</p>
+              <div class="why-icon-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+              </div>
+              <h3 class="why-card-title">Custom Printing</h3>
+              <p class="why-card-desc">Your logo, your design, our expertise.</p>
             </div>
             <div class="why-card">
-              <div class="why-icon-box">✨</div>
-              <h3 class="why-card-title">✅ Custom Branding Experts</h3>
-              <p class="why-card-desc">Complete branding with your logo, individual name engraving, and custom-designed luxury gift box packaging.</p>
+              <div class="why-icon-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              </div>
+              <h3 class="why-card-title">Bulk Discounts</h3>
+              <p class="why-card-desc">Best prices for large orders.</p>
             </div>
             <div class="why-card">
-              <div class="why-icon-box">⚡</div>
-              <h3 class="why-card-title">✅ Fast Delivery & Support</h3>
-              <p class="why-card-desc">Pan-India express delivery with a dedicated corporate account manager and live WhatsApp order updates.</p>
+              <div class="why-icon-box">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <h3 class="why-card-title">Fast & Reliable Delivery</h3>
+              <p class="why-card-desc">On-time delivery across India.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 8. REVIEWS & TESTIMONIALS (Judge.me Style) -->
+      <!-- 8. REVIEWS & TESTIMONIALS -->
       <section class="gl-section reviews-section">
         <div class="container">
-          <div class="gl-section-header">
-            <div class="reviews-header-badge">
-              <div class="stars-gold">★★★★★</div>
-              <span class="rating-text">Rated 4.9/5 based on 324+ reviews</span>
-            </div>
-            <h2 class="gl-section-title">Let Customers Speak For Us</h2>
+          <div class="gl-section-header left-aligned">
+            <h2 class="gl-section-title">What Our Customers Say</h2>
+            <p class="gl-section-subtitle">Trusted by 10,000+ happy customers</p>
           </div>
 
-          <div class="reviews-grid">
-            @for (rev of customerReviews; track rev.name) {
-              <div class="review-card">
-                <div class="rev-stars">★★★★★</div>
-                <h4 class="rev-title">{{ rev.title }}</h4>
-                <p class="rev-body">"{{ rev.comment }}"</p>
-                <div class="rev-author-row">
-                  <div class="rev-avatar">{{ rev.name[0] }}</div>
-                  <div class="rev-details">
-                    <span class="rev-name">{{ rev.name }}</span>
-                    <span class="rev-company">{{ rev.company }}</span>
+          <div class="reviews-wrapper">
+            <button class="review-nav prev" aria-label="Previous Review">❮</button>
+            
+            <div class="reviews-grid">
+              @for (rev of customerReviews; track rev.name) {
+                <div class="review-card">
+                  <div class="rev-stars">★★★★★</div>
+                  <p class="rev-body">"{{ rev.comment }}"</p>
+                  <div class="rev-author-row">
+                    <div class="rev-avatar">{{ rev.name[0] }}</div>
+                    <div class="rev-details">
+                      <span class="rev-name">{{ rev.name }}</span>
+                      <span class="rev-company">{{ rev.company }}</span>
+                    </div>
                   </div>
-                  <span class="verified-badge">✓ Verified Buyer</span>
                 </div>
-              </div>
-            }
+              }
+            </div>
+
+            <button class="review-nav next" aria-label="Next Review">❯</button>
+          </div>
+          <div class="review-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA BANNER -->
+      <section class="gl-section cta-banner-section">
+        <div class="container">
+          <div class="cta-banner">
+            <div class="cta-content">
+              <span class="cta-pill">CUSTOM GIFTS FOR EVERY OCCASION</span>
+              <h2>Let's Create Something Special</h2>
+              <p>Get custom printed gifts, t-shirts and more for your business or event.</p>
+              <a routerLink="/menu" class="cta-btn">Start Your Order →</a>
+            </div>
+            <div class="cta-image">
+              <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/gift-box-illustration.webp" alt="Gift Box" onerror="this.src='https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphic-line-2.webp?v=1780414367&width=800'">
+            </div>
           </div>
         </div>
       </section>
@@ -722,12 +697,22 @@ interface ReelItem {
     }
 
     .reels-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
       gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 16px;
+      scrollbar-width: none;
+      
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       @media (min-width: 640px) {
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
+        overflow-x: visible;
+        padding-bottom: 0;
       }
 
       @media (min-width: 1024px) {
@@ -737,12 +722,18 @@ interface ReelItem {
     }
 
     .reel-card {
+      flex: 0 0 65%; /* Shows 1 full card and a part of the next on mobile */
+      scroll-snap-align: start;
       background: #ffffff;
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--color-border);
       cursor: pointer;
       transition: all 0.3s ease;
+
+      @media (min-width: 640px) {
+        flex: auto; /* Reset flex for grid on desktop */
+      }
 
       &:hover {
         transform: translateY(-6px);
@@ -758,9 +749,13 @@ interface ReelItem {
     .reel-thumb-frame {
       position: relative;
       width: 100%;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 4 / 5; /* Changed from 9/16 to make it less tall (shorter) */
       background: #222;
       overflow: hidden;
+
+      @media (max-width: 768px) {
+        aspect-ratio: 1 / 1; /* Makes it completely square, reducing height further on mobile */
+      }
 
       .reel-img {
         width: 100%;
@@ -841,7 +836,20 @@ interface ReelItem {
       flex-wrap: wrap;
       margin-bottom: 40px;
 
+      @media (max-width: 768px) {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
       .filter-tab {
+        flex-shrink: 0;
+        white-space: nowrap;
         background: #ffffff;
         color: #333333;
         border: 1px solid var(--color-border);
@@ -852,13 +860,14 @@ interface ReelItem {
         transition: all 0.2s ease;
 
         &:hover {
-          border-color: #111111;
+          border-color: #2563eb;
+          color: #2563eb;
         }
 
         &.active {
-          background: #111111;
+          background: #2563eb;
           color: #ffffff;
-          border-color: #111111;
+          border-color: #2563eb;
         }
       }
     }
@@ -905,32 +914,36 @@ interface ReelItem {
       }
     }
 
-    .pcard-badges {
+    .badge-bestseller {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      top: 12px;
+      left: 12px;
       z-index: 5;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      background: #111111;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
 
-      .pcard-badge {
-        font-size: 10px;
-        font-weight: 800;
-        padding: 3px 8px;
-        border-radius: 4px;
-        letter-spacing: 0.5px;
-      }
+    .badge-discount {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 5;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
 
-      .badge-bestseller {
-        background: #111111;
-        color: #ffffff;
-      }
-
-      .badge-discount {
-        background: #e84e4e;
-        color: #ffffff;
-      }
+    .pcard-media-box {
+      position: relative;
     }
 
     .pcard-img-link {
@@ -961,44 +974,41 @@ interface ReelItem {
 
     .pcard-quick-actions {
       position: absolute;
-      bottom: 110px;
+      bottom: 12px; /* Positioned at the very bottom of the image */
       left: 12px;
       right: 12px;
       display: flex;
-      gap: 6px;
       opacity: 0;
-      transform: translateY(8px);
-      transition: all 0.25s ease;
+      transform: translateY(12px);
+      transition: all 0.3s ease;
       z-index: 6;
 
-      .quick-view-btn, .quick-add-btn {
-        flex: 1;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(4px);
+      @media (max-width: 768px) {
+        opacity: 1; /* Always visible on mobile since there is no hover */
+        transform: translateY(0);
+      }
+
+      .quick-add-btn {
+        width: 100%;
+        background: var(--color-accent);
         color: #111111;
-        border: 1px solid #dcd7cf;
-        border-radius: 6px;
-        padding: 9px 4px;
-        font-size: 11.5px;
-        font-weight: 700;
+        border: none;
+        border-radius: var(--radius-full);
+        padding: 10px 16px;
+        font-size: 13px;
+        font-weight: 800;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 4px;
-        transition: all 0.2s;
+        gap: 8px;
+        transition: all 0.2s ease;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 
         &:hover {
           background: #111111;
           color: #ffffff;
-          border-color: #111111;
+          transform: translateY(-2px);
         }
-      }
-
-      .quick-add-btn {
-        background: #111111;
-        color: #ffffff;
-        border-color: #111111;
-        &:hover { background: #333333; }
       }
     }
 
@@ -1039,19 +1049,22 @@ interface ReelItem {
       .pcard-price-row {
         margin-top: auto;
         display: flex;
-        align-items: center;
-        gap: 8px;
+        align-items: baseline;
+        gap: 6px;
+        flex-wrap: wrap;
 
         .price-current {
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 800;
           color: #111111;
+          white-space: nowrap;
         }
 
         .price-original {
-          font-size: 13px;
+          font-size: 11.5px;
           color: #999999;
           text-decoration: line-through;
+          white-space: nowrap;
         }
       }
     }
@@ -1063,11 +1076,21 @@ interface ReelItem {
 
     /* ── 4. FEATURE CARDS GRID ── */
     .feature-cards-grid {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 20px;
 
+      @media (max-width: 767px) {
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 8px;
+        scrollbar-width: none;
+        &::-webkit-scrollbar { display: none; }
+      }
+
       @media (min-width: 768px) {
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
       }
     }
@@ -1077,174 +1100,16 @@ interface ReelItem {
       border-radius: 14px;
       overflow: hidden;
       aspect-ratio: 4 / 3;
-      cursor: pointer;
 
-      @media (min-width: 768px) {
-        &.fcard-large {
-          grid-column: span 1;
-        }
+      @media (max-width: 767px) {
+        flex: 0 0 85%;
+        scroll-snap-align: center;
       }
 
       .fc-bg-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.6s ease;
-      }
-
-      &:hover .fc-bg-img {
-        transform: scale(1.06);
-      }
-
-      .fc-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
-      }
-
-      .fc-content {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 24px;
-        color: #ffffff;
-      }
-
-      .fc-pill {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(4px);
-        font-size: 10.5px;
-        font-weight: 800;
-        letter-spacing: 1px;
-        padding: 3px 10px;
-        border-radius: 4px;
-        margin-bottom: 8px;
-      }
-
-      .fc-title {
-        font-size: 20px;
-        font-weight: 800;
-        color: #ffffff;
-        margin-bottom: 4px;
-      }
-
-      .fc-desc {
-        font-size: 12.5px;
-        color: #e0e0e0;
-        margin-bottom: 12px;
-      }
-
-      .fc-cta-btn {
-        font-size: 13px;
-        font-weight: 700;
-        color: #f7d583;
-        transition: transform 0.2s;
-        display: inline-block;
-        &:hover { transform: translateX(4px); }
-      }
-    }
-
-    /* ── 5. WATCH & BUY ── */
-    .watch-buy-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-
-      @media (min-width: 768px) {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-      }
-    }
-
-    .shoppable-card {
-      background: #ffffff;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--color-border);
-      transition: all 0.3s;
-
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-lg);
-      }
-    }
-
-    .shoppable-video-frame {
-      position: relative;
-      aspect-ratio: 9 / 14;
-      background: #111;
-      overflow: hidden;
-      cursor: pointer;
-
-      .shoppable-thumb {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .shoppable-badge {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: rgba(0,0,0,0.7);
-        color: #fff;
-        font-size: 10.5px;
-        font-weight: 700;
-        padding: 3px 8px;
-        border-radius: 4px;
-      }
-
-      .shoppable-play-btn {
-        position: absolute;
-        bottom: 12px;
-        right: 12px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(0,0,0,0.7);
-        backdrop-filter: blur(4px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-left: 3px;
-      }
-    }
-
-    .shoppable-bottom {
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-
-      .sh-title {
-        font-size: 12.5px;
-        font-weight: 700;
-        color: #111;
-        display: block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 120px;
-      }
-
-      .sh-price {
-        font-size: 12px;
-        font-weight: 800;
-        color: #111;
-      }
-
-      .sh-btn {
-        background: #111;
-        color: #fff;
-        font-size: 11.5px;
-        font-weight: 700;
-        padding: 6px 12px;
-        border-radius: 6px;
-        white-space: nowrap;
-        &:hover { background: #333; }
       }
     }
 
@@ -1315,14 +1180,15 @@ interface ReelItem {
 
     /* ── 7. WHY CHOOSE US ── */
     .why-choose-section {
-      background: #faf8f5;
-      border-top: 1px solid var(--color-border);
+      background: #ffffff;
+      padding: 60px 0;
     }
 
     .why-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 32px;
+      margin-top: 40px;
 
       @media (min-width: 640px) {
         grid-template-columns: repeat(2, 1fr);
@@ -1330,26 +1196,25 @@ interface ReelItem {
 
       @media (min-width: 1024px) {
         grid-template-columns: repeat(4, 1fr);
+        gap: 0;
       }
     }
 
     .why-card {
-      background: #ffffff;
-      border: 1px solid var(--color-border);
-      border-radius: 14px;
-      padding: 30px 24px;
       text-align: center;
-      transition: all 0.3s ease;
+      padding: 0 20px;
+      position: relative;
 
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
-        border-color: #111111;
+      @media (min-width: 1024px) {
+        border-right: 1px solid #eaeaea;
+
+        &:last-child {
+          border-right: none;
+        }
       }
 
       .why-icon-box {
-        font-size: 32px;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
       }
 
       .why-card-title {
@@ -1367,33 +1232,40 @@ interface ReelItem {
     }
 
     /* ── 8. REVIEWS ── */
-    .reviews-header-badge {
+    .reviews-wrapper {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 8px;
+      gap: 16px;
+    }
 
-      .stars-gold {
-        color: #f59e0b;
-        font-size: 20px;
-        letter-spacing: 2px;
-      }
+    .review-nav {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #111111;
+      cursor: pointer;
+      display: none; /* hidden on small screens */
 
-      .rating-text {
-        font-size: 14px;
-        font-weight: 700;
-        color: #444;
+      @media (min-width: 1024px) {
+        display: block;
       }
     }
 
     .reviews-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 20px;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
 
       @media (min-width: 768px) {
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
+        overflow-x: visible;
+        padding-bottom: 0;
       }
     }
 
@@ -1401,75 +1273,171 @@ interface ReelItem {
       background: #ffffff;
       border: 1px solid var(--color-border);
       border-radius: 12px;
-      padding: 24px;
+      padding: 30px;
       display: flex;
       flex-direction: column;
+      flex: 0 0 85%;
+      scroll-snap-align: center;
 
-      .rev-stars {
-        color: #108474;
-        font-size: 16px;
-        margin-bottom: 10px;
+      @media (min-width: 768px) {
+        flex: auto;
       }
 
-      .rev-title {
-        font-size: 15px;
-        font-weight: 700;
-        color: #111111;
-        margin-bottom: 8px;
+      .rev-stars {
+        color: #f59e0b;
+        font-size: 16px;
+        margin-bottom: 16px;
+        letter-spacing: 2px;
       }
 
       .rev-body {
-        font-size: 13.5px;
-        color: #555555;
-        line-height: 1.55;
-        margin-bottom: 20px;
+        font-size: 14px;
+        color: #444444;
+        line-height: 1.6;
+        margin-bottom: 24px;
         flex: 1;
+        font-style: italic;
       }
 
       .rev-author-row {
         display: flex;
         align-items: center;
-        gap: 10px;
-        border-top: 1px solid #f4f0eb;
-        padding-top: 14px;
+        gap: 14px;
 
         .rev-avatar {
-          width: 34px;
-          height: 34px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
-          background: #108474;
-          color: #fff;
+          background: #e2e8f0;
+          color: #475569;
           font-weight: 700;
-          font-size: 13px;
+          font-size: 14px;
           display: flex;
           align-items: center;
           justify-content: center;
+          object-fit: cover;
         }
 
         .rev-details {
           display: flex;
           flex-direction: column;
-          flex: 1;
 
           .rev-name {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             color: #111111;
           }
 
           .rev-company {
-            font-size: 11.5px;
-            color: #777777;
+            font-size: 12px;
+            color: #64748b;
           }
         }
+      }
+    }
 
-        .verified-badge {
-          font-size: 10.5px;
-          color: #108474;
-          font-weight: 700;
-          background: #e6f4f1;
-          padding: 3px 8px;
-          border-radius: 4px;
+    .review-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 24px;
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #cbd5e1;
+        
+        &.active {
+          background: #1e293b;
+        }
+      }
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner-section {
+      padding: 40px 0 60px;
+    }
+
+    .cta-banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
+      border-radius: 16px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+
+      @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 50px 60px;
+      }
+    }
+
+    .cta-content {
+      color: #ffffff;
+      z-index: 2;
+      flex: 1;
+      max-width: 500px;
+
+      .cta-pill {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #fbbc04;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        font-size: clamp(24px, 4vw, 32px);
+        font-weight: 800;
+        margin-bottom: 12px;
+        line-height: 1.2;
+      }
+
+      p {
+        font-size: 15px;
+        color: #cbd5e1;
+        margin-bottom: 24px;
+        line-height: 1.5;
+      }
+
+      .cta-btn {
+        display: inline-flex;
+        background: #fbbc04;
+        color: #111111;
+        font-weight: 800;
+        font-size: 14px;
+        padding: 12px 24px;
+        border-radius: 8px;
+        transition: transform 0.2s;
+
+        &:hover {
+          transform: translateY(-2px);
+          background: #e6ab03;
+        }
+      }
+    }
+
+    .cta-image {
+      position: relative;
+      z-index: 2;
+      display: none;
+
+      @media (min-width: 768px) {
+        display: block;
+        flex: 1;
+        text-align: right;
+
+        img {
+          max-width: 100%;
+          max-height: 250px;
+          object-fit: contain;
         }
       }
     }
@@ -1479,27 +1447,28 @@ interface ReelItem {
       background: #ffffff;
       border: 1px solid var(--color-border);
       border-radius: 16px;
-      padding: 40px;
+      padding: 24px;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 40px;
+      gap: 32px;
       box-shadow: var(--shadow-md);
 
       @media (min-width: 992px) {
         grid-template-columns: 1fr 1.2fr;
         padding: 50px;
+        gap: 40px;
       }
     }
 
     .inquiry-title {
-      font-size: clamp(24px, 3vw, 34px);
+      font-size: clamp(22px, 3vw, 34px);
       font-weight: 800;
       color: #111111;
       margin: 14px 0 10px;
     }
 
     .inquiry-sub {
-      font-size: 14.5px;
+      font-size: 14px;
       color: #666666;
       line-height: 1.6;
       margin-bottom: 24px;
@@ -1546,8 +1515,12 @@ interface ReelItem {
 
       .form-row {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        
+        @media (min-width: 640px) {
+          grid-template-columns: 1fr 1fr;
+        }
       }
 
       .form-group {
@@ -1877,49 +1850,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       name: '🏢 Inside Our Factory',
       videoUrl: 'https://cdn.shopify.com/videos/c/o/v/922c0e5e7e2d4a8da1d151f3b87e2f38.mp4',
       thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-26e7721a-21db-4763-a88e-20ceddeb9d6f.jpg?v=1780236800'
-    }
-  ];
-
-  shoppableReels: ReelItem[] = [
-    {
-      id: 'sr1',
-      title: 'Smart Metal Pens',
-      name: 'Engraved Metal Pens',
-      videoUrl: 'https://cdn.shopify.com/videos/c/o/v/45c34139ec3b4185b22b2764f17ebc5b.mp4',
-      thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-19649ce6-6d2b-4509-9fe5-eb0b5dd1b581.jpg?v=1780236811',
-      productId: '7966746968112',
-      productName: 'Engraved Metal Pens',
-      price: 399
-    },
-    {
-      id: 'sr2',
-      title: 'Laser Keychains',
-      name: 'Custom Metal Keychains',
-      videoUrl: 'https://cdn.shopify.com/videos/c/o/v/83e65d3b62644b04aa10c957da995aac.mp4',
-      thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-091dcd7f-6a83-47ca-a7f5-6017ae3bf5c0.jpg?v=1780236828',
-      productId: '7966763483184',
-      productName: 'Custom Metal Keychains',
-      price: 599
-    },
-    {
-      id: 'sr3',
-      title: 'Elite Business Set',
-      name: 'Card Holder & Pen Set',
-      videoUrl: 'https://cdn.shopify.com/videos/c/o/v/a82442a9f2b84ea2986592e1cfcc07cc.mp4',
-      thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-bf66ca12-b855-4ae6-ac21-156b10c36f60.jpg?v=1780236817',
-      productId: '7968277102640',
-      productName: 'Elite Business Gift Set',
-      price: 999
-    },
-    {
-      id: 'sr4',
-      title: 'Mobile Desktop Stand',
-      name: 'Branded Mobile Stand',
-      videoUrl: 'https://cdn.shopify.com/videos/c/o/v/07b7ebf98e1d45fcade184cf696ba7d2.mp4',
-      thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-28a0cff1-add5-4722-918f-612a59e36c3e.jpg?v=1780236794',
-      productId: '7967735349296',
-      productName: 'Premium Mobile Stand',
-      price: 599
     }
   ];
 

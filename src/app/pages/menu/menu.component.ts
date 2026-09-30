@@ -53,19 +53,18 @@ import { Product } from '../../core/models/product.model';
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
-              <input type="text" placeholder="Search in collection..." [(ngModel)]="searchQuery">
-              @if (searchQuery) {
-                <button class="clear-search-btn" (click)="searchQuery = ''">✕</button>
+              <input type="text" placeholder="Search in collection..." [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)">
+              @if (searchQuery()) {
+                <button class="clear-search-btn" (click)="searchQuery.set('')">✕</button>
               }
             </div>
 
             <div class="sort-box">
               <label for="sortSelect">Sort:</label>
-              <select id="sortSelect" [(ngModel)]="sortBy">
+              <select id="sortSelect" [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)">
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
                 <option value="price-high">Price: High to Low</option>
-                <option value="rating">Top Rated</option>
               </select>
             </div>
           </div>
@@ -82,7 +81,7 @@ import { Product } from '../../core/models/product.model';
             <div class="empty-icon">🔍</div>
             <h3>No products found</h3>
             <p>Try clearing your search query or selecting a different category.</p>
-            <button class="gl-btn-primary" (click)="activeCategory.set('all'); searchQuery = ''">
+            <button class="gl-btn-primary" (click)="activeCategory.set('all'); searchQuery.set('')">
               Show All Products
             </button>
           </div>
@@ -305,8 +304,8 @@ export class MenuComponent implements OnInit {
   private route = inject(ActivatedRoute);
 
   readonly activeCategory = signal<string>('all');
-  searchQuery = '';
-  sortBy = 'featured';
+  readonly searchQuery = signal<string>('');
+  readonly sortBy = signal<string>('featured');
 
   categories = [
     { id: 'all', label: 'All Products', icon: '✦' },
@@ -330,7 +329,7 @@ export class MenuComponent implements OnInit {
     }
 
     // Search query filter
-    const q = this.searchQuery.trim().toLowerCase();
+    const q = this.searchQuery().trim().toLowerCase();
     if (q) {
       list = list.filter(p =>
         p.name.toLowerCase().includes(q) ||
@@ -341,12 +340,11 @@ export class MenuComponent implements OnInit {
 
     // Sort
     const sorted = [...list];
-    if (this.sortBy === 'price-low') {
+    const sortVal = this.sortBy();
+    if (sortVal === 'price-low') {
       sorted.sort((a, b) => a.price - b.price);
-    } else if (this.sortBy === 'price-high') {
+    } else if (sortVal === 'price-high') {
       sorted.sort((a, b) => b.price - a.price);
-    } else if (this.sortBy === 'rating') {
-      sorted.sort((a, b) => b.rating - a.rating);
     }
 
     return sorted;

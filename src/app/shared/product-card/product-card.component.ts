@@ -11,24 +11,36 @@ import { CartService } from '../../core/services/cart.service';
   template: `
     <div class="gl-pcard">
       <!-- BADGES -->
-      <div class="pcard-badges">
-        @if (product.isBestseller) {
-          <span class="pcard-badge badge-hot">HOT</span>
-        }
-        @if (product.originalPrice && product.originalPrice > product.price) {
-          <span class="pcard-badge badge-sale">{{ getDiscount() }}% OFF</span>
-        }
-      </div>
+      @if (product.isBestseller) {
+        <span class="badge-bestseller">BESTSELLER</span>
+      }
+      @if (product.originalPrice && product.originalPrice > product.price) {
+        <span class="badge-discount">{{ getDiscount() }}% OFF</span>
+      }
 
-      <!-- IMAGE WITH HOVER -->
-      <a [routerLink]="['/product', product.id]" class="pcard-img-link">
-        <div class="pcard-img-wrap">
-          <img [src]="product.image" [alt]="product.name" class="pcard-img primary-img" loading="lazy">
-          @if (product.secondaryImage && product.secondaryImage !== product.image) {
-            <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img" loading="lazy">
-          }
+      <!-- MEDIA BOX (Image + Overlay Actions) -->
+      <div class="pcard-media-box">
+        <a [routerLink]="['/product', product.id]" class="pcard-img-link">
+          <div class="pcard-img-wrap">
+            <img [src]="product.image" [alt]="product.name" class="pcard-img primary-img" loading="lazy">
+            @if (product.secondaryImage && product.secondaryImage !== product.image) {
+              <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img" loading="lazy">
+            }
+          </div>
+        </a>
+
+        <!-- QUICK ACTIONS -->
+        <div class="pcard-quick-actions">
+          <button class="quick-add-btn" (click)="onAddToCart($event)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            Add to Cart
+          </button>
         </div>
-      </a>
+      </div>
 
       <!-- BODY -->
       <div class="pcard-body">
@@ -49,12 +61,6 @@ import { CartService } from '../../core/services/cart.service';
           @if (product.originalPrice && product.originalPrice > product.price) {
             <span class="original-price">Rs. {{ product.originalPrice }}.00</span>
           }
-        </div>
-
-        <div class="pcard-action-bar">
-          <button class="add-to-cart-btn" (click)="onAddToCart($event)">
-            Add to Cart
-          </button>
         </div>
       </div>
     </div>
@@ -79,39 +85,43 @@ import { CartService } from '../../core/services/cart.service';
           opacity: 1;
         }
 
-        .add-to-cart-btn {
-          background: #000000;
-          color: #ffffff;
+        .pcard-quick-actions {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
     }
 
-    .pcard-badges {
+    .badge-bestseller {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      top: 12px;
+      left: 12px;
       z-index: 5;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      background: #111111;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
 
-      .pcard-badge {
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.5px;
-        padding: 3px 8px;
-        border-radius: 4px;
-      }
+    .badge-discount {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 5;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
 
-      .badge-hot {
-        background: #111111;
-        color: #ffffff;
-      }
-
-      .badge-sale {
-        background: #e84e4e;
-        color: #ffffff;
-      }
+    .pcard-media-box {
+      position: relative;
     }
 
     .pcard-img-link {
@@ -198,43 +208,60 @@ import { CartService } from '../../core/services/cart.service';
     .pcard-pricing {
       display: flex;
       align-items: baseline;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
       margin-bottom: 12px;
 
       .current-price {
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 800;
         color: #111111;
+        white-space: nowrap;
       }
 
       .original-price {
-        font-size: 12px;
+        font-size: 11.5px;
         color: #999999;
         text-decoration: line-through;
+        white-space: nowrap;
       }
     }
+    .pcard-quick-actions {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.3s ease;
+      z-index: 6;
 
-    .pcard-action-bar {
-      margin-top: auto;
+      @media (max-width: 768px) {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-      .add-to-cart-btn {
+      .quick-add-btn {
         width: 100%;
-        background: #f4f0eb;
-        color: #222222;
-        border: 1px solid #dcd7cf;
-        border-radius: 6px;
-        padding: 9px;
-        font-size: 12.5px;
-        font-weight: 700;
-        transition: all 0.2s ease;
+        background: var(--color-accent);
+        color: #111111;
+        border: none;
+        border-radius: var(--radius-full);
+        padding: 10px 16px;
+        font-size: 13px;
+        font-weight: 800;
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 
         &:hover {
           background: #111111;
           color: #ffffff;
-          border-color: #111111;
+          transform: translateY(-2px);
         }
       }
     }
