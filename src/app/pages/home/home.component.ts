@@ -44,13 +44,15 @@ interface ReelItem {
               <div class="hero-overlay"></div>
               <div class="container hero-content-container">
                 <div class="hero-text-block animate-fade-in-up">
-                  <span class="hero-badge-pill">{{ slide.badge }}</span>
+                  <div class="hero-badge-pill">
+                    <span class="badge-sparkle">✦</span> {{ slide.badge }}
+                  </div>
                   <h1 class="hero-main-title">{{ slide.title }}</h1>
                   <p class="hero-subtext">{{ slide.subtitle }}</p>
                   <div class="hero-btn-row">
                     <a [routerLink]="slide.btnLink" [queryParams]="slide.queryParams" class="gl-btn-primary hero-btn-main">
-                      {{ slide.btnText }}
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <span>{{ slide.btnText }}</span>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
                       </svg>
@@ -65,6 +67,18 @@ interface ReelItem {
           }
         </div>
 
+        <!-- HERO NAVIGATION ARROWS -->
+        <button class="hero-nav-btn prev" (click)="prevHeroSlide()" aria-label="Previous Slide">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="hero-nav-btn next" (click)="nextHeroSlide()" aria-label="Next Slide">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
         <!-- HERO CONTROLS -->
         <div class="hero-indicators">
           @for (slide of heroSlides; track slide.id; let i = $index) {
@@ -73,13 +87,16 @@ interface ReelItem {
         </div>
       </section>
 
+     
+
+      <!-- 2. INSIDE GIFTAURA (Behind-the-scenes Reels & Factory) -->
       <!-- 2. INSIDE GIFTAURA (Behind-the-scenes Reels & Factory) -->
       <section class="gl-section inside-gl-section">
         <div class="container">
           <div class="gl-section-header">
-            <span class="gl-section-pill gl-badge-pill">BEHIND THE SCENES</span>
-            <h2 class="gl-section-title">Inside GiftAura</h2>
-            <p class="gl-section-subtitle">Real look into our in-house manufacturing, precision laser engraving &amp; daily order dispatches.</p>
+            <span class="gl-section-pill gl-badge-pill">✦ IN-HOUSE PRODUCTION</span>
+            <h2 class="gl-section-title">Inside the GiftAura Workshop</h2>
+            <p class="gl-section-subtitle">Real look into our German fiber laser engraving, HD apparel embroidery &amp; daily corporate order dispatches.</p>
           </div>
 
           <div class="reels-slider-wrap">
@@ -88,18 +105,31 @@ interface ReelItem {
                 <div class="reel-card" (click)="openVideoModal(reel)">
                   <div class="reel-thumb-frame">
                     <video [src]="reel.videoUrl" class="reel-img" autoplay muted loop playsinline></video>
+                    
+                    <div class="reel-top-bar">
+                      <span class="reel-live-tag">
+                        <span class="live-dot"></span> LIVE FACTORY
+                      </span>
+                    </div>
+
                     <div class="reel-play-overlay">
                       <div class="play-circle">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
-                          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#111111">
+                          <polygon points="6 4 20 12 6 20 6 4"></polygon>
                         </svg>
                       </div>
                     </div>
-                    <div class="reel-tag-badge">{{ reel.name }}</div>
-                  </div>
-                  <div class="reel-meta">
-                    <h4 class="reel-title">{{ reel.title }}</h4>
-                    <span class="reel-action">Watch Reel ›</span>
+
+                    <div class="reel-bottom-overlay">
+                      <div class="reel-tag-badge">{{ reel.name }}</div>
+                      <h4 class="reel-title">{{ reel.title }}</h4>
+                      <span class="reel-action-btn">
+                        Watch Reel
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                      </span>
+                    </div>
                   </div>
                 </div>
               }
@@ -112,33 +142,33 @@ interface ReelItem {
       <section class="gl-section trending-section" id="products">
         <div class="container">
           <div class="gl-section-header">
-            <span class="gl-section-pill gl-badge-pill">OUR BESTSELLERS</span>
+            <span class="gl-section-pill gl-badge-pill">✦ BESTSELLERS CATALOG</span>
             <h2 class="gl-section-title">Trending Corporate Gifts</h2>
-            <p class="gl-section-subtitle">Laser engraved executive pens, customized keychains, mobile stands & premium welcome gift sets.</p>
+            <p class="gl-section-subtitle">Laser engraved executive pens, customized keychains, mobile stands &amp; premium welcome gift sets.</p>
           </div>
 
           <!-- CATEGORY PILL FILTER -->
           <div class="gl-filter-tabs">
             <button class="filter-tab" [class.active]="selectedCategory() === 'all'" (click)="selectedCategory.set('all')">
-              All Products
+              <span>All Products</span>
             </button>
             <button class="filter-tab" [class.active]="selectedCategory() === 'corporate-gifts'" (click)="selectedCategory.set('corporate-gifts')">
-              Pens & Diaries
+              <span>Pens & Diaries</span>
             </button>
             <button class="filter-tab" [class.active]="selectedCategory() === 'welcome-kits'" (click)="selectedCategory.set('welcome-kits')">
-              Welcome Kits
+              <span>Welcome Kits</span>
             </button>
             <button class="filter-tab" [class.active]="selectedCategory() === 't-shirts'" (click)="selectedCategory.set('t-shirts')">
-              Customized T-Shirts
+              <span>Customized T-Shirts</span>
             </button>
             <button class="filter-tab" [class.active]="selectedCategory() === 'keychains-badges'" (click)="selectedCategory.set('keychains-badges')">
-              Keychains & Badges
+              <span>Keychains & Badges</span>
             </button>
             <button class="filter-tab" [class.active]="selectedCategory() === 'office-essentials'" (click)="selectedCategory.set('office-essentials')">
-              Office Essentials
+              <span>Office Essentials</span>
             </button>
             <button class="filter-tab" [class.active]="selectedCategory() === 'drinkware'" (click)="selectedCategory.set('drinkware')">
-              Vacuum Flasks
+              <span>Vacuum Flasks</span>
             </button>
           </div>
 
@@ -147,31 +177,42 @@ interface ReelItem {
             @for (product of filteredProducts(); track product.id) {
               <div class="gl-product-card">
                 <!-- BADGES -->
-                @if (product.isBestseller) {
-                  <span class="badge-bestseller">BESTSELLER</span>
-                }
-                @if (product.originalPrice && product.originalPrice > product.price) {
-                  <span class="badge-discount">
-                    {{ getDiscountPercent(product.price, product.originalPrice) }}% OFF
-                  </span>
-                }
+                <div class="pcard-badge-row">
+                  @if (product.isBestseller) {
+                    <span class="badge-bestseller">
+                      <span class="badge-icon">★</span> BESTSELLER
+                    </span>
+                  }
+                  @if (product.originalPrice && product.originalPrice > product.price) {
+                    <span class="badge-discount">
+                      {{ getDiscountPercent(product.price, product.originalPrice) }}% OFF
+                    </span>
+                  }
+                </div>
 
                 <!-- MEDIA BOX (Image + Overlay Actions) -->
                 <div class="pcard-media-box">
                   <!-- IMAGE CONTAINER WITH DUAL-IMAGE HOVER -->
                   <a [routerLink]="['/product', product.id]" class="pcard-img-link">
                     <div class="pcard-img-wrap">
-                      <img [src]="product.image" [alt]="product.name" class="pcard-img main-img">
+                      <img [src]="product.image" [alt]="product.name" class="pcard-img main-img" loading="lazy">
                       @if (product.secondaryImage && product.secondaryImage !== product.image) {
-                        <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img">
+                        <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img" loading="lazy">
                       }
                     </div>
                   </a>
 
                   <!-- QUICK ACTIONS -->
                   <div class="pcard-quick-actions">
-                    <button class="quick-add-btn" (click)="addToCart(product)">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <button class="quick-view-action-btn" (click)="openQuickView(product)" title="Quick View">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                      Quick View
+                    </button>
+                    <button class="quick-add-btn" (click)="addToCart(product)" title="Add to Cart">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
                         <circle cx="9" cy="21" r="1"></circle>
                         <circle cx="20" cy="21" r="1"></circle>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -192,9 +233,10 @@ interface ReelItem {
                     <h3 class="pcard-title">{{ product.name }}</h3>
                   </a>
                   <div class="pcard-price-row">
-                    <span class="price-current">Rs. {{ product.price }}</span>
+                    <span class="price-current">₹{{ product.price }}</span>
                     @if (product.originalPrice && product.originalPrice > product.price) {
-                      <span class="price-original">Rs. {{ product.originalPrice }}</span>
+                      <span class="price-original">₹{{ product.originalPrice }}</span>
+                      <span class="price-save">Save ₹{{ product.originalPrice - product.price }}</span>
                     }
                   </div>
                 </div>
@@ -203,53 +245,51 @@ interface ReelItem {
           </div>
 
           <div class="view-all-row">
-            <a routerLink="/menu" class="gl-btn-primary">
-              View All {{ allProducts().length }} Products
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <a routerLink="/menu" class="gl-btn-primary view-all-btn">
+              <span>View All {{ allProducts().length }} Products</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
           </div>
-        </div>
-      </section>
-
-
-      <!-- 7. WHY CHOOSE GIFTAURA -->
+            <!-- 7. WHY CHOOSE GIFTAURA -->
       <section class="gl-section why-choose-section" id="why-choose">
         <div class="container">
-          <div class="gl-section-header left-aligned">
-            <h2 class="gl-section-title">Why Choose GiftAura?</h2>
+          <div class="gl-section-header">
+            <span class="gl-section-pill gl-badge-pill">✦ THE GIFTAURA ADVANTAGE</span>
+            <h2 class="gl-section-title">Why Leading Brands Choose GiftAura</h2>
+            <p class="gl-section-subtitle">From startup welcome kits to 5,000+ corporate uniform orders, we deliver uncompromised quality.</p>
           </div>
 
           <div class="why-grid">
             <div class="why-card">
               <div class="why-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </div>
-              <h3 class="why-card-title">Premium Quality</h3>
-              <p class="why-card-desc">Top-notch materials & print quality.</p>
+              <h3 class="why-card-title">Executive Grade Quality</h3>
+              <p class="why-card-desc">High-density 240+ GSM cotton fabrics, stainless steel flasks &amp; precision German laser branding.</p>
             </div>
             <div class="why-card">
               <div class="why-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
               </div>
-              <h3 class="why-card-title">Custom Printing</h3>
-              <p class="why-card-desc">Your logo, your design, our expertise.</p>
+              <h3 class="why-card-title">In-House Customization</h3>
+              <p class="why-card-desc">Laser engraving, multi-color UV printing, digital embroidery &amp; custom debossing directly at our facility.</p>
             </div>
             <div class="why-card">
               <div class="why-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
               </div>
-              <h3 class="why-card-title">Bulk Discounts</h3>
-              <p class="why-card-desc">Best prices for large orders.</p>
+              <h3 class="why-card-title">Direct Factory Pricing</h3>
+              <p class="why-card-desc">No middle-men markup. Get tiered corporate discounts, GST tax invoicing &amp; flexible payment terms.</p>
             </div>
             <div class="why-card">
               <div class="why-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
               </div>
-              <h3 class="why-card-title">Fast & Reliable Delivery</h3>
-              <p class="why-card-desc">On-time delivery across India.</p>
+              <h3 class="why-card-title">Pan-India Express Dispatch</h3>
+              <p class="why-card-desc">Reliable courier network delivering to 19,000+ pin codes with live consignment tracking.</p>
             </div>
           </div>
         </div>
@@ -258,18 +298,21 @@ interface ReelItem {
       <!-- 8. REVIEWS & TESTIMONIALS -->
       <section class="gl-section reviews-section">
         <div class="container">
-          <div class="gl-section-header left-aligned">
-            <h2 class="gl-section-title">What Our Customers Say</h2>
-            <p class="gl-section-subtitle">Trusted by 10,000+ happy customers</p>
+          <div class="gl-section-header">
+            <span class="gl-section-pill gl-badge-pill">✦ CORPORATE CLIENT REVIEWS</span>
+            <h2 class="gl-section-title">What Our Clients Say</h2>
+            <p class="gl-section-subtitle">Trusted by 500+ Indian enterprises, coaching hubs &amp; high-growth startups</p>
           </div>
 
           <div class="reviews-wrapper">
-            <button class="review-nav prev" aria-label="Previous Review">❮</button>
-            
             <div class="reviews-grid">
               @for (rev of customerReviews; track rev.name) {
                 <div class="review-card">
-                  <div class="rev-stars">★★★★★</div>
+                  <div class="rev-card-header">
+                    <div class="rev-stars">★★★★★</div>
+                    <span class="rev-verified-pill">✔ Verified Order</span>
+                  </div>
+                  <h4 class="rev-card-title">{{ rev.title }}</h4>
                   <p class="rev-body">"{{ rev.comment }}"</p>
                   <div class="rev-author-row">
                     <div class="rev-avatar">{{ rev.name[0] }}</div>
@@ -281,13 +324,6 @@ interface ReelItem {
                 </div>
               }
             </div>
-
-            <button class="review-nav next" aria-label="Next Review">❯</button>
-          </div>
-          <div class="review-dots">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
           </div>
         </div>
       </section>
@@ -372,26 +408,25 @@ interface ReelItem {
       position: relative;
       overflow: hidden;
       width: 100%;
-      height: clamp(480px, 78vh, 700px);
-      background: #111111;
+      height: clamp(500px, 80vh, 720px);
+      background: #0f1015;
       max-width: var(--container-max);
-      margin: 20px auto;
+      margin: 20px auto 16px;
       border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 
       @media (max-width: 768px) {
-        margin: 16px;
+        margin: 12px;
         border-radius: var(--radius-lg);
-        height: 45vh;
-        min-height: 400px; 
-        width: calc(100% - 32px);
+        height: 520px;
+        width: calc(100% - 24px);
       }
     }
 
     .hero-slider-track {
       display: flex;
       height: 100%;
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform;
     }
 
@@ -408,10 +443,16 @@ interface ReelItem {
       height: 100%;
       object-fit: cover;
       object-position: center;
-      
+      transform: scale(1.02);
+      transition: transform 6s ease-out;
+
       @media (max-width: 768px) {
-        object-position: top center; /* Helps show the main part of image on mobile */
+        object-position: 70% center;
       }
+    }
+
+    .hero-slide:hover .hero-bg-img {
+      transform: scale(1.06);
     }
 
     .hero-overlay {
@@ -419,10 +460,20 @@ interface ReelItem {
       inset: 0;
       background: linear-gradient(
         90deg,
-        rgba(0, 0, 0, 0.75) 0%,
-        rgba(0, 0, 0, 0.45) 50%,
-        rgba(0, 0, 0, 0.2) 100%
+        rgba(12, 14, 20, 0.92) 0%,
+        rgba(12, 14, 20, 0.75) 45%,
+        rgba(12, 14, 20, 0.35) 75%,
+        rgba(12, 14, 20, 0.2) 100%
       );
+
+      @media (max-width: 768px) {
+        background: linear-gradient(
+          180deg,
+          rgba(12, 14, 20, 0.3) 0%,
+          rgba(12, 14, 20, 0.85) 50%,
+          rgba(12, 14, 20, 0.98) 100%
+        );
+      }
     }
 
     .hero-content-container {
@@ -430,54 +481,80 @@ interface ReelItem {
       inset: 0;
       display: flex;
       align-items: center;
+      padding: 0 40px;
+
+      @media (max-width: 768px) {
+        padding: 30px 18px 48px;
+        align-items: center;
+      }
     }
 
     .hero-text-block {
-      max-width: 650px;
+      max-width: 640px;
       color: #ffffff;
-      padding: 20px 0;
-      
+      padding: 24px 0;
+      z-index: 2;
+
       @media (max-width: 768px) {
-        padding: 24px 0; /* Reduced extra padding to fit in smaller height */
+        padding: 0;
       }
     }
 
     .hero-badge-pill {
-      display: inline-block;
-      background: #a6893b;
-      color: #ffffff;
-      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+      font-size: 11.5px;
       font-weight: 800;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       padding: 6px 14px;
       border-radius: var(--radius-full);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(8px);
+
+      @media (max-width: 768px) {
+        padding: 4px 10px;
+        font-size: 10px;
+        margin-bottom: 12px;
+      }
+
+      .badge-sparkle {
+        color: #f59e0b;
+        font-size: 12px;
+      }
     }
 
     .hero-main-title {
-      font-size: clamp(28px, 4.5vw, 54px);
-      font-weight: 900;
+      font-size: clamp(30px, 4.2vw, 52px);
+      font-weight: 800;
       line-height: 1.15;
       color: #ffffff;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.025em;
       margin-bottom: 16px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 
       @media (max-width: 768px) {
-        font-size: 24px;
-        margin-bottom: 10px;
+        font-size: 22px;
+        line-height: 1.25;
+        margin-bottom: 8px;
       }
     }
 
     .hero-subtext {
-      font-size: clamp(14px, 1.8vw, 17px);
-      color: #e5e5e5;
+      font-size: clamp(14px, 1.6vw, 17px);
+      color: #e2e8f0;
       line-height: 1.6;
       margin-bottom: 28px;
+      max-width: 560px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 
       @media (max-width: 768px) {
-        font-size: 13px;
-        margin-bottom: 18px;
+        font-size: 12px;
+        margin-bottom: 16px;
         line-height: 1.4;
       }
     }
@@ -488,33 +565,99 @@ interface ReelItem {
       flex-wrap: wrap;
 
       @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px; /* tighter spacing on mobile to save vertical space */
+        flex-direction: row;
+        gap: 8px;
+
+        .hero-btn-main, .hero-btn-sub {
+          padding: 11px 18px;
+          font-size: 13px;
+        }
       }
 
       .hero-btn-main {
-        background: var(--color-accent);
+        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
         color: #111111;
         font-weight: 700;
+        font-size: 15px;
         border: none;
-        padding: 14px 28px;
+        padding: 14px 30px;
         border-radius: var(--radius-full);
-        &:hover { background: var(--color-accent-hover); }
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 28px rgba(245, 158, 11, 0.5);
+          background: linear-gradient(135deg, #f0c75e 0%, #fbbf24 100%);
+        }
       }
 
       .hero-btn-sub {
-        border-color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
         color: #ffffff;
+        font-weight: 600;
+        font-size: 15px;
         padding: 14px 28px;
         border-radius: var(--radius-full);
-        &:hover { background: #ffffff; color: #111111; }
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #ffffff;
+          color: #111111;
+          border-color: #ffffff;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+        }
       }
+    }
+
+    .hero-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(17, 19, 28, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.25s ease;
+      opacity: 0;
+
+      &.prev { left: 24px; }
+      &.next { right: 24px; }
+
+      &:hover {
+        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+        color: #111111;
+        border-color: #d4af37;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+      }
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+
+    .gl-hero-section:hover .hero-nav-btn {
+      opacity: 1;
     }
 
     .hero-indicators {
       position: absolute;
-      bottom: 24px;
+      bottom: 22px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -525,20 +668,150 @@ interface ReelItem {
         width: 32px;
         height: 4px;
         border-radius: 2px;
-        background: rgba(255, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.35);
+        border: none;
+        cursor: pointer;
+        padding: 0;
         transition: all 0.3s;
 
         &.active {
-          background: #ffffff;
-          width: 48px;
+          background: #f59e0b;
+          width: 52px;
+          box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
         }
       }
     }
 
-    /* ── 2. INSIDE GRAPHIC LINE (Reels) ── */
+    /* ── TRUST BAR ── */
+    .hero-trust-bar {
+      max-width: var(--container-max);
+      margin: 0 auto 36px;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+      border: 1px solid #ebe7df;
+      padding: 18px 28px;
+
+      @media (max-width: 768px) {
+        margin: -2px 10px 22px;
+        padding: 10px;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    .trust-bar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0;
+
+      @media (max-width: 992px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      @media (max-width: 768px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+
+      @media (max-width: 768px) {
+        background: #fbf9f4;
+        border: 1px solid #ede8dc;
+        border-radius: 12px;
+        padding: 9px 8px;
+        gap: 8px;
+      }
+
+      .trust-icon {
+        font-size: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #fbf9f4;
+        border: 1px solid #eee8db;
+        flex-shrink: 0;
+
+        @media (max-width: 768px) {
+          width: 32px;
+          height: 32px;
+          font-size: 15px;
+          border-radius: 8px;
+          background: #ffffff;
+          border: 1px solid #e7e2d5;
+        }
+      }
+
+      .trust-text {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        strong {
+          font-size: 14px;
+          font-weight: 700;
+          color: #1a1a1a;
+          line-height: 1.25;
+
+          @media (max-width: 768px) {
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #11141c;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
+        span {
+          font-size: 12px;
+          color: #71717a;
+          margin-top: 2px;
+
+          @media (max-width: 768px) {
+            font-size: 9.5px;
+            color: #78716c;
+            line-height: 1.2;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .trust-divider {
+      width: 1px;
+      height: 38px;
+      background: #eee8db;
+
+      @media (max-width: 992px) {
+        display: none;
+      }
+    }
+
+    /* ── 2. INSIDE GIFTAURA (Reels) ── */
     .inside-gl-section {
-      background: #faf8f5;
-      border-bottom: 1px solid var(--color-border);
+      background: #fbfaf8;
+      border-top: 1px solid #eee8db;
+      border-bottom: 1px solid #eee8db;
+      padding: 50px 0;
     }
 
     .reels-grid {
@@ -548,7 +821,7 @@ interface ReelItem {
       scroll-snap-type: x mandatory;
       padding-bottom: 16px;
       scrollbar-width: none;
-      
+
       &::-webkit-scrollbar {
         display: none;
       }
@@ -567,26 +840,34 @@ interface ReelItem {
     }
 
     .reel-card {
-      flex: 0 0 65%; /* Shows 1 full card and a part of the next on mobile */
+      flex: 0 0 72%;
       scroll-snap-align: start;
-      background: #ffffff;
-      border-radius: 12px;
+      background: #0f1118;
+      border-radius: 18px;
       overflow: hidden;
-      border: 1px solid var(--color-border);
+      border: 1px solid #ebe6dc;
       cursor: pointer;
-      transition: all 0.3s ease;
+      position: relative;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 
       @media (min-width: 640px) {
-        flex: auto; /* Reset flex for grid on desktop */
+        flex: auto;
       }
 
       &:hover {
-        transform: translateY(-6px);
-        box-shadow: var(--shadow-lg);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 16px 36px rgba(245, 158, 11, 0.15);
+        border-color: #d4af37;
 
         .play-circle {
           transform: scale(1.15);
-          background: #25D366;
+          background: #ffffff;
+          box-shadow: 0 0 24px rgba(245, 158, 11, 0.6);
+        }
+
+        .reel-img {
+          transform: scale(1.08);
         }
       }
     }
@@ -594,84 +875,126 @@ interface ReelItem {
     .reel-thumb-frame {
       position: relative;
       width: 100%;
-      aspect-ratio: 4 / 5; /* Changed from 9/16 to make it less tall (shorter) */
-      background: #222;
+      aspect-ratio: 9 / 14;
+      background: #11141c;
       overflow: hidden;
-
-      @media (max-width: 768px) {
-        aspect-ratio: 1 / 1; /* Makes it completely square, reducing height further on mobile */
-      }
 
       .reel-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.4s ease;
+        transition: transform 0.5s ease;
       }
+    }
 
-      &:hover .reel-img {
-        transform: scale(1.05);
+    .reel-top-bar {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 4;
+
+      .reel-live-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(15, 17, 24, 0.7);
+        backdrop-filter: blur(8px);
+        color: #ffffff;
+        font-size: 10.5px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+
+        .live-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #ef4444;
+          box-shadow: 0 0 8px #ef4444;
+          animation: pulse 1.8s infinite;
+        }
       }
     }
 
     .reel-play-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.18);
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 3;
     }
 
     .play-circle {
-      width: 48px;
-      height: 48px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.25s ease;
-      padding-left: 3px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      padding-left: 2px;
     }
 
-    .reel-tag-badge {
+    .reel-bottom-overlay {
       position: absolute;
-      bottom: 10px;
-      left: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 4px;
-      backdrop-filter: blur(2px);
-    }
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 14px 14px;
+      background: linear-gradient(180deg, transparent 0%, rgba(10, 12, 18, 0.95) 100%);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
 
-    .reel-meta {
-      padding: 12px;
+      .reel-tag-badge {
+        font-size: 11px;
+        font-weight: 700;
+        color: #fbbf24;
+      }
 
       .reel-title {
-        font-size: 13.5px;
+        font-size: 14px;
         font-weight: 700;
-        color: #111111;
-        margin-bottom: 4px;
+        color: #ffffff;
+        margin: 0;
+        line-height: 1.3;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
-      .reel-action {
+      .reel-action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
         font-size: 12px;
         font-weight: 700;
-        color: var(--color-accent);
+        color: #f59e0b;
+        margin-top: 2px;
+        transition: transform 0.2s ease;
+
+        svg {
+          transition: transform 0.2s ease;
+        }
       }
+    }
+
+    .reel-card:hover .reel-action-btn svg {
+      transform: translateX(4px);
     }
 
     /* ── 3. TRENDING PRODUCTS ── */
     .trending-section {
       background: var(--color-bg-canvas);
+      padding: 60px 0;
     }
 
     .gl-filter-tabs {
@@ -679,13 +1002,14 @@ interface ReelItem {
       gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
 
       @media (max-width: 768px) {
         flex-wrap: nowrap;
         justify-content: flex-start;
         overflow-x: auto;
-        padding-bottom: 8px;
+        padding: 0 16px 8px;
+        margin: 0 -16px 28px;
         scrollbar-width: none;
         &::-webkit-scrollbar {
           display: none;
@@ -696,23 +1020,29 @@ interface ReelItem {
         flex-shrink: 0;
         white-space: nowrap;
         background: #ffffff;
-        color: #333333;
-        border: 1px solid var(--color-border);
-        border-radius: 999px;
-        padding: 9px 20px;
+        color: #4b5563;
+        border: 1px solid #e5e0d4;
+        border-radius: var(--radius-full);
+        padding: 10px 22px;
         font-size: 13.5px;
         font-weight: 600;
-        transition: all 0.2s ease;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
         &:hover {
-          border-color: #2563eb;
-          color: #2563eb;
+          border-color: #d4af37;
+          color: #111111;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         &.active {
-          background: #2563eb;
-          color: #ffffff;
-          border-color: #2563eb;
+          background: #11141c;
+          color: #fbbf24;
+          border-color: #11141c;
+          font-weight: 700;
+          box-shadow: 0 6px 18px rgba(17, 20, 28, 0.2);
+          transform: translateY(-2px);
         }
       }
     }
@@ -720,7 +1050,7 @@ interface ReelItem {
     .gl-products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 16px;
 
       @media (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
@@ -735,21 +1065,26 @@ interface ReelItem {
 
     .gl-product-card {
       background: #ffffff;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      border: 1px solid #ebe5d8;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
       &:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
-        border-color: #d6cfc5;
+        transform: translateY(-6px);
+        box-shadow: 0 16px 36px rgba(27, 33, 59, 0.09);
+        border-color: #d8cebd;
 
         .pcard-img.hover-img {
           opacity: 1;
+        }
+
+        .pcard-img.main-img {
+          transform: scale(1.06);
         }
 
         .pcard-quick-actions {
@@ -759,32 +1094,47 @@ interface ReelItem {
       }
     }
 
-    .badge-bestseller {
+    .pcard-badge-row {
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       z-index: 5;
-      background: #111111;
-      color: #ffffff;
+      pointer-events: none;
+    }
+
+    .badge-bestseller {
+      background: #11141c;
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
       font-size: 10px;
       font-weight: 800;
       padding: 4px 8px;
-      border-radius: 4px;
+      border-radius: 6px;
       letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+
+      .badge-icon {
+        color: #f59e0b;
+        font-size: 11px;
+      }
     }
 
     .badge-discount {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      z-index: 5;
-      background: #2563eb;
-      color: #ffffff;
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
       font-size: 10px;
       font-weight: 800;
       padding: 4px 8px;
-      border-radius: 4px;
+      border-radius: 6px;
       letter-spacing: 0.5px;
+      margin-left: auto;
     }
 
     .pcard-media-box {
@@ -800,7 +1150,7 @@ interface ReelItem {
       position: relative;
       width: 100%;
       aspect-ratio: 1 / 1;
-      background: #f7f5f2;
+      background: #fcfbf9;
       overflow: hidden;
 
       .pcard-img {
@@ -809,7 +1159,7 @@ interface ReelItem {
         object-fit: cover;
         position: absolute;
         inset: 0;
-        transition: opacity 0.35s ease, transform 0.4s ease;
+        transition: opacity 0.35s ease, transform 0.5s ease;
 
         &.hover-img {
           opacity: 0;
@@ -819,77 +1169,114 @@ interface ReelItem {
 
     .pcard-quick-actions {
       position: absolute;
-      bottom: 12px; /* Positioned at the very bottom of the image */
-      left: 12px;
-      right: 12px;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
       display: flex;
+      gap: 6px;
       opacity: 0;
-      transform: translateY(12px);
-      transition: all 0.3s ease;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 6;
 
       @media (max-width: 768px) {
-        opacity: 1; /* Always visible on mobile since there is no hover */
+        opacity: 1;
         transform: translateY(0);
       }
 
+      .quick-view-action-btn {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        color: #1a1a1a;
+        border: 1px solid #e5e0d4;
+        border-radius: var(--radius-full);
+        padding: 8px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #11141c;
+          color: #ffffff;
+          border-color: #11141c;
+        }
+
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
+
       .quick-add-btn {
-        width: 100%;
-        background: var(--color-accent);
+        flex: 1.3;
+        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
         color: #111111;
         border: none;
         border-radius: var(--radius-full);
-        padding: 10px 16px;
-        font-size: 13px;
+        padding: 9px 12px;
+        font-size: 12px;
         font-weight: 800;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 6px;
+        cursor: pointer;
         transition: all 0.2s ease;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 
         &:hover {
-          background: #111111;
-          color: #ffffff;
+          background: linear-gradient(135deg, #e5b958 0%, #fbbf24 100%);
           transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
+        }
+
+        @media (max-width: 768px) {
+          flex: 1;
+          padding: 8px 10px;
+          font-size: 11px;
         }
       }
     }
 
     .pcard-body {
-      padding: 14px 16px 16px;
+      padding: 14px 16px 18px;
       display: flex;
       flex-direction: column;
       flex: 1;
 
       @media (max-width: 767px) {
-        padding: 12px 10px 14px;
+        padding: 10px 10px 14px;
       }
 
       .pcard-rating {
         display: flex;
         align-items: center;
-        gap: 3px;
+        gap: 4px;
         font-size: 12px;
-        color: #666;
+        color: #6b7280;
         margin-bottom: 6px;
 
         .star { color: #f59e0b; font-size: 13px; }
         .rating-val { font-weight: 700; color: #111; }
+        .rating-count { color: #9ca3af; font-size: 11.5px; }
       }
 
       .pcard-title {
-        font-size: 14px;
+        font-size: 14.5px;
         font-weight: 700;
-        color: #111111;
-        line-height: 1.4;
+        color: #18191f;
+        line-height: 1.35;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        min-height: 38px;
-        margin-bottom: 10px;
+        min-height: 40px;
+        margin-bottom: 12px;
         transition: color 0.2s;
 
         @media (max-width: 767px) {
@@ -898,42 +1285,52 @@ interface ReelItem {
           margin-bottom: 8px;
         }
 
-        &:hover { color: var(--color-accent); }
+        &:hover { color: #d4af37; }
       }
 
       .pcard-price-row {
         margin-top: auto;
         display: flex;
         align-items: baseline;
-        gap: 6px;
-        flex-wrap: nowrap;
-        white-space: nowrap;
+        gap: 8px;
+        flex-wrap: wrap;
 
         @media (max-width: 767px) {
-          gap: 4px;
+          gap: 5px;
         }
 
         .price-current {
-          font-size: 14px;
+          font-size: 17px;
           font-weight: 800;
-          color: #111111;
-          white-space: nowrap;
-          flex-shrink: 0;
+          color: #11141c;
+          letter-spacing: -0.02em;
 
           @media (max-width: 767px) {
-            font-size: 13.5px;
+            font-size: 15px;
           }
         }
 
         .price-original {
-          font-size: 11.5px;
-          color: #999999;
+          font-size: 12.5px;
+          color: #9ca3af;
           text-decoration: line-through;
-          white-space: nowrap;
-          flex-shrink: 0;
 
           @media (max-width: 767px) {
-            font-size: 11px;
+            font-size: 11.5px;
+          }
+        }
+
+        .price-save {
+          font-size: 10.5px;
+          font-weight: 700;
+          color: #15803d;
+          background: #ecfdf5;
+          padding: 2px 6px;
+          border-radius: 4px;
+          margin-left: auto;
+
+          @media (max-width: 767px) {
+            display: none;
           }
         }
       }
@@ -942,6 +1339,29 @@ interface ReelItem {
     .view-all-row {
       text-align: center;
       margin-top: 48px;
+
+      .view-all-btn {
+        background: linear-gradient(135deg, #11141c 0%, #1e2230 100%);
+        color: #ffffff;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        padding: 15px 36px;
+        border-radius: var(--radius-full);
+        font-size: 15px;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+
+        &:hover {
+          background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+          color: #111111;
+          border-color: #d4af37;
+          transform: translateY(-2px);
+          box-shadow: 0 10px 28px rgba(245, 158, 11, 0.35);
+        }
+      }
     }
 
     /* ── 4. FEATURE CARDS GRID ── */
@@ -1051,170 +1471,193 @@ interface ReelItem {
     /* ── 7. WHY CHOOSE US ── */
     .why-choose-section {
       background: #ffffff;
-      padding: 40px 0;
+      padding: 60px 0;
     }
 
     .why-grid {
-      display: flex;
-      gap: 16px;
-      margin-top: 24px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 12px;
-      scrollbar-width: none;
-      &::-webkit-scrollbar { display: none; }
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 36px;
 
       @media (min-width: 640px) {
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
-        overflow-x: visible;
       }
 
       @media (min-width: 1024px) {
         grid-template-columns: repeat(4, 1fr);
-        gap: 0;
+        gap: 24px;
       }
     }
 
     .why-card {
       text-align: center;
-      padding: 24px 16px;
+      padding: 36px 24px;
       position: relative;
       background: #ffffff;
-      border: 1px solid var(--color-border);
-      border-radius: 12px;
-      flex: 0 0 45%;
-      scroll-snap-align: start;
+      border: 1px solid #ebe5d8;
+      border-radius: 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
-      @media (min-width: 640px) {
-        flex: auto;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: transparent;
+        transition: background 0.3s ease;
       }
 
-      @media (min-width: 1024px) {
-        border: none;
-        border-radius: 0;
-        border-right: 1px solid #eaeaea;
-        padding: 0 20px;
-        background: transparent;
+      &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 36px rgba(27, 33, 59, 0.09);
+        border-color: #d4af37;
 
-        &:last-child {
-          border-right: none;
+        &::before {
+          background: linear-gradient(90deg, #d4af37, #f59e0b);
+        }
+
+        .why-icon-box {
+          transform: scale(1.1);
+          background: #fde68a;
         }
       }
 
       .why-icon-box {
-        margin-bottom: 16px;
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        background: #fef3c7;
+        border: 1px solid #fde68a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        transition: all 0.3s ease;
       }
 
       .why-card-title {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 800;
-        color: #111111;
-        margin-bottom: 8px;
-        
-        @media (min-width: 1024px) {
-          font-size: 16px;
-          margin-bottom: 10px;
-        }
+        color: #11141c;
+        margin-bottom: 10px;
+        letter-spacing: -0.01em;
       }
 
       .why-card-desc {
-        font-size: 12px;
-        color: #666666;
-        line-height: 1.4;
-        
-        @media (min-width: 1024px) {
-          font-size: 13.5px;
-          line-height: 1.55;
-        }
+        font-size: 13.5px;
+        color: #52525b;
+        line-height: 1.6;
       }
     }
 
     /* ── 8. REVIEWS ── */
-    .reviews-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    .reviews-section {
+      background: #fbfaf8;
+      border-top: 1px solid #eee8db;
+      padding: 60px 0;
     }
 
-    .review-nav {
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: #111111;
-      cursor: pointer;
-      display: none; /* hidden on small screens */
-
-      @media (min-width: 1024px) {
-        display: block;
-      }
+    .reviews-wrapper {
+      position: relative;
+      margin-top: 36px;
     }
 
     .reviews-grid {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 24px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 20px;
-      scrollbar-width: none;
-      &::-webkit-scrollbar { display: none; }
 
       @media (min-width: 768px) {
-        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (min-width: 1024px) {
         grid-template-columns: repeat(3, 1fr);
-        overflow-x: visible;
-        padding-bottom: 0;
       }
     }
 
     .review-card {
       background: #ffffff;
-      border: 1px solid var(--color-border);
-      border-radius: 12px;
-      padding: 30px;
+      border: 1px solid #ebe5d8;
+      border-radius: 18px;
+      padding: 32px 28px;
       display: flex;
       flex-direction: column;
-      flex: 0 0 85%;
-      scroll-snap-align: center;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
-      @media (min-width: 768px) {
-        flex: auto;
+      &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+        border-color: #d4af37;
+      }
+
+      .rev-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
       }
 
       .rev-stars {
         color: #f59e0b;
-        font-size: 16px;
-        margin-bottom: 16px;
+        font-size: 15px;
         letter-spacing: 2px;
       }
 
+      .rev-verified-pill {
+        display: inline-flex;
+        align-items: center;
+        background: #ecfdf5;
+        color: #15803d;
+        border: 1px solid #a7f3d0;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: var(--radius-full);
+      }
+
+      .rev-card-title {
+        font-size: 15.5px;
+        font-weight: 800;
+        color: #11141c;
+        margin-bottom: 8px;
+        line-height: 1.35;
+      }
+
       .rev-body {
-        font-size: 14px;
-        color: #444444;
-        line-height: 1.6;
+        font-size: 13.5px;
+        color: #52525b;
+        line-height: 1.65;
         margin-bottom: 24px;
         flex: 1;
-        font-style: italic;
       }
 
       .rev-author-row {
         display: flex;
         align-items: center;
         gap: 14px;
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid #f4f1ea;
 
         .rev-avatar {
-          width: 40px;
-          height: 40px;
+          width: 44px;
+          height: 44px;
           border-radius: 50%;
-          background: #e2e8f0;
-          color: #475569;
-          font-weight: 700;
-          font-size: 14px;
+          background: linear-gradient(135deg, #11141c 0%, #2a2c36 100%);
+          color: #fbbf24;
+          font-weight: 800;
+          font-size: 16px;
           display: flex;
           align-items: center;
           justify-content: center;
-          object-fit: cover;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .rev-details {
@@ -1222,33 +1665,16 @@ interface ReelItem {
           flex-direction: column;
 
           .rev-name {
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 700;
-            color: #111111;
+            color: #11141c;
           }
 
           .rev-company {
             font-size: 12px;
-            color: #64748b;
+            color: #71717a;
+            margin-top: 2px;
           }
-        }
-      }
-    }
-
-    .review-dots {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 24px;
-
-      .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #cbd5e1;
-        
-        &.active {
-          background: #1e293b;
         }
       }
     }
@@ -1609,7 +2035,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       btnText: 'Shop T-Shirts Collection',
       btnLink: '/menu',
       queryParams: { cat: 't-shirts' },
-      image: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/customized-polo-tshirts-14-colors-logo-printing_7013747c-8aee-474d-a925-ca2c44ea933f.webp?v=1780224409&width=3840'
+      image: '/assets/images/hero/hero-polo-tshirts.jpg'
     },
     {
       id: 2,
@@ -1619,7 +2045,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       btnText: 'Explore Welcome Kits',
       btnLink: '/menu',
       queryParams: { cat: 'welcome-kits' },
-      image: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/1_da9619cd-aebf-41cf-8b30-dfac4195f748.webp?v=1778759164&width=3840'
+      image: '/assets/images/hero/hero-welcome-kits.jpg'
     },
     {
       id: 3,
@@ -1629,43 +2055,43 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       btnText: 'Shop Pens & Badges',
       btnLink: '/menu',
       queryParams: { cat: 'corporate-gifts' },
-      image: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/5_62ef39f6-4e85-4dc0-8bb9-b2a4561ed40a.webp?v=1778759946&width=3840'
+      image: '/assets/images/hero/hero-pens-badges.jpg'
     }
   ];
 
   reelsList: ReelItem[] = [
     {
       id: 'r1',
-      title: 'Packaging & Dispatch',
-      name: '📦 Order Processing',
+      title: 'Fast Dispatch & Packing',
+      name: '📦 Express Dispatches',
       videoUrl: 'https://cdn.shopify.com/videos/c/o/v/cd854d3a64ae4a24892af26e1fe10166.mp4',
       thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-db641504-ad47-495a-b70a-1dc91e730c6d.jpg?v=1780236830'
     },
     {
       id: 'r2',
-      title: 'Laser Engraving & Print',
-      name: '🏭 Production in Progress',
+      title: 'Precision Laser Engraving',
+      name: '⚡ Laser Branding Live',
       videoUrl: 'https://cdn.shopify.com/videos/c/o/v/b7d6c073471d49edbdde6438f98f01f9.mp4',
       thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-602e0161-66c4-43a6-9f19-dcf24ddaf74b.jpg?v=1780236833'
     },
     {
       id: 'r3',
-      title: 'QC & Safe Shipping',
-      name: '🚚 Quality Check & Dispatch',
+      title: 'QC & Secure Transit',
+      name: '🛡️ 100% Quality Check',
       videoUrl: 'https://cdn.shopify.com/videos/c/o/v/220b72f13d564edb9aa0c318f0830370.mp4',
       thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-af178473-47d6-4b0c-b1a9-58ec4ec8a4e9.jpg?v=1780236825'
     },
     {
       id: 'r4',
       title: 'Executive Pen Sets',
-      name: '🎥 Product Showcase',
+      name: '✨ Luxury Presentation',
       videoUrl: 'https://cdn.shopify.com/videos/c/o/v/721c337d37af4aafa74bc573eb58051a.mp4',
       thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-c7465a99-1bf5-47a6-8ff9-5fc2d4a2fdde.jpg?v=1780235538'
     },
     {
       id: 'r5',
       title: 'In-House Machinery',
-      name: '🏢 Inside Our Factory',
+      name: '🏭 Factory Operations',
       videoUrl: 'https://cdn.shopify.com/videos/c/o/v/922c0e5e7e2d4a8da1d151f3b87e2f38.mp4',
       thumbnail: 'https://cdn.shopify.com/s/files/1/0681/7257/8864/files/preview_images/moast-video-first-frame-26e7721a-21db-4763-a88e-20ceddeb9d6f.jpg?v=1780236800'
     }
@@ -1701,7 +2127,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     return list.filter(p => p.category === cat);
   });
 
-  private pendingCartItem = signal<{product: Product, qty: number} | null>(null);
+  private pendingCartItem = signal<{ product: Product, qty: number } | null>(null);
 
   private document = inject(DOCUMENT);
 
@@ -1756,6 +2182,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.startHeroAutoplay();
   }
 
+  nextHeroSlide() {
+    this.currentHeroIndex.update(idx => (idx + 1) % this.heroSlides.length);
+    this.stopHeroAutoplay();
+    this.startHeroAutoplay();
+  }
+
+  prevHeroSlide() {
+    this.currentHeroIndex.update(idx => (idx - 1 + this.heroSlides.length) % this.heroSlides.length);
+    this.stopHeroAutoplay();
+    this.startHeroAutoplay();
+  }
+
   getDiscountPercent(price: number, origPrice?: number): number {
     if (!origPrice || origPrice <= price) return 0;
     return Math.round(((origPrice - price) / origPrice) * 100);
@@ -1763,7 +2201,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addToCart(product: Product) {
     if (!this.authService.isLoggedIn()) {
-      this.pendingCartItem.set({product, qty: 1});
+      this.pendingCartItem.set({ product, qty: 1 });
       this.cartService.openDrawer();
       return;
     }
