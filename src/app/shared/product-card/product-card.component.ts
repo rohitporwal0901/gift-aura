@@ -57,9 +57,9 @@ import { CartService } from '../../core/services/cart.service';
         </a>
 
         <div class="pcard-pricing">
-          <span class="current-price">Rs. {{ product.price }}.00</span>
+          <span class="current-price">Rs. {{ product.price }}</span>
           @if (product.originalPrice && product.originalPrice > product.price) {
-            <span class="original-price">Rs. {{ product.originalPrice }}.00</span>
+            <span class="original-price">Rs. {{ product.originalPrice }}</span>
           }
         </div>
       </div>
@@ -155,6 +155,10 @@ import { CartService } from '../../core/services/cart.service';
       display: flex;
       flex-direction: column;
       flex: 1;
+
+      @media (max-width: 767px) {
+        padding: 12px 10px 14px;
+      }
     }
 
     .pcard-meta {
@@ -200,6 +204,12 @@ import { CartService } from '../../core/services/cart.service';
       min-height: 38px;
       transition: color 0.2s;
 
+      @media (max-width: 767px) {
+        font-size: 13px;
+        min-height: 36px;
+        margin-bottom: 8px;
+      }
+
       &:hover {
         color: var(--color-accent);
       }
@@ -209,14 +219,24 @@ import { CartService } from '../../core/services/cart.service';
       display: flex;
       align-items: baseline;
       gap: 6px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      white-space: nowrap;
       margin-bottom: 12px;
+
+      @media (max-width: 767px) {
+        gap: 4px;
+      }
 
       .current-price {
         font-size: 14px;
         font-weight: 800;
         color: #111111;
         white-space: nowrap;
+        flex-shrink: 0;
+
+        @media (max-width: 767px) {
+          font-size: 13.5px;
+        }
       }
 
       .original-price {
@@ -224,6 +244,11 @@ import { CartService } from '../../core/services/cart.service';
         color: #999999;
         text-decoration: line-through;
         white-space: nowrap;
+        flex-shrink: 0;
+
+        @media (max-width: 767px) {
+          font-size: 11px;
+        }
       }
     }
     .pcard-quick-actions {

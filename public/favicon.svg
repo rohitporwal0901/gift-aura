@@ -1,41 +1,110 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <!-- Deep Emerald Crest Gradient -->
-    <linearGradient id="fcCrestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1B5E20"/>
-      <stop offset="50%" stop-color="#144A1B"/>
-      <stop offset="100%" stop-color="#082811"/>
+    <!-- Deep obsidian luxury gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E2336"/>
+      <stop offset="40%" stop-color="#131622"/>
+      <stop offset="100%" stop-color="#0A0C13"/>
     </linearGradient>
 
-    <!-- Gold Border Shimmer -->
-    <linearGradient id="fcGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F9D776"/>
-      <stop offset="50%" stop-color="#D4AF37"/>
-      <stop offset="100%" stop-color="#99771A"/>
+    <!-- Rich metallic gold gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF4C2"/>
+      <stop offset="25%" stop-color="#F5CA4C"/>
+      <stop offset="65%" stop-color="#D4A017"/>
+      <stop offset="100%" stop-color="#8E6306"/>
     </linearGradient>
 
-    <!-- Soft Drop Shadow -->
-    <filter id="crestShadow" x="-10%" y="-10%" width="120%" height="125%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000" flood-opacity="0.35"/>
+    <!-- Ribbon highlight gold -->
+    <linearGradient id="goldRibbon" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8D6"/>
+      <stop offset="30%" stop-color="#F7D05A"/>
+      <stop offset="70%" stop-color="#D4A017"/>
+      <stop offset="100%" stop-color="#A3750D"/>
+    </linearGradient>
+
+    <!-- Box surface gradient -->
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2B334B"/>
+      <stop offset="50%" stop-color="#1B2030"/>
+      <stop offset="100%" stop-color="#10131E"/>
+    </linearGradient>
+
+    <!-- Glowing Aura -->
+    <radialGradient id="auraGlow" cx="50%" cy="48%" r="45%">
+      <stop offset="0%" stop-color="#F7D05A" stop-opacity="0.4"/>
+      <stop offset="45%" stop-color="#D4A017" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Drop Shadow -->
+    <filter id="giftShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.6"/>
     </filter>
   </defs>
 
-  <!-- Outer Rounded Squircle / Shield -->
-  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#fcCrestGrad)" filter="url(#crestShadow)"/>
+  <!-- Squircle Base -->
+  <rect x="16" y="16" width="480" height="480" rx="118" fill="url(#bgGrad)"/>
   
-  <!-- Premium Gold Border -->
-  <rect x="3.5" y="3.5" width="57" height="57" rx="14.5" fill="none" stroke="url(#fcGoldGrad)" stroke-width="2"/>
-  
-  <!-- Inner Golden Dotted Accent Circle -->
-  <circle cx="32" cy="32" r="21" fill="none" stroke="#D4AF37" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.75"/>
+  <!-- Outer Gold Rim -->
+  <rect x="22" y="22" width="468" height="468" rx="112" fill="none" stroke="url(#goldGrad)" stroke-width="12" opacity="0.95"/>
+  <!-- Inner Stitched / Dotted Accent -->
+  <rect x="40" y="40" width="432" height="432" rx="96" fill="none" stroke="#F5CA4C" stroke-width="2.5" stroke-dasharray="9 6" opacity="0.45"/>
 
-  <!-- Golden Crown / Fruit Leaf at Top -->
-  <path d="M32 15 C34.5 11.5, 39 12, 40 14.5 C40 17.5, 36.5 19.5, 32 18" stroke="url(#fcGoldGrad)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-  <circle cx="32" cy="14.5" r="2.2" fill="#F9D776"/>
+  <!-- Aura Glow behind box -->
+  <circle cx="256" cy="265" r="175" fill="url(#auraGlow)"/>
 
-  <!-- Bold Crisp FC Monogram -->
-  <text x="32" y="41" text-anchor="middle" font-family="'Outfit', 'Playfair Display', Georgia, serif" font-weight="800" font-size="22" fill="#FFFFFF" letter-spacing="1">FC</text>
+  <!-- Gift Box Group with Shadow -->
+  <g filter="url(#giftShadow)">
+    <!-- Box Body -->
+    <rect x="156" y="242" width="200" height="155" rx="18" fill="url(#boxGrad)" stroke="url(#goldGrad)" stroke-width="3.5"/>
 
-  <!-- Small sparkling star / fruit seed at bottom -->
-  <circle cx="32" cy="47.5" r="1.5" fill="#D4AF37"/>
+    <!-- Body Vertical Ribbon -->
+    <rect x="236" y="242" width="40" height="155" fill="url(#goldRibbon)"/>
+    <line x1="242" y1="242" x2="242" y2="397" stroke="#FFFDE8" stroke-width="2" opacity="0.6"/>
+
+    <!-- Body Horizontal Ribbon -->
+    <rect x="156" y="302" width="200" height="32" fill="url(#goldRibbon)"/>
+    <line x1="156" y1="308" x2="356" y2="308" stroke="#FFFDE8" stroke-width="1.8" opacity="0.6"/>
+
+    <!-- Box Lid -->
+    <rect x="142" y="208" width="228" height="40" rx="10" fill="url(#goldRibbon)" stroke="#FFE899" stroke-width="2"/>
+    <rect x="234" y="208" width="44" height="40" fill="#A3750D" opacity="0.4"/>
+
+    <!-- Ribbon Loops (Bow) -->
+    <!-- Left Loop -->
+    <path d="M 256 208 C 210 120 135 140 170 192 C 188 214 232 208 256 208 Z" fill="url(#goldRibbon)" stroke="#8E6306" stroke-width="2.5"/>
+    <!-- Right Loop -->
+    <path d="M 256 208 C 302 120 377 140 342 192 C 324 214 280 208 256 208 Z" fill="url(#goldRibbon)" stroke="#8E6306" stroke-width="2.5"/>
+
+    <!-- Bow Inner Cutouts for 3D realism -->
+    <path d="M 246 195 C 220 148 175 160 195 186 C 208 198 234 195 246 195 Z" fill="#7A5204" opacity="0.45"/>
+    <path d="M 266 195 C 292 148 337 160 317 186 C 304 198 278 195 266 195 Z" fill="#7A5204" opacity="0.45"/>
+
+    <!-- Center Knot -->
+    <ellipse cx="256" cy="206" rx="21" ry="17" fill="url(#goldGrad)" stroke="#FFFDE8" stroke-width="2.5"/>
+    <circle cx="256" cy="206" r="8" fill="#FFF4C2"/>
+  </g>
+
+  <!-- Aura Stars / Sparkles -->
+  <!-- Primary Sparkle Top Right -->
+  <g transform="translate(392, 148)">
+    <path d="M 0 -28 Q 0 0 28 0 Q 0 0 0 28 Q 0 0 -28 0 Q 0 0 0 -28 Z" fill="url(#goldGrad)"/>
+    <circle cx="0" cy="0" r="5" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Secondary Sparkle Top Left -->
+  <g transform="translate(118, 168)">
+    <path d="M 0 -18 Q 0 0 18 0 Q 0 0 0 18 Q 0 0 -18 0 Q 0 0 0 18 Z" fill="url(#goldGrad)"/>
+    <circle cx="0" cy="0" r="3.5" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Tertiary Accent Sparkle Bottom Right -->
+  <g transform="translate(390, 365)">
+    <path d="M 0 -12 Q 0 0 12 0 Q 0 0 0 12 Q 0 0 -12 0 Q 0 0 0 -12 Z" fill="url(#goldRibbon)"/>
+    <circle cx="0" cy="0" r="2.5" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Subtle bottom sparkle -->
+  <circle cx="125" cy="350" r="3" fill="#F5CA4C" opacity="0.8"/>
 </svg>

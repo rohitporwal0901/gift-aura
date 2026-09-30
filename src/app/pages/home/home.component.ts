@@ -192,9 +192,9 @@ interface ReelItem {
                     <h3 class="pcard-title">{{ product.name }}</h3>
                   </a>
                   <div class="pcard-price-row">
-                    <span class="price-current">Rs. {{ product.price }}.00</span>
+                    <span class="price-current">Rs. {{ product.price }}</span>
                     @if (product.originalPrice && product.originalPrice > product.price) {
-                      <span class="price-original">Rs. {{ product.originalPrice }}.00</span>
+                      <span class="price-original">Rs. {{ product.originalPrice }}</span>
                     }
                   </div>
                 </div>
@@ -328,9 +328,9 @@ interface ReelItem {
                   <span class="revs">({{ quickViewProduct()?.ratingCount }} reviews)</span>
                 </div>
                 <div class="qv-price-row">
-                  <span class="qv-price">Rs. {{ quickViewProduct()?.price }}.00</span>
+                  <span class="qv-price">Rs. {{ quickViewProduct()?.price }}</span>
                   @if (quickViewProduct()?.originalPrice) {
-                    <span class="qv-orig">Rs. {{ quickViewProduct()?.originalPrice }}.00</span>
+                    <span class="qv-orig">Rs. {{ quickViewProduct()?.originalPrice }}</span>
                   }
                 </div>
                 <p class="qv-desc">{{ quickViewProduct()?.description }}</p>
@@ -720,7 +720,7 @@ interface ReelItem {
     .gl-products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 12px;
 
       @media (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
@@ -858,10 +858,14 @@ interface ReelItem {
     }
 
     .pcard-body {
-      padding: 16px;
+      padding: 14px 16px 16px;
       display: flex;
       flex-direction: column;
       flex: 1;
+
+      @media (max-width: 767px) {
+        padding: 12px 10px 14px;
+      }
 
       .pcard-rating {
         display: flex;
@@ -888,6 +892,12 @@ interface ReelItem {
         margin-bottom: 10px;
         transition: color 0.2s;
 
+        @media (max-width: 767px) {
+          font-size: 13px;
+          min-height: 36px;
+          margin-bottom: 8px;
+        }
+
         &:hover { color: var(--color-accent); }
       }
 
@@ -896,13 +906,23 @@ interface ReelItem {
         display: flex;
         align-items: baseline;
         gap: 6px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+
+        @media (max-width: 767px) {
+          gap: 4px;
+        }
 
         .price-current {
           font-size: 14px;
           font-weight: 800;
           color: #111111;
           white-space: nowrap;
+          flex-shrink: 0;
+
+          @media (max-width: 767px) {
+            font-size: 13.5px;
+          }
         }
 
         .price-original {
@@ -910,6 +930,11 @@ interface ReelItem {
           color: #999999;
           text-decoration: line-through;
           white-space: nowrap;
+          flex-shrink: 0;
+
+          @media (max-width: 767px) {
+            font-size: 11px;
+          }
         }
       }
     }

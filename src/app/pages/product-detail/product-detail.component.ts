@@ -65,9 +65,9 @@ import { Product } from '../../core/models/product.model';
 
               <!-- PRICE ROW -->
               <div class="prod-price-row">
-                <span class="price-val">Rs. {{ product()!.price }}.00</span>
+                <span class="price-val">Rs. {{ product()!.price }}</span>
                 @if (product()!.originalPrice && product()!.originalPrice! > product()!.price) {
-                  <span class="orig-val">Rs. {{ product()!.originalPrice }}.00</span>
+                  <span class="orig-val">Rs. {{ product()!.originalPrice }}</span>
                   <span class="save-chip">Save {{ getDiscount() }}%</span>
                 }
               </div>
@@ -101,7 +101,7 @@ import { Product } from '../../core/models/product.model';
 
                 <div class="btn-group">
                   <button class="gl-btn-primary add-cart-btn" (click)="addToCart()">
-                    Add to Cart • Rs. {{ computeTotal() }}.00
+                    Add to Cart • Rs. {{ computeTotal() }}
                   </button>
                   <a [href]="getWhatsAppInquiryUrl()" target="_blank" rel="noopener" class="gl-btn-outline bulk-quote-btn">
                     💬 Bulk WhatsApp Quote
