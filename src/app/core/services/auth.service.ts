@@ -22,7 +22,7 @@ import {
 } from '@angular/fire/firestore';
 import { User, AddressOption } from '../models/user.model';
 
-const STORAGE_KEY = 'fc_user';
+const STORAGE_KEY = 'user';
 
 export const DEFAULT_ADDRESS: AddressOption = {
   id: 'default_addr',
@@ -127,7 +127,7 @@ export class AuthService {
   // Firebase Auth requires minimum 6 characters for a password
   private pinToPassword(pin: string): string {
     const clean = pin.trim();
-    return `fc_${clean}`;
+    return `${clean}`;
   }
 
   openAuthModal(): void {

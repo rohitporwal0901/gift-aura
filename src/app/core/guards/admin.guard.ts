@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
 
-  const isLoggedIn = localStorage.getItem('fc_admin_logged_in') === 'true';
+  const isLoggedIn = localStorage.getItem('admin_logged_in') === 'true';
 
   if (isLoggedIn) {
     return true;

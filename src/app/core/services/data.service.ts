@@ -53,7 +53,7 @@ export class DataService {
   // ── Listeners ─────────────────────────────────────────────
 
   private listenProducts() {
-    const ref = collection(this.firestore, 'fc_products');
+    const ref = collection(this.firestore, 'products');
     const q = query(ref, orderBy('createdAt', 'desc'));
     onSnapshot(q, (snap) => {
       const data = snap.docs.map(d => ({ id: d.id, ...d.data() } as AdminProduct));
@@ -64,7 +64,7 @@ export class DataService {
   }
 
   private listenCategories() {
-    const ref = collection(this.firestore, 'fc_categories');
+    const ref = collection(this.firestore, 'categories');
     onSnapshot(ref, (snap) => {
       const data = snap.docs.map(d => ({ id: d.id, ...d.data() } as Category));
       this.categories.set(data);
@@ -74,7 +74,7 @@ export class DataService {
   }
 
   private listenOrders() {
-    const ref = collection(this.firestore, 'fc_orders');
+    const ref = collection(this.firestore, 'orders');
     onSnapshot(ref, (snap) => {
       const data = snap.docs.map(d => ({ id: d.id, ...d.data() } as AdminOrder));
       data.sort((a, b) => {
@@ -89,7 +89,7 @@ export class DataService {
   }
 
   private listenTransactions() {
-    const ref = collection(this.firestore, 'fc_transactions');
+    const ref = collection(this.firestore, 'transactions');
     onSnapshot(ref, (snap) => {
       const data = snap.docs.map(d => ({ id: d.id, ...d.data() } as Transaction));
       data.sort((a, b) => {
@@ -104,7 +104,7 @@ export class DataService {
   }
 
   private listenHomeSlides() {
-    const ref = collection(this.firestore, 'fc_home_slides');
+    const ref = collection(this.firestore, 'home_slides');
     const q = query(ref, orderBy('order', 'asc'));
     onSnapshot(q, (snap) => {
       const data = snap.docs.map(d => ({ id: d.id, ...d.data() } as HomeSlide));
@@ -115,7 +115,7 @@ export class DataService {
   }
 
   private listenComboCards() {
-    const ref = collection(this.firestore, 'fc_combo_cards');
+    const ref = collection(this.firestore, 'combo_cards');
     const q = query(ref, orderBy('order', 'asc'));
     onSnapshot(q, (snap) => {
       const data = snap.docs.map(d => ({ id: d.id, ...d.data() } as ComboCard));
@@ -126,7 +126,7 @@ export class DataService {
   }
 
   private listenOfferCard() {
-    const ref = doc(this.firestore, 'fc_settings', 'offerCard');
+    const ref = doc(this.firestore, 'settings', 'offerCard');
     onSnapshot(ref, (snap) => {
       if (snap.exists()) {
         const d = snap.data() as any;
@@ -150,34 +150,34 @@ export class DataService {
   // ── Products CRUD ──────────────────────────────────────────
 
   async addProduct(product: Omit<AdminProduct, 'id'>): Promise<void> {
-    const ref = collection(this.firestore, 'fc_products');
+    const ref = collection(this.firestore, 'products');
     await addDoc(ref, { ...product, createdAt: new Date().toISOString() });
   }
 
   async updateProduct(id: string, data: Partial<AdminProduct>): Promise<void> {
-    const ref = doc(this.firestore, 'fc_products', id);
+    const ref = doc(this.firestore, 'products', id);
     await updateDoc(ref, data as any);
   }
 
   async deleteProduct(id: string): Promise<void> {
-    const ref = doc(this.firestore, 'fc_products', id);
+    const ref = doc(this.firestore, 'products', id);
     await deleteDoc(ref);
   }
 
   // ── Categories CRUD ────────────────────────────────────────
 
   async addCategory(category: Omit<Category, 'id'>): Promise<void> {
-    const ref = collection(this.firestore, 'fc_categories');
+    const ref = collection(this.firestore, 'categories');
     await addDoc(ref, { ...category, createdAt: new Date().toISOString() });
   }
 
   async updateCategory(id: string, data: Partial<Category>): Promise<void> {
-    const ref = doc(this.firestore, 'fc_categories', id);
+    const ref = doc(this.firestore, 'categories', id);
     await updateDoc(ref, data as any);
   }
 
   async deleteCategory(id: string): Promise<void> {
-    const ref = doc(this.firestore, 'fc_categories', id);
+    const ref = doc(this.firestore, 'categories', id);
     await deleteDoc(ref);
   }
 
@@ -206,14 +206,14 @@ export class DataService {
   // ── Orders ─────────────────────────────────────────────────
 
   async addOrder(order: Omit<AdminOrder, 'id'>): Promise<string> {
-    const ref = collection(this.firestore, 'fc_orders');
+    const ref = collection(this.firestore, 'orders');
     const cleaned = this.removeUndefined(order);
     const docRef = await addDoc(ref, cleaned);
     return docRef.id;
   }
 
   async updateOrderStatus(id: string, status: AdminOrder['status'], reason?: string): Promise<void> {
-    const ref = doc(this.firestore, 'fc_orders', id);
+    const ref = doc(this.firestore, 'orders', id);
     const data: any = { status };
     if (reason) data.cancellationReason = reason;
     await updateDoc(ref, data);
@@ -222,7 +222,7 @@ export class DataService {
   // ── Transactions ───────────────────────────────────────────
 
   async addTransaction(txn: Omit<Transaction, 'id'>): Promise<void> {
-    const ref = collection(this.firestore, 'fc_transactions');
+    const ref = collection(this.firestore, 'transactions');
     const cleaned = this.removeUndefined(txn);
     await addDoc(ref, cleaned);
   }
@@ -230,53 +230,53 @@ export class DataService {
   // ── Home Slides ────────────────────────────────────
 
   async addHomeSlide(slide: Omit<HomeSlide, 'id'>): Promise<void> {
-    const ref = collection(this.firestore, 'fc_home_slides');
+    const ref = collection(this.firestore, 'home_slides');
     await addDoc(ref, slide);
   }
 
   async updateHomeSlide(id: string, data: Partial<HomeSlide>): Promise<void> {
-    const ref = doc(this.firestore, 'fc_home_slides', id);
+    const ref = doc(this.firestore, 'home_slides', id);
     await updateDoc(ref, data as any);
   }
 
   async deleteHomeSlide(id: string): Promise<void> {
-    const ref = doc(this.firestore, 'fc_home_slides', id);
+    const ref = doc(this.firestore, 'home_slides', id);
     await deleteDoc(ref);
   }
 
   // ── Offer Card ─────────────────────────────────────────────
 
   async updateOfferCard(data: Partial<OfferCard>): Promise<void> {
-    const ref = doc(this.firestore, 'fc_settings', 'offerCard');
+    const ref = doc(this.firestore, 'settings', 'offerCard');
     await setDoc(ref, data, { merge: true });
   }
 
   // ── Combo Cards ────────────────────────────────────────────
 
   async addComboCard(combo: Omit<ComboCard, 'id'>): Promise<void> {
-    const ref = collection(this.firestore, 'fc_combo_cards');
+    const ref = collection(this.firestore, 'combo_cards');
     await addDoc(ref, { ...combo, createdAt: new Date().toISOString() });
   }
 
   async updateComboCard(id: string, data: Partial<ComboCard>): Promise<void> {
-    const ref = doc(this.firestore, 'fc_combo_cards', id);
+    const ref = doc(this.firestore, 'combo_cards', id);
     await updateDoc(ref, data as any);
   }
 
   async deleteComboCard(id: string): Promise<void> {
-    const ref = doc(this.firestore, 'fc_combo_cards', id);
+    const ref = doc(this.firestore, 'combo_cards', id);
     await deleteDoc(ref);
   }
 
   // ── Live Delivery Tracking ───────────────────────────────
 
   async updateLiveDelivery(orderId: string, lat: number, lng: number): Promise<void> {
-    const ref = doc(this.firestore, 'fc_live_deliveries', orderId);
+    const ref = doc(this.firestore, 'live_deliveries', orderId);
     await setDoc(ref, { lat, lng, updatedAt: new Date().toISOString() }, { merge: true });
   }
 
   listenToLiveDelivery(orderId: string, callback: (data: {lat: number, lng: number} | null) => void): () => void {
-    const ref = doc(this.firestore, 'fc_live_deliveries', orderId);
+    const ref = doc(this.firestore, 'live_deliveries', orderId);
     return onSnapshot(ref, (snap) => {
       if (snap.exists()) {
         callback(snap.data() as {lat: number, lng: number});
@@ -293,7 +293,7 @@ export class DataService {
     if (!cleanCode || !userId) return;
 
     try {
-      const userRef = doc(this.firestore, 'fc_users', userId);
+      const userRef = doc(this.firestore, 'users', userId);
       const snap = await getDoc(userRef);
       if (snap.exists()) {
         const currentCoupons: string[] = snap.data()['usedCoupons'] || [];

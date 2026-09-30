@@ -104,7 +104,7 @@ export class AdminProductsComponent implements OnInit {
     this.isUploading.set(true); this.uploadProgress.set(0);
     const total = files.length; let done = 0;
     const promises = Array.from(files).map(file => {
-      const storRef = ref(this.storage, `fc_products/${Date.now()}_${file.name}`);
+      const storRef = ref(this.storage, `products/${Date.now()}_${file.name}`);
       const task = uploadBytesResumable(storRef, file);
       return new Promise<void>((resolve, reject) => {
         task.on('state_changed', null,

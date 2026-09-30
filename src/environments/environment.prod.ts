@@ -2,13 +2,13 @@ export const environment = {
   production: true,
   razorpayKey: "rzp_test_T0ghGBsIrMwMjX",
   firebase: {
-    apiKey: "AIzaSyDagNDyMeE38DQt-kjD1XsfmKmv6EicKBU",
-    authDomain: "fruit-chats.firebaseapp.com",
-    projectId: "fruit-chats",
-    storageBucket: "fruit-chats.firebasestorage.app",
-    messagingSenderId: "715924531061",
-    appId: "1:715924531061:web:6e34606dee046d52b6953c",
-    measurementId: "G-236CZK5YHY"
+    apiKey: "AIzaSyCicepSOXxlKyX5oG_58wjfYuFEPo8zLPE",
+    authDomain: "gift-aura.firebaseapp.com",
+    projectId: "gift-aura",
+    storageBucket: "gift-aura.firebasestorage.app",
+    messagingSenderId: "790255589885",
+    appId: "1:790255589885:web:e7d467eeb9221d9229e194",
+    measurementId: "G-T6LZ20PRKY"
   }
 };
 

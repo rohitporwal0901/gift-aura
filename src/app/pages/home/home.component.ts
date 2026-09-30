@@ -554,6 +554,18 @@ interface ReelItem {
       width: 100%;
       height: clamp(480px, 78vh, 700px);
       background: #111111;
+      max-width: var(--container-max);
+      margin: 20px auto;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+
+      @media (max-width: 768px) {
+        margin: 16px;
+        border-radius: var(--radius-lg);
+        height: 45vh;
+        min-height: 400px; 
+        width: calc(100% - 32px);
+      }
     }
 
     .hero-slider-track {
@@ -576,6 +588,10 @@ interface ReelItem {
       height: 100%;
       object-fit: cover;
       object-position: center;
+      
+      @media (max-width: 768px) {
+        object-position: top center; /* Helps show the main part of image on mobile */
+      }
     }
 
     .hero-overlay {
@@ -600,6 +616,10 @@ interface ReelItem {
       max-width: 650px;
       color: #ffffff;
       padding: 20px 0;
+      
+      @media (max-width: 768px) {
+        padding: 24px 0; /* Reduced extra padding to fit in smaller height */
+      }
     }
 
     .hero-badge-pill {
@@ -622,6 +642,11 @@ interface ReelItem {
       color: #ffffff;
       letter-spacing: -0.03em;
       margin-bottom: 16px;
+
+      @media (max-width: 768px) {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
     }
 
     .hero-subtext {
@@ -629,6 +654,12 @@ interface ReelItem {
       color: #e5e5e5;
       line-height: 1.6;
       margin-bottom: 28px;
+
+      @media (max-width: 768px) {
+        font-size: 13px;
+        margin-bottom: 18px;
+        line-height: 1.4;
+      }
     }
 
     .hero-btn-row {
@@ -636,19 +667,27 @@ interface ReelItem {
       gap: 14px;
       flex-wrap: wrap;
 
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px; /* tighter spacing on mobile to save vertical space */
+      }
+
       .hero-btn-main {
-        background: #ffffff;
+        background: var(--color-accent);
         color: #111111;
         font-weight: 700;
         border: none;
         padding: 14px 28px;
-        &:hover { background: #f0f0f0; }
+        border-radius: var(--radius-full);
+        &:hover { background: var(--color-accent-hover); }
       }
 
       .hero-btn-sub {
         border-color: #ffffff;
         color: #ffffff;
         padding: 14px 28px;
+        border-radius: var(--radius-full);
         &:hover { background: #ffffff; color: #111111; }
       }
     }

@@ -9,9 +9,9 @@ export interface AppliedCoupon {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private readonly STORAGE_ITEMS_KEY = 'fc_cart_items_v2';
-  private readonly STORAGE_COUPON_KEY = 'fc_cart_coupon_v2';
-  private readonly STORAGE_LOCATION_KEY = 'fc_cart_loc_v2';
+  private readonly STORAGE_ITEMS_KEY = 'cart_items_v2';
+  private readonly STORAGE_COUPON_KEY = 'cart_coupon_v2';
+  private readonly STORAGE_LOCATION_KEY = 'cart_loc_v2';
 
   private _items = signal<CartItem[]>(this.loadStoredItems());
   appliedCoupon = signal<AppliedCoupon | null>(this.loadStoredCoupon());

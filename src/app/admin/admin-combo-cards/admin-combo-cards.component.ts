@@ -82,7 +82,7 @@ export class AdminComboCardsComponent {
     const file = event.target.files[0];
     if (!file) return;
     this.isUploading.set(true); this.uploadProgress.set(0);
-    const storRef = ref(this.storage, `fc_combo_cards/${Date.now()}_${file.name}`);
+    const storRef = ref(this.storage, `combo_cards/${Date.now()}_${file.name}`);
     const task = uploadBytesResumable(storRef, file);
     await new Promise<void>((resolve, reject) => {
       task.on('state_changed',

@@ -5,42 +5,45 @@
   --font-family: 'Geist', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-heading: 'Geist', 'Outfit', sans-serif;
 
-  --color-bg-canvas: #f3efea;
+  --color-bg-canvas: #fafafa;
   --color-bg-surface: #ffffff;
   --color-bg-card: #ffffff;
-  --color-bg-secondary: #f8f6f2;
-  --color-bg-muted: #ebe7e1;
-  --color-footer-bg: #2d2d2d;
+  --color-bg-secondary: #f4f6f8;
+  --color-bg-muted: #e9ecef;
+  
+  --color-footer-bg: #1c1e26; /* Dark Navy / Black from image */
   --color-footer-text: #f0f0f0;
 
-  --color-text-main: #222222;
+  --color-text-main: #333333;
   --color-text-heading: #111111;
-  --color-text-muted: #777777;
+  --color-text-muted: #666666;
   --color-text-subtle: #999999;
 
-  --color-primary: #111111;
-  --color-primary-hover: #333333;
-  --color-accent: #a6893b;
-  --color-accent-light: #c5a85c;
+  --color-primary: #1b213b; /* Dark Navy Blue used in banners and headers */
+  --color-primary-hover: #121629;
+  --color-accent: #ffc107; /* Bright Yellow/Gold used for main buttons */
+  --color-accent-hover: #ffb300;
+  --color-accent-light: #ffe082;
+  
   --color-sale: #e84e4e;
   --color-success: #28a745;
   --color-whatsapp: #25D366;
 
-  --color-border: #e6e2dc;
-  --color-border-light: #eeebe6;
-  --color-border-dark: #3a3a3a;
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+  --color-border-dark: #334155;
 
   --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
 
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.10);
-  --shadow-float: 0 14px 40px rgba(0, 0, 0, 0.14);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.08);
+  --shadow-float: 0 20px 40px rgba(27, 33, 59, 0.12);
 
   --container-max: 1280px;
   --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -122,9 +125,9 @@ button {
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 14px;
-  letter-spacing: 0.3px;
-  padding: 12px 24px;
-  border-radius: var(--radius-sm);
+  letter-spacing: 0.2px;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
   border: 1px solid var(--color-primary);
   cursor: pointer;
   transition: var(--transition-fast);
@@ -132,8 +135,37 @@ button {
 
   &:hover {
     background: var(--color-primary-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(27, 33, 59, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.gl-btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-accent);
+  color: #111111;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 193, 7, 0.3);
   }
 
   &:active {
@@ -151,8 +183,8 @@ button {
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 14px;
-  padding: 12px 24px;
-  border-radius: var(--radius-sm);
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
   border: 1.5px solid var(--color-primary);
   cursor: pointer;
   transition: var(--transition-fast);
@@ -161,20 +193,7 @@ button {
   &:hover {
     background: var(--color-primary);
     color: #ffffff;
-    transform: translateY(-1px);
-  }
-}
-
-.gl-btn-gold {
-  background: linear-gradient(135deg, #a6893b 0%, #c5a85c 100%);
-  color: #ffffff;
-  font-weight: 700;
-  border: none;
-  box-shadow: 0 4px 15px rgba(166, 137, 59, 0.3);
-
-  &:hover {
-    background: linear-gradient(135deg, #917530 0%, #b89a4e 100%);
-    box-shadow: 0 6px 20px rgba(166, 137, 59, 0.4);
+    transform: translateY(-2px);
   }
 }
 
@@ -201,19 +220,19 @@ button {
 }
 
 .gl-badge-new {
-  background: #49a594;
+  background: var(--color-primary);
   color: #ffffff;
 }
 
 .gl-badge-pill {
-  background: rgba(166, 137, 59, 0.12);
-  color: var(--color-accent);
-  border: 1px solid rgba(166, 137, 59, 0.25);
+  background: rgba(27, 33, 59, 0.08);
+  color: var(--color-primary);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.5px;
-  padding: 5px 14px;
+  letter-spacing: 1px;
+  padding: 6px 16px;
   border-radius: var(--radius-full);
+  text-transform: uppercase;
 }
 
 /* =================== CARDS =================== */
@@ -227,7 +246,7 @@ button {
   &:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
-    border-color: #d6d0c7;
+    border-color: var(--color-border-light);
   }
 }
 
@@ -238,15 +257,15 @@ button {
 
   .gl-section-pill {
     display: inline-block;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
 
   .gl-section-title {
-    font-size: clamp(24px, 3.5vw, 36px);
+    font-size: clamp(24px, 3.5vw, 32px);
     font-weight: 800;
     color: var(--color-text-heading);
-    letter-spacing: -0.03em;
-    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
   }
 
   .gl-section-subtitle {
@@ -271,14 +290,14 @@ button {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1ede8;
+  background: var(--color-bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #c7c1b8;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a9a298;
+  background: #94a3b8;
 }
 
 /* =================== KEYFRAME ANIMATIONS =================== */
@@ -309,3 +328,4 @@ button {
 .animate-fade-in-up {
   animation: fadeInUp 0.4s ease both;
 }
+

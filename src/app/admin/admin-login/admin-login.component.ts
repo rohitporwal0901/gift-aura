@@ -48,7 +48,7 @@ export class AdminLoginComponent {
       (this.password === '123456' || this.password === 'admin' || this.password === 'admin123')
     ) {
       setTimeout(() => {
-        localStorage.setItem('fc_admin_logged_in', 'true');
+        localStorage.setItem('admin_logged_in', 'true');
         this.snackbar.show('Logged in successfully!', 'success');
         this.router.navigate(['/admin/dashboard']);
         this.isLoading.set(false);
@@ -58,7 +58,7 @@ export class AdminLoginComponent {
 
     try {
       await signInWithEmailAndPassword(this.auth, this.email, this.password);
-      localStorage.setItem('fc_admin_logged_in', 'true');
+      localStorage.setItem('admin_logged_in', 'true');
       this.snackbar.show('Logged in successfully!', 'success');
       this.router.navigate(['/admin/dashboard']);
     } catch (err: any) {

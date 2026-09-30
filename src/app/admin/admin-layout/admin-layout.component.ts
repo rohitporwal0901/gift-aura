@@ -40,7 +40,7 @@ export class AdminLayoutComponent {
 
   async confirmLogout() {
     this.isLogoutModalOpen = false;
-    localStorage.removeItem('fc_admin_logged_in');
+    localStorage.removeItem('admin_logged_in');
     await signOut(this.auth).catch(() => {});
     this.router.navigate(['/admin/login']);
   }

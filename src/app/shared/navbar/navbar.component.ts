@@ -12,27 +12,6 @@ import { Product } from '../../core/models/product.model';
   standalone: true,
   imports: [RouterLink, RouterLinkActive, CommonModule, FormsModule],
   template: `
-    <!-- TOP ANNOUNCEMENT BAR -->
-    <div class="gl-announcement-bar">
-      <div class="container announcement-inner">
-        <div class="announcement-item">
-          <span>🔥</span>
-          <strong>First 13% OFF</strong>
-          <span class="code-tag">Use Code: FIRST13</span>
-        </div>
-        <div class="announcement-sep">|</div>
-        <div class="announcement-item hide-mobile">
-          <span>🚚</span>
-          <span>Free Shipping Across India on Orders Above ₹999</span>
-        </div>
-        <div class="announcement-sep hide-mobile">|</div>
-        <div class="announcement-item hide-mobile">
-          <span>⭐</span>
-          <span>Trusted by 1000+ Corporate Clients</span>
-        </div>
-      </div>
-    </div>
-
     <!-- MAIN HEADER -->
     <header class="gl-header" [class.scrolled]="isScrolled()">
       <div class="container header-inner">
@@ -46,14 +25,10 @@ import { Product } from '../../core/models/product.model';
         </button>
 
         <!-- BRAND LOGO -->
-        <a routerLink="/" class="gl-brand" title="Graphic Line Home">
-          <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/10_2770576c-f5d9-44d5-bb02-476af09f6010.webp?v=1778942276" 
-               alt="Graphic Line" 
-               class="brand-logo-img"
-               onerror="this.style.display='none'; document.getElementById('textBrand').style.display='flex'">
+        <a routerLink="/" class="gl-brand" title="Gift Aura Home">
           <div class="brand-text-fallback" id="textBrand">
-            <span class="bt-name">GRAPHIC<span class="bt-gold">LINE</span></span>
-            <span class="bt-tag">CORPORATE GIFTING</span>
+            <span class="bt-name">GIFT<span class="bt-gold">AURA</span></span>
+            <span class="bt-tag">CUSTOM GIFTS & PRINTING</span>
           </div>
         </a>
 
@@ -69,14 +44,6 @@ import { Product } from '../../core/models/product.model';
 
         <!-- RIGHT ACTIONS -->
         <div class="header-actions">
-          <!-- SEARCH TRIGGER -->
-          <button class="action-btn" (click)="toggleSearch()" aria-label="Search store">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
-
           <!-- USER ACCOUNT -->
           @if (authService.isLoggedIn()) {
             <a routerLink="/profile" class="action-btn user-btn" title="My Account">
@@ -169,7 +136,7 @@ import { Product } from '../../core/models/product.model';
       <div class="mobile-drawer-backdrop" (click)="toggleMobileMenu()"></div>
       <div class="mobile-drawer">
         <div class="md-header">
-          <div class="bt-name">GRAPHIC<span class="bt-gold">LINE</span></div>
+          <div class="bt-name">GIFT<span class="bt-gold">AURA</span></div>
           <button class="md-close" (click)="toggleMobileMenu()">✕</button>
         </div>
 
@@ -224,48 +191,6 @@ import { Product } from '../../core/models/product.model';
     }
   `,
   styles: [`
-    /* ── TOP ANNOUNCEMENT BAR ── */
-    .gl-announcement-bar {
-      background: #111111;
-      color: #ffffff;
-      font-size: 12.5px;
-      padding: 7px 0;
-      letter-spacing: 0.2px;
-      position: relative;
-      z-index: 101;
-    }
-
-    .announcement-inner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      text-align: center;
-    }
-
-    .announcement-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-
-      strong {
-        color: #f7d583;
-      }
-
-      .code-tag {
-        background: rgba(255, 255, 255, 0.15);
-        padding: 2px 7px;
-        border-radius: 4px;
-        font-family: monospace;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-      }
-    }
-
-    .announcement-sep {
-      color: #555555;
-    }
-
     /* ── HEADER ── */
     .gl-header {
       background: #ffffff;
@@ -292,12 +217,10 @@ import { Product } from '../../core/models/product.model';
       display: flex;
       align-items: center;
       text-decoration: none;
-    }
-
-    .brand-logo-img {
-      height: 48px;
-      width: auto;
-      object-fit: contain;
+      
+      @media (min-width: 769px) {
+        flex: 1; /* take space on left to center the nav on desktop */
+      }
     }
 
     .brand-text-fallback {
@@ -330,24 +253,29 @@ import { Product } from '../../core/models/product.model';
     .gl-desktop-nav {
       display: flex;
       align-items: center;
-      gap: 24px;
+      justify-content: center;
+      gap: 32px; /* Added gap between items */
+      flex: 2; /* takes middle space */
 
       .nav-item {
-        font-size: 14.5px;
+        font-size: 13.5px;
         font-weight: 600;
         color: #222222;
         padding: 8px 0;
         position: relative;
+        white-space: nowrap; /* PREVENTS WRAPPING (UPAR NICHE) */
         transition: color 0.2s;
 
         &::after {
           content: '';
           position: absolute;
-          bottom: 0;
-          left: 0;
+          bottom: -4px;
+          left: 50%;
+          transform: translateX(-50%);
           width: 0%;
-          height: 2px;
-          background: #111111;
+          height: 3px;
+          background: var(--color-accent); /* Yellow underline like screenshot */
+          border-radius: 4px;
           transition: width 0.25s ease;
         }
 
@@ -355,7 +283,7 @@ import { Product } from '../../core/models/product.model';
           color: #111111;
 
           &::after {
-            width: 100%;
+            width: 80%; /* not full width, centered */
           }
         }
       }
@@ -365,7 +293,15 @@ import { Product } from '../../core/models/product.model';
     .header-actions {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 10px;
+      
+      @media (min-width: 769px) {
+        flex: 1; /* take space on right on desktop */
+      }
+      @media (max-width: 768px) {
+        margin-left: auto; /* Push to right on mobile */
+      }
     }
 
     .action-btn {
@@ -422,6 +358,7 @@ import { Product } from '../../core/models/product.model';
     .mobile-toggle-btn {
       color: #111111;
       padding: 6px;
+      margin-right: 8px; /* space between hamburger and logo */
     }
 
     /* ── SEARCH OVERLAY ── */
