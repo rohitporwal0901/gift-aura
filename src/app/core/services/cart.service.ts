@@ -53,15 +53,11 @@ export class CartService {
   totalItems = computed(() => this._items().reduce((sum, i) => sum + i.quantity, 0));
   itemTotal  = computed(() => this._items().reduce((sum, i) => sum + i.totalPrice, 0));
 
-  // Distance-based delivery charge
-  // 0-2km → ₹15, 2-5km → ₹15+(dist-2)×5, 5-10km → ₹30+(dist-5)×8
+  // Delivery charge: Free above ₹999, else flat ₹49
   deliveryCharge = computed(() => {
-    const dist = this.deliveryDistanceKm();
-    if (dist <= 0) return 15; // default minimum charge
-    if (dist <= 2) return 15;
-    if (dist <= 5) return Math.round(15 + (dist - 2) * 5);
-    if (dist <= 10) return Math.round(30 + (dist - 5) * 8);
-    return 15; // fallback
+    if (this._items().length === 0) return 0;
+    if (this.itemTotal() >= 999) return 0;
+    return 49;
   });
 
   // Discount applies only when itemTotal meets the minOrderAmount

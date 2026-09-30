@@ -7,6 +7,8 @@ export interface Product {
   fullDescription?: string;
   price: number;
   originalPrice?: number;
+  discountPercent?: number;
+  offerText?: string;
   image: string;
   secondaryImage?: string;
   images?: string[];
