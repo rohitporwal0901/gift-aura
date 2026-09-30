@@ -70,13 +70,13 @@ import { AdminOrder } from '../../core/models/admin.model';
         } @else if (displayedOrders().length === 0) {
           <!-- EMPTY STATE -->
           <div class="orders-empty-state">
-            <span class="empty-emoji">🥗</span>
+            <span class="empty-emoji">🎁</span>
             <h4>No Orders Found</h4>
             <p>You have no {{ orderFilter() !== 'all' ? orderFilter() : '' }} orders right now.</p>
             @if (orderFilter() !== 'all') {
               <button class="browse-menu-btn" (click)="orderFilter.set('all')">View All Orders</button>
             } @else {
-              <a routerLink="/menu" class="browse-menu-btn">Order Fresh Now →</a>
+              <a routerLink="/menu" class="browse-menu-btn">Explore Collections →</a>
             }
           </div>
         } @else {
@@ -88,9 +88,9 @@ import { AdminOrder } from '../../core/models/admin.model';
                 <!-- Card Top: Brand Info & Status -->
                 <div class="soc-top">
                   <div class="soc-brand-group">
-                    <div class="soc-brand-icon">🥗</div>
+                    <div class="soc-brand-icon">🎁</div>
                     <div class="soc-restaurant">
-                      <span class="soc-brand">FruitChat Kitchen</span>
+                      <span class="soc-brand">GiftAura Prints & Merch</span>
                       <span class="soc-date">
                         <span class="soc-time-icon">🕒</span> {{ formatOrderDate(order.placedAt) }}
                       </span>
@@ -306,7 +306,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       width: 36px;
       height: 36px;
       border-radius: 10px;
-      background: #E8F5E9;
+      background: #F8FAFC;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -353,7 +353,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       border-radius: 50%;
       background: currentColor;
     }
-    .badge-delivered { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
+    .badge-delivered { background: #F1F5F9; color: #0F172A; border: 1px solid #CBD5E1; }
     .badge-preparing { background: #FFF3E0; color: #E65100; border: 1px solid #FFE0B2; }
     .badge-out       { background: #EDE7F6; color: #512DA8; border: 1px solid #D1C4E9; }
     .badge-confirmed { background: #E3F2FD; color: #1565C0; border: 1px solid #BBDEFB; }
@@ -387,7 +387,7 @@ import { AdminOrder } from '../../core/models/admin.model';
     .veg-symbol {
       width: 13px;
       height: 13px;
-      border: 1.5px solid #2E7D32;
+      border: 1.5px solid #0F172A;
       border-radius: 3px;
       display: flex;
       align-items: center;
@@ -398,7 +398,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       width: 5.5px;
       height: 5.5px;
       border-radius: 50%;
-      background: #2E7D32;
+      background: #0F172A;
     }
     .soc-item-name {
       font-size: 12.5px;
@@ -465,7 +465,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       gap: 8px;
     }
     .soc-track-btn {
-      background: linear-gradient(135deg, #2E7D32, #1B5E20);
+      background: linear-gradient(135deg, #0F172A, #1E293B);
       color: #fff;
       font-size: 12px;
       font-weight: 700;
@@ -475,11 +475,11 @@ import { AdminOrder } from '../../core/models/admin.model';
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 3px 10px rgba(46,125,50,0.3);
+      box-shadow: 0 3px 10px rgba(15,23,42,0.3);
       transition: all 0.2s ease;
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 0 5px 14px rgba(46,125,50,0.4);
+        box-shadow: 0 5px 14px rgba(15,23,42,0.4);
       }
     }
     .track-scooter-icon { font-size: 14px; }
@@ -499,9 +499,9 @@ import { AdminOrder } from '../../core/models/admin.model';
       &:hover { background: #EDF2F7; color: #1A1A1A; }
     }
     .soc-reorder-btn {
-      background: #F1F8E9;
-      color: #2E7D32;
-      border: 1px solid #C8E6C9;
+      background: #F1F5F9;
+      color: #0F172A;
+      border: 1px solid #CBD5E1;
       font-size: 11.5px;
       font-weight: 700;
       padding: 6px 14px;
@@ -512,7 +512,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       gap: 5px;
       font-family: inherit;
       transition: all 0.2s;
-      &:hover { background: #E8F5E9; border-color: #81C784; }
+      &:hover { background: #E2E8F0; border-color: #94A3B8; }
     }
 
     /* EMPTY STATE */
@@ -529,7 +529,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       p { font-size: 13px; color: #666; margin-bottom: 18px; }
       .browse-menu-btn {
         display: inline-block;
-        background: #2E7D32;
+        background: #0F172A;
         color: #fff;
         padding: 10px 22px;
         border-radius: 10px;
@@ -540,7 +540,7 @@ import { AdminOrder } from '../../core/models/admin.model';
         cursor: pointer;
         font-family: inherit;
         transition: background 0.2s;
-        &:hover { background: #1B5E20; }
+        &:hover { background: #1E293B; }
       }
     }
 

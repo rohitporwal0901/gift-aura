@@ -23,114 +23,116 @@ interface MenuItem {
     <div class="profile-page" [class.inline]="inlineMode">
       
       @if (authService.isLoggedIn()) {
-        <!-- LOGGED-IN PROFILE HEADER -->
-        <div class="profile-header">
+        <!-- COMPACT PROFILE HEADER -->
+        <div class="profile-header compact">
           @if (inlineMode) {
             <button class="back-btn" (click)="cartService.setDrawerMode('cart')" aria-label="Back">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </button>
           }
-          <div class="ph-bg-circle c1"></div>
-          <div class="ph-bg-circle c2"></div>
 
-          <!-- AVATAR WITH PHOTO UPLOAD (KHANDELWAL ARCHITECTURE) -->
-          <div class="avatar-wrap">
-            <input 
-              type="file" 
-              #photoInput 
-              accept="image/*" 
-              style="display: none" 
-              (change)="onPhotoSelected($event)" 
-            />
-            
-            <div class="avatar" (click)="photoInput.click()" title="Click to upload profile photo">
-              @if (authService.currentUser()?.photoUrl) {
-                <img [src]="authService.currentUser()?.photoUrl" alt="Profile" class="avatar-img" />
-              } @else {
-                <span>{{ getUserInitials() }}</span>
-              }
+          <div class="user-row">
+            <!-- AVATAR WITH PHOTO UPLOAD -->
+            <div class="avatar-wrap">
+              <input 
+                type="file" 
+                #photoInput 
+                accept="image/*" 
+                style="display: none" 
+                (change)="onPhotoSelected($event)" 
+              />
+              
+              <div class="avatar" (click)="photoInput.click()" title="Click to change photo">
+                @if (authService.currentUser()?.photoUrl) {
+                  <img [src]="authService.currentUser()?.photoUrl" alt="Profile" class="avatar-img" />
+                } @else {
+                  <span>{{ getUserInitials() }}</span>
+                }
+              </div>
+
+              <button 
+                type="button" 
+                class="camera-badge-btn" 
+                (click)="photoInput.click()" 
+                [title]="isUploadingPhoto() ? 'Uploading...' : 'Change photo'"
+              >
+                @if (isUploadingPhoto()) {
+                  <span class="upload-spin">⌛</span>
+                } @else {
+                  <span>📷</span>
+                }
+              </button>
             </div>
 
-            <!-- Camera upload badge button -->
-            <button 
-              type="button" 
-              class="camera-badge-btn" 
-              (click)="photoInput.click()" 
-              [title]="isUploadingPhoto() ? 'Uploading...' : 'Upload profile picture'"
-            >
-              @if (isUploadingPhoto()) {
-                <span class="upload-spin">⌛</span>
-              } @else {
-                <span>📷</span>
-              }
-            </button>
-          </div>
-
-          <!-- USER NAME & INFO -->
-          <h2 class="profile-name">{{ authService.currentUser()?.name }}</h2>
-          <p class="profile-phone">+91 {{ authService.currentUser()?.phone }}</p>
-          <div class="health-member-badge">
-            <span>🎁 GiftAura • <b>Gold Corporate</b></span>
-          </div>
-
-          <!-- STATS CARD -->
-          <div class="profile-stats">
-            <div class="stat">
-              <span class="stat-val">{{ userOrders().length }}</span>
-              <span class="stat-label">📦 Orders</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat">
-              <span class="stat-val">14k</span>
-              <span class="stat-label">✨ Points</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat">
-              <span class="stat-val">&#8377;{{ totalSpent() }}</span>
-              <span class="stat-label">💳 Spent</span>
+            <!-- NAME & DETAILS -->
+            <div class="user-info">
+              <h2 class="profile-name">{{ authService.currentUser()?.name || 'Valued Customer' }}</h2>
+              <p class="profile-phone">+91 {{ authService.currentUser()?.phone }}</p>
+              <div class="member-chip">
+                <span>🎁 Gift Aura Member</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="container profile-content">
 
-          <!-- ACTIVE ORDER STRIP (IF ANY ACTIVE ORDER IN PROGRESS) -->
-          @if (activeOrdersCount() > 0) {
-            <div class="profile-section">
-              <a routerLink="/my-orders" class="active-order-strip">
-                <div class="aos-left">
-                  <span class="aos-pulse"></span>
-                  <div class="aos-info">
-                    <span class="aos-title">🛵 Order In Progress</span>
-                    <span class="aos-sub">You have {{ activeOrdersCount() }} live order{{ activeOrdersCount() > 1 ? 's' : '' }}</span>
+          <!-- MY ORDERS ACCORDION -->
+          <div class="profile-section">
+            <div class="menu-card accordion-card">
+              <div class="menu-item accordion-header" (click)="myOrdersExpanded.set(!myOrdersExpanded())">
+                <div class="header-left">
+                  <span class="mi-icon">📦</span>
+                  <div class="header-title-box">
+                    <span class="mi-label">My Orders</span>
+                    <span class="orders-count-text">{{ userOrders().length }} {{ userOrders().length === 1 ? 'order' : 'orders' }} placed</span>
                   </div>
                 </div>
-                <span class="aos-link">Track Order →</span>
-              </a>
-            </div>
-          }
-
-          <!-- ACTIVITY ITEMS -->
-          <div class="profile-section">
-            <h3 class="section-label">More Activity</h3>
-            <div class="menu-card">
-              @for (item of activityItems; track item.label) {
-                <a [routerLink]="item.route || '/'" class="menu-item">
-                  <span class="mi-icon">{{ item.icon }}</span>
-                  <span class="mi-label">{{ item.label }}</span>
-                  @if (item.label === 'My Orders' && userOrders().length > 0) {
-                    <span class="orders-chip">{{ userOrders().length }} orders</span>
+                <div class="header-right">
+                  <span class="mi-arrow" [class.rotated]="myOrdersExpanded()">›</span>
+                </div>
+              </div>
+              
+              @if (myOrdersExpanded()) {
+                <div class="accordion-body">
+                  @if (userOrders().length === 0) {
+                    <div class="empty-orders-wrap">
+                      <span class="empty-icon">🛍️</span>
+                      <p class="empty-orders-msg">No orders placed yet</p>
+                    </div>
+                  } @else {
+                    <div class="compact-orders-list">
+                      @for (order of userOrders(); track order.id) {
+                        <div class="co-card">
+                          <div class="co-top">
+                            <span class="co-id">#{{ order.id.slice(-8).toUpperCase() }}</span>
+                            <span class="co-badge" [ngClass]="'st-' + (order.status || 'confirmed')">{{ getStatusLabel(order.status) }}</span>
+                          </div>
+                          <div class="co-mid">
+                            <span class="co-date">{{ formatOrderDate(order.placedAt) }}</span>
+                            <span class="co-price">₹{{ order.grandTotal }}</span>
+                          </div>
+                          <div class="co-items">
+                            {{ getOrderItemsPreview(order) }}
+                          </div>
+                        </div>
+                      }
+                    </div>
                   }
-                  <span class="mi-arrow">›</span>
-                </a>
+                </div>
               }
             </div>
           </div>
 
-          <!-- SETTINGS -->
+          <!-- SETTINGS & PREFERENCES -->
           <div class="profile-section">
-            <h3 class="section-label">Settings</h3>
+            <h3 class="section-label">Preferences & Support</h3>
             <div class="menu-card">
+              <a routerLink="/" (click)="inlineMode && cartService.closeDrawer()" class="menu-item">
+                <span class="mi-icon">🎟️</span>
+                <span class="mi-label">Coupons & Offers</span>
+                <span class="mi-arrow">›</span>
+              </a>
               @for (item of settingsItems; track item.label) {
                 <div class="menu-item">
                   <span class="mi-icon">{{ item.icon }}</span>
@@ -147,9 +149,9 @@ interface MenuItem {
             </div>
           </div>
 
-          <!-- LOGOUT BUTTON (KHANDELWAL ARCHITECTURE) -->
+          <!-- LOGOUT BUTTON -->
           <button class="logout-btn" (click)="handleLogout()">
-            &#128682; Logout of Account
+            🚪 Logout of Account
           </button>
         </div>
 
@@ -158,8 +160,8 @@ interface MenuItem {
         <div class="logged-out-container">
           <div class="guest-card">
             <div class="guest-icon">🎁</div>
-            <h2 class="guest-title">Account & Preferences</h2>
-            <p class="guest-sub">Log in to view your orders, corporate offers, and track shipments.</p>
+            <h2 class="guest-title">Account & Orders</h2>
+            <p class="guest-sub">Log in to view your orders, corporate gifts, and special offers.</p>
             
             <button class="guest-login-btn" (click)="goToLogin()">
               Login / Sign Up
@@ -172,7 +174,7 @@ interface MenuItem {
   `,
   styles: [`
     .profile-page {
-      padding-bottom: 20px;
+      padding-bottom: 24px;
     }
 
     .profile-page.inline {
@@ -181,12 +183,21 @@ interface MenuItem {
       overflow-y: auto;
     }
 
+    /* COMPACT HEADER */
+    .profile-header.compact {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      color: #fff;
+      padding: 16px 18px;
+      position: relative;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.15);
+    }
+
     .back-btn {
       position: absolute;
-      top: 16px;
-      left: 16px;
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
       width: 32px;
       height: 32px;
@@ -196,62 +207,38 @@ interface MenuItem {
       justify-content: center;
       cursor: pointer;
       backdrop-filter: blur(4px);
+      transition: background 0.2s;
+      &:hover { background: rgba(255, 255, 255, 0.25); }
     }
 
-    /* HEADER */
-    .profile-header {
-      background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #334155 100%);
-      color: #fff;
-      padding: 36px 16px 28px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .ph-bg-circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      pointer-events: none;
-    }
-    .ph-bg-circle.c1 {
-      width: 220px;
-      height: 220px;
-      top: -60px;
-      right: -50px;
-    }
-    .ph-bg-circle.c2 {
-      width: 160px;
-      height: 160px;
-      bottom: -40px;
-      left: -30px;
+    .user-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
-    /* AVATAR & CAMERA BADGE */
+    /* AVATAR & BADGE */
     .avatar-wrap {
       position: relative;
-      width: 82px;
-      height: 82px;
-      margin: 0 auto 12px;
-      cursor: pointer;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
     }
     .avatar {
-      width: 82px;
-      height: 82px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       background: #F8FAFC;
       color: #0F172A;
-      font-size: 28px;
+      font-size: 18px;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 3px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
       overflow: hidden;
-      transition: transform 0.2s ease;
-      &:hover {
-        transform: scale(1.03);
-      }
+      cursor: pointer;
     }
     .avatar-img {
       width: 100%;
@@ -263,288 +250,264 @@ interface MenuItem {
       bottom: -2px;
       right: -2px;
       background: #FFFFFF;
-      border: 2px solid #0F172A;
-      width: 28px;
-      height: 28px;
+      border: 1.5px solid #0F172A;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 10px;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
-      transition: transform 0.15s ease;
-      &:active {
-        transform: scale(0.92);
-      }
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
     .upload-spin {
       animation: spin 1s infinite linear;
-      font-size: 12px;
+      font-size: 10px;
     }
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    /* NAME & PHONE */
+    /* USER INFO */
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
     .profile-name {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 800;
-      margin-bottom: 2px;
-      letter-spacing: 0.2px;
-      color: #fff;
+      color: #FFFFFF;
+      margin: 0 0 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .profile-phone {
       font-size: 12.5px;
-      opacity: 0.88;
-      margin-bottom: 8px;
-      font-weight: 600;
+      color: #94A3B8;
+      margin: 0 0 4px;
+      font-weight: 500;
     }
-
-    /* HEALTH MEMBER BADGE */
-    .health-member-badge {
+    .member-chip {
       display: inline-flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.16);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 999px;
-      padding: 4px 12px;
-      font-size: 11.5px;
-      color: #F8FAFC;
-      margin-bottom: 14px;
-    }
-    .health-member-badge b {
-      color: #fbbc04;
-      font-weight: 700;
-    }
-
-    /* STATS CARD */
-    .profile-stats {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: 16px;
-      padding: 12px 6px;
-      max-width: 420px;
-      margin: 0 auto;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
-    }
-    .stat {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      flex: 1;
-    }
-    .stat-val {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-      color: #fff;
-    }
-    .stat-label {
-      font-size: 11px;
-      opacity: 0.85;
-      font-weight: 500;
-      color: #F8FAFC;
-    }
-    .stat-divider {
-      width: 1px;
-      height: 30px;
-      background: rgba(255, 255, 255, 0.2);
+      padding: 2px 8px;
+      font-size: 10.5px;
+      color: #FCD34D;
+      font-weight: 600;
     }
 
     /* CONTENT */
     .profile-content {
-      margin-top: 14px;
+      padding: 16px;
     }
     .profile-section {
       margin-bottom: 16px;
     }
-    .section-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      padding: 0 4px;
-    }
     .section-label {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      color: #6B7280;
+      color: #64748B;
       margin: 0 0 8px 4px;
     }
-    .section-top .section-label {
-      margin: 0;
-    }
 
-    /* MY ORDERS SECTION & PREMIUM CARDS */
-    .orders-header-row {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 14px;
-      padding: 0 2px;
+    /* MENU CARD & ACCORDION */
+    .menu-card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
     }
-    /* ACTIVE ORDER STRIP */
-    .active-order-strip {
-      background: linear-gradient(135deg, #1E293B, #0F172A);
-      border-radius: 16px;
-      padding: 14px 18px;
+    .accordion-card {
+      border: 1.5px solid #CBD5E1;
+    }
+    .accordion-header {
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      text-decoration: none;
-      box-shadow: 0 4px 14px rgba(46,125,50,0.25);
-      transition: transform 0.2s, box-shadow 0.2s;
-      &:active { transform: scale(0.98); }
-      &:hover { box-shadow: 0 6px 18px rgba(46,125,50,0.35); }
+      padding: 14px 16px;
+      background: #FFFFFF;
+      transition: background 0.15s;
+      user-select: none;
+      &:hover { background: #F8FAFC; }
     }
-    .aos-left {
+    .header-left {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .aos-pulse {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #76FF03;
-      box-shadow: 0 0 0 0 rgba(118, 255, 3, 0.7);
-      animation: liveGlow 1.5s infinite;
-    }
-    @keyframes liveGlow {
-      0% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0.7); }
-      70% { box-shadow: 0 0 0 8px rgba(118, 255, 3, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0); }
-    }
-    .aos-info {
+    .header-title-box {
       display: flex;
       flex-direction: column;
     }
-    .aos-title {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: #fff;
-    }
-    .aos-sub {
+    .orders-count-text {
       font-size: 11px;
-      color: #94A3B8;
+      color: #64748B;
       font-weight: 500;
+      margin-top: 1px;
     }
-    .aos-link {
-      font-size: 12px;
-      font-weight: 700;
-      color: #fff;
-      background: rgba(255,255,255,0.2);
-      padding: 6px 12px;
-      border-radius: 8px;
-      white-space: nowrap;
+    .header-right {
+      display: flex;
+      align-items: center;
     }
 
-    .orders-chip {
-      background: #F1F5F9;
-      color: #0F172A;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      margin-left: auto;
-      margin-right: 6px;
-    }
-
-
-    /* MENU CARD */
-    .menu-card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-      border: 1px solid #E5E7EB;
-      overflow: hidden;
-    }
     .menu-item {
       display: flex;
       align-items: center;
       padding: 13px 16px;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid #F1F5F9;
       text-decoration: none;
       color: inherit;
       cursor: pointer;
-      transition: background 0.15s;
       gap: 12px;
+      transition: background 0.15s;
       &:last-child { border-bottom: none; }
-      &:hover { background: #FAFAFA; }
+      &:hover { background: #F8FAFC; }
     }
     .mi-icon {
-      font-size: 18px;
-      width: 24px;
+      font-size: 17px;
+      width: 22px;
       text-align: center;
       flex-shrink: 0;
     }
     .mi-label {
       flex: 1;
-      font-size: 14px;
-      font-weight: 500;
-      color: #1F2937;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #1E293B;
     }
     .mi-arrow {
       font-size: 18px;
-      color: #9CA3AF;
-      line-height: 1;
+      color: #94A3B8;
+      transition: transform 0.25s ease;
+    }
+    .mi-arrow.rotated {
+      transform: rotate(90deg);
     }
 
+    /* ACCORDION BODY */
+    .accordion-body {
+      background: #F8FAFC;
+      border-top: 1px solid #E2E8F0;
+      padding: 12px 14px;
+    }
+    .empty-orders-wrap {
+      text-align: center;
+      padding: 16px 8px;
+    }
+    .empty-icon { font-size: 28px; display: block; margin-bottom: 6px; }
+    .empty-orders-msg { font-size: 12.5px; color: #64748B; margin: 0; font-weight: 500; }
+
+    /* ORDER CARD */
+    .compact-orders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .co-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .co-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .co-id {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0F172A;
+      font-family: monospace;
+    }
+    .co-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
+    .st-delivered { background: #ECFDF5; color: #047857; }
+    .st-pending, .st-confirmed, .st-preparing { background: #FEF3C7; color: #B45309; }
+    .st-shipped, .st-out-for-delivery { background: #EFF6FF; color: #1D4ED8; }
+    .st-cancelled { background: #FEE2E2; color: #B91C1C; }
+
+    .co-mid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .co-date {
+      font-size: 11px;
+      color: #64748B;
+    }
+    .co-price {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0F172A;
+    }
+    .co-items {
+      font-size: 11.5px;
+      color: #475569;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-top: 1px dashed #E2E8F0;
+      padding-top: 6px;
+    }
 
     /* TOGGLE */
     .toggle {
-      width: 44px;
-      height: 24px;
-      background: #D1D5DB;
+      width: 40px;
+      height: 22px;
+      background: #CBD5E1;
       border-radius: 999px;
       padding: 2px;
       cursor: pointer;
       transition: background 0.2s;
     }
-    .toggle.on {
-      background: #0F172A;
-    }
+    .toggle.on { background: #0F172A; }
     .toggle-thumb {
-      width: 20px;
-      height: 20px;
-      background: #fff;
+      width: 18px;
+      height: 18px;
+      background: #FFFFFF;
       border-radius: 50%;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       transition: transform 0.2s;
     }
     .toggle.on .toggle-thumb {
-      transform: translateX(20px);
+      transform: translateX(18px);
     }
 
     /* LOGOUT */
     .logout-btn {
       width: 100%;
-      background: #fff;
-      border: 1.5px solid #FCA5A5;
+      background: #FFFFFF;
+      border: 1.5px solid #FECACA;
       color: #DC2626;
-      padding: 13px;
-      border-radius: 14px;
+      padding: 12px;
+      border-radius: 12px;
       font-family: inherit;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      margin-top: 4px;
+      transition: all 0.15s;
+      margin-top: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: 0 1px 3px rgba(220, 38, 38, 0.08);
+      gap: 6px;
       &:hover { background: #FEF2F2; }
       &:active { transform: scale(0.98); }
     }
@@ -554,35 +517,34 @@ interface MenuItem {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 70vh;
+      min-height: 60vh;
       padding: 24px 16px;
     }
     .guest-card {
       background: #ffffff;
-      border-radius: 24px;
-      padding: 36px 24px;
+      border-radius: 20px;
+      padding: 32px 20px;
       text-align: center;
-      max-width: 380px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      border: 1px solid #E5E7EB;
+      max-width: 360px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      border: 1px solid #E2E8F0;
     }
-    .guest-icon { font-size: 48px; margin-bottom: 12px; }
-    .guest-title { font-size: 22px; font-weight: 800; color: #111827; margin: 0 0 8px; }
-    .guest-sub { font-size: 13.5px; color: #6B7280; line-height: 1.5; margin: 0 0 24px; }
+    .guest-icon { font-size: 44px; margin-bottom: 10px; }
+    .guest-title { font-size: 20px; font-weight: 800; color: #0F172A; margin: 0 0 6px; }
+    .guest-sub { font-size: 13px; color: #64748B; line-height: 1.45; margin: 0 0 20px; }
     .guest-login-btn {
       width: 100%;
       background: #0F172A;
       color: #ffffff;
       border: none;
-      border-radius: 14px;
-      padding: 14px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 15px;
-      font-weight: 800;
+      border-radius: 12px;
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(46, 125, 50, 0.35);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
       transition: all 0.2s;
-      &:active { transform: scale(0.98); background: #1B5E20; }
+      &:active { transform: scale(0.98); background: #1E293B; }
     }
   `]
 })
@@ -592,15 +554,9 @@ export class ProfileComponent {
   dataService = inject(DataService);
   cartService = inject(CartService);
   private router = inject(Router);
-
+  
+  myOrdersExpanded = signal(true); // Default open so user easily sees orders
   readonly isUploadingPhoto = signal<boolean>(false);
-  readonly isLoadingOrders = signal<boolean>(true);
-
-  constructor() {
-    setTimeout(() => this.isLoadingOrders.set(false), 600);
-  }
-
-  orderFilter = signal<'all' | 'active' | 'delivered'>('all');
 
   userOrders = computed<AdminOrder[]>(() => {
     const user = this.authService.currentUser();
@@ -612,11 +568,8 @@ export class ProfileComponent {
     const uEmail = (user.email || '').trim().toLowerCase();
 
     const myOrders = list.filter(o => {
-      // 1. Match by authenticated user UID
       if (o.userId && user.uid && o.userId === user.uid) return true;
-      // 2. Match by 10-digit phone number
       if (uPhone && o.customerPhone && cleanPhone(o.customerPhone) === uPhone) return true;
-      // 3. Match by email if available
       if (uEmail && o.customerEmail && o.customerEmail.trim().toLowerCase() === uEmail) return true;
       return false;
     });
@@ -624,60 +577,20 @@ export class ProfileComponent {
     return [...myOrders].sort((a, b) => new Date(b.placedAt || 0).getTime() - new Date(a.placedAt || 0).getTime());
   });
 
-  displayedOrders = computed(() => {
-    const orders = this.userOrders();
-    const f = this.orderFilter();
-    if (f === 'active') {
-      return orders.filter(o => this.isActiveOrder(o.status));
-    }
-    if (f === 'delivered') {
-      return orders.filter(o => o.status === 'delivered');
-    }
-    return orders;
-  });
-
-  activeOrdersCount = computed(() =>
-    this.userOrders().filter(o => this.isActiveOrder(o.status)).length
-  );
-
-  deliveredOrdersCount = computed(() =>
-    this.userOrders().filter(o => o.status === 'delivered').length
-  );
-
-  scrollToOrders(): void {
-    const el = document.getElementById('myOrdersSection');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  totalSpent = computed(() =>
-    this.userOrders().reduce((acc, o) => acc + (o.grandTotal || 0), 0)
-  );
-
-  isActiveOrder(status: string): boolean {
-    return status === 'pending' || status === 'confirmed' || status === 'preparing' || status === 'out-for-delivery';
-  }
-
-  getStatusBadgeClass(status: string): string {
-    switch (status) {
-      case 'delivered': return 'badge-delivered';
-      case 'preparing': return 'badge-preparing';
-      case 'out-for-delivery': return 'badge-out';
-      case 'confirmed': return 'badge-confirmed';
-      case 'cancelled': return 'badge-cancelled';
-      default: return 'badge-confirmed';
-    }
+  getOrderItemsPreview(order: AdminOrder): string {
+    if (!order.items || order.items.length === 0) return 'No items';
+    const names = order.items.map(i => `${i.quantity}x ${i.productName}`);
+    return names.join(', ');
   }
 
   getStatusLabel(status: string): string {
     switch (status) {
       case 'delivered': return 'Delivered';
       case 'preparing': return 'Preparing';
-      case 'out-for-delivery': return 'On the way';
+      case 'out-for-delivery': return 'On The Way';
       case 'confirmed': return 'Confirmed';
       case 'cancelled': return 'Cancelled';
-      default: return 'Order Placed';
+      default: return 'Confirmed';
     }
   }
 
@@ -696,28 +609,9 @@ export class ProfileComponent {
     }
   }
 
-  reorder(order: AdminOrder): void {
-    if (order.items?.length) {
-      for (const it of order.items) {
-        this.cartService.addToCart({
-          id: it.productId,
-          name: it.productName,
-          price: it.price,
-          image: it.productImage || 'assets/images/mix-fruit-chaat.jpg',
-          category: 'corporate-kits',
-          rating: 4.8,
-          ratingCount: 50,
-          isVeg: true,
-          description: ''
-        });
-      }
-      this.router.navigate(['/cart']);
-    }
-  }
-
   getUserInitials(): string {
     const user = this.authService.currentUser();
-    if (!user || !user.name) return 'FC';
+    if (!user || !user.name) return 'GA';
     const parts = user.name.trim().split(' ');
     if (parts.length > 1) {
       return (parts[0][0] + parts[1][0]).toUpperCase();
@@ -725,7 +619,6 @@ export class ProfileComponent {
     return user.name.slice(0, 2).toUpperCase();
   }
 
-  // ─── Photo Upload & Canvas Resizing (Khandelwal Architecture) ─
   onPhotoSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -742,7 +635,7 @@ export class ProfileComponent {
         img.src = e.target?.result as string;
         img.onload = async () => {
           const canvas = document.createElement('canvas');
-          const MAX_SIZE = 300; // Optimal 300x300 for Firestore storage
+          const MAX_SIZE = 300;
           let width = img.width;
           let height = img.height;
 
@@ -799,16 +692,9 @@ export class ProfileComponent {
     }
   }
 
-  activityItems: MenuItem[] = [
-    { icon: '📦', label: 'My Orders', route: '/my-orders' },
-    { icon: '❤️', label: 'Favourites', route: '/menu' },
-    { icon: '🎟️', label: 'Coupons & Offers', route: '/' },
-  ];
-
   settingsItems: MenuItem[] = [
-    { icon: '🔔', label: 'Notifications', toggle: true, on: true },
-    { icon: '🌙', label: 'Dark Mode', toggle: true, on: false },
-    { icon: '📞', label: 'Help & Support', toggle: false },
-    { icon: 'ℹ️', label: 'About GiftAura', toggle: false },
+    { icon: '🔔', label: 'Order Notifications', toggle: true, on: true },
+    { icon: '📞', label: 'Help & Customer Support', toggle: false },
+    { icon: 'ℹ️', label: 'About Gift Aura', toggle: false },
   ];
 }

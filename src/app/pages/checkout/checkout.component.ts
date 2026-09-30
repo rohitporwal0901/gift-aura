@@ -7,12 +7,10 @@ import { AuthService } from '../../core/services/auth.service';
 import { DataService } from '../../core/services/data.service';
 import { AdminOrder } from '../../core/models/admin.model';
 import { environment } from '../../../environments/environment';
-import { MapPickerComponent } from '../../shared/map-picker/map-picker.component';
-
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, FormsModule, MapPickerComponent],
+  imports: [CommonModule, FormsModule],
   template: `
     <div class="checkout-page" [class.inline]="inlineMode">
       <!-- HEADER -->
@@ -86,70 +84,53 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
           <div class="step-pane animate-fadeInUp">
             <h3 class="step-heading">Delivery Address</h3>
 
-            <!-- PICKUP (fixed store) -->
-            <div class="addr-block pickup-block">
-              <div class="addr-dot green"></div>
-              <div class="addr-info">
-                <span class="addr-label green-tag">STORE PICKUP</span>
-                <p class="addr-main">Corporate Headquarters, Indore</p>
-                <span class="addr-sub">GiftAura Printing & Merchandise Hub</span>
-              </div>
-              <div class="store-badge">🏪 Store</div>
-            </div>
-
-            <!-- ROUTE CONNECTOR -->
-            <div class="route-separator">
-              <div class="route-line-vert"></div>
-              @if (cartService.deliveryDistanceKm() > 0) {
-                <div class="route-sep-chips">
-                  <span class="sep-chip dist">📏 {{ cartService.deliveryDistanceKm() | number:'1.1-1' }} km</span>
-                  <span class="sep-chip charge">💰 Delivery ₹{{ cartService.deliveryCharge() }}</span>
+            <div class="address-form-container">
+              <form #addrForm="ngForm" class="address-form">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" name="name" [(ngModel)]="address.name" placeholder="John Doe" required [class.error]="pulseDropError() && !address.name">
                 </div>
-              } @else {
-                <div class="route-sep-chips">
-                  <span class="sep-chip pending">Choose delivery point</span>
+                
+                <div class="form-group">
+                  <label>Mobile Number</label>
+                  <input type="tel" name="phone" [(ngModel)]="address.phone" placeholder="+91 XXXXX XXXXX" required [class.error]="pulseDropError() && !address.phone">
                 </div>
-              }
-            </div>
-
-            <!-- DROP (user selects) -->
-            <div
-              class="addr-block drop-block"
-              [class.drop-empty]="!cartService.dropDisplayName()"
-              [class.pulse-highlight]="pulseDropError()"
-            >
-              <div class="addr-dot red"></div>
-              <div class="addr-info">
-                <span class="addr-label red-tag">DELIVERY TO</span>
-                <p class="addr-main">{{ cartService.dropDisplayName() || 'Tap to select delivery location' }}</p>
-                @if (cartService.dropDisplayName()) {
-                  <span class="addr-sub verified">✓ Location confirmed on map</span>
-                }
-              </div>
-              <button class="map-pick-btn" (click)="showMapPicker.set(true)" type="button" id="open-map-btn">
-                {{ cartService.dropDisplayName() ? 'Change Location' : 'Select on Map' }}
-              </button>
-            </div>
-
-            @if (!cartService.dropDisplayName()) {
-              <div class="addr-cta-banner" (click)="showMapPicker.set(true)">
-                <div class="cta-banner-icon">🗺️</div>
-                <div class="cta-banner-text">
-                  <p class="cta-banner-title">Select Delivery Location on Map</p>
-                  <p class="cta-banner-sub">Tap here to choose your exact drop point in Indore</p>
+                
+                <div class="form-group half-width">
+                  <label>Pincode</label>
+                  <input type="text" name="pincode" [(ngModel)]="address.pincode" placeholder="452001" required [class.error]="pulseDropError() && !address.pincode">
                 </div>
-                <span class="cta-banner-arrow">→</span>
-              </div>
-            }
+
+                <div class="form-group">
+                  <label>Flat, House no., Building, Company, Apartment</label>
+                  <input type="text" name="addressLine1" [(ngModel)]="address.addressLine1" placeholder="Flat No / Building Name" required [class.error]="pulseDropError() && !address.addressLine1">
+                </div>
+
+                <div class="form-group">
+                  <label>Area, Street, Sector, Village</label>
+                  <input type="text" name="addressLine2" [(ngModel)]="address.addressLine2" placeholder="Sector / Area Name" required [class.error]="pulseDropError() && !address.addressLine2">
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group half">
+                    <label>City</label>
+                    <input type="text" name="city" [(ngModel)]="address.city" placeholder="Indore" required [class.error]="pulseDropError() && !address.city">
+                  </div>
+                  <div class="form-group half">
+                    <label>State</label>
+                    <select name="state" [(ngModel)]="address.state" required [class.error]="pulseDropError() && !address.state">
+                      <option value="" disabled>Select State</option>
+                      <option value="Madhya Pradesh">Madhya Pradesh</option>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Gujarat">Gujarat</option>
+                      <option value="Rajasthan">Rajasthan</option>
+                      <option value="Delhi">Delhi</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-        }
-
-        <!-- MAP PICKER BOTTOM SHEET -->
-        @if (showMapPicker()) {
-          <app-map-picker
-            (locationConfirmed)="onMapLocationConfirmed()"
-            (closed)="showMapPicker.set(false)"
-          ></app-map-picker>
         }
 
         <!-- STEP 2: PAYMENT -->
@@ -216,12 +197,12 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
             <h3 class="step-heading">Confirm Order</h3>
             <div class="confirm-section">
               <div class="confirm-row">
-                <span class="confirm-label">🏪 Pickup</span>
-                <span class="confirm-val">Atal Dwar, LIG, Indore</span>
+                <span class="confirm-label">👤 Name</span>
+                <span class="confirm-val">{{ address.name }}</span>
               </div>
               <div class="confirm-row">
                 <span class="confirm-label">📍 Deliver to</span>
-                <span class="confirm-val">{{ address.addressLine1 || 'Indore' }}</span>
+                <span class="confirm-val">{{ address.addressLine1 }}, {{ address.addressLine2 }}, {{ address.city }} - {{ address.pincode }}, {{ address.state }}</span>
               </div>
               <div class="confirm-row">
                 <span class="confirm-label">💳 Payment</span>
@@ -231,12 +212,6 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
                 <span class="confirm-label">🛒 Items</span>
                 <span class="confirm-val">{{ cartService.totalItems() }} items</span>
               </div>
-              @if (cartService.deliveryDistanceKm() > 0) {
-                <div class="confirm-row">
-                  <span class="confirm-label">📏 Distance</span>
-                  <span class="confirm-val">{{ cartService.deliveryDistanceKm() | number:'1.1-1' }} km</span>
-                </div>
-              }
               @if (cartService.discount() > 0) {
                 <div class="confirm-row discount-row">
                   <span class="confirm-label">🎟️ Coupon ({{ cartService.appliedCoupon()?.code }})</span>
@@ -371,158 +346,76 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
     .stepper { display: flex; align-items: center; justify-content: center; gap: 0; }
     .step-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
     .step-circle { width: 28px; height: 28px; border-radius: 50%; background: #EEE; color: #999; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-    .step-item.active .step-circle { background: #2E7D32; color: #fff; }
+    .step-item.active .step-circle { background: #0F172A; color: #fff; }
     .step-label { font-size: 10px; font-weight: 500; color: #999; white-space: nowrap; }
-    .step-item.active .step-label { color: #2E7D32; font-weight: 600; }
+    .step-item.active .step-label { color: #0F172A; font-weight: 600; }
     .step-line { height: 2px; width: 60px; background: #EEE; margin: 0 4px; margin-bottom: 20px; transition: background 0.3s; }
-    .step-line.active { background: #2E7D32; }
+    .step-line.active { background: #0F172A; }
 
     /* STEP CONTENT */
     .step-content { padding-top: 18px; padding-bottom: 140px; }
     .step-heading { font-size: 17px; font-weight: 800; margin-bottom: 16px; color: #1A1A1A; }
 
-    /* ADDRESS BLOCKS */
-    .addr-block {
-      background: #fff;
-      border-radius: 16px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    /* ADDRESS FORM */
+    .address-form-container {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       border: 1px solid #E5E7EB;
-      transition: all 0.2s;
-      &.drop-empty {
-        border: 1.5px dashed #CBD5E1;
-        background: #FAFAFA;
-      }
-      &.pulse-highlight {
-        animation: pulseRed 0.8s ease-in-out;
-        border-color: #EF4444;
-      }
     }
-    @keyframes pulseRed {
-      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-      70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    .address-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
-
-    .addr-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      &.green { background: #2E7D32; box-shadow: 0 0 0 4px rgba(46,125,50,0.18); }
-      &.red   { background: #E53935; box-shadow: 0 0 0 4px rgba(229,57,53,0.18); }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-    .addr-info { flex: 1; min-width: 0; }
-    .addr-label {
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 0.8px;
-      display: block;
-      margin-bottom: 2px;
-      &.green-tag { color: #2E7D32; }
-      &.red-tag { color: #E53935; }
-    }
-    .addr-main {
-      font-size: 13.5px;
+    .form-group label {
+      font-size: 11.5px;
       font-weight: 700;
-      color: #1A1A1A;
-      margin: 0;
-      line-height: 1.35;
-      word-break: break-word;
+      color: #374151;
     }
-    .addr-sub {
-      font-size: 11px;
-      color: #9CA3AF;
-      margin-top: 2px;
-      display: block;
-      &.verified { color: #15803D; font-weight: 600; }
-    }
-    .store-badge {
-      font-size: 11px;
-      font-weight: 700;
-      color: #2E7D32;
-      background: #E8F5E9;
-      padding: 4px 8px;
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #D1D5DB;
       border-radius: 8px;
-      flex-shrink: 0;
-    }
-
-    .map-pick-btn {
-      background: #2E7D32;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 9px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-      flex-shrink: 0;
+      font-size: 13.5px;
+      font-family: 'Poppins', sans-serif;
       transition: all 0.2s;
-      box-shadow: 0 3px 10px rgba(46,125,50,0.25);
-      &:hover { background: #1B5E20; transform: translateY(-1px); }
-      &:active { transform: scale(0.97); }
+      outline: none;
+      background: #F9FAFB;
     }
-
-    /* ROUTE CONNECTOR */
-    .route-separator {
+    .form-group input:focus, .form-group select:focus {
+      border-color: #0F172A;
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(15,23,42,0.1);
+    }
+    .form-group input.error, .form-group select.error {
+      border-color: #EF4444;
+      background: #FEF2F2;
+    }
+    .form-row {
       display: flex;
-      align-items: center;
       gap: 12px;
-      margin: 4px 0 4px 6px;
-      padding-left: 14px;
     }
-    .route-line-vert {
-      width: 2px;
-      height: 34px;
-      background: #D1D5DB;
-      border-radius: 99px;
+    .form-group.half {
+      flex: 1;
     }
-    .route-sep-chips { display: flex; gap: 6px; flex-shrink: 0; }
-    .sep-chip {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 999px;
-      &.dist { background: #EFF6FF; color: #1D4ED8; }
-      &.charge { background: #DCFCE7; color: #15803D; }
-      &.pending { background: #F3F4F6; color: #6B7280; font-size: 10px; }
+    .form-group.half-width {
+      width: 50%;
     }
-
-    /* CTA BANNER IF NO LOCATION */
-    .addr-cta-banner {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: linear-gradient(135deg, #ECFDF5, #F0FDF4);
-      border: 1.5px solid #A7F3D0;
-      border-radius: 14px;
-      padding: 12px 16px;
-      margin-top: 14px;
-      cursor: pointer;
-      transition: all 0.2s;
-      &:hover {
-        background: #DCFCE7;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 14px rgba(46,125,50,0.12);
-      }
-    }
-    .cta-banner-icon { font-size: 22px; flex-shrink: 0; }
-    .cta-banner-text { flex: 1; }
-    .cta-banner-title { font-size: 13px; font-weight: 700; color: #166534; margin: 0; }
-    .cta-banner-sub { font-size: 11px; color: #4B5563; margin: 2px 0 0; }
-    .cta-banner-arrow { font-size: 16px; color: #166534; font-weight: 700; }
 
     /* PAYMENT */
     .payment-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
     .payment-option { cursor: pointer; input { display: none; } }
     .payment-radio { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 2px solid transparent; transition: all 0.2s; }
-    .payment-option.selected .payment-radio { border-color: #4CAF50; background: #F1F8E9; }
-    .radio-circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #DDD; transition: all 0.2s; flex-shrink: 0; &.selected { border-color: #2E7D32; border-width: 6px; } }
+    .payment-option.selected .payment-radio { border-color: #0F172A; background: #F8FAFC; }
+    .radio-circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #DDD; transition: all 0.2s; flex-shrink: 0; &.selected { border-color: #0F172A; border-width: 6px; } }
     .payment-info { display: flex; align-items: center; gap: 12px; }
     .method-icon { font-size: 24px; }
     .method-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
@@ -541,8 +434,8 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
     .summary-price { font-size: 14px; font-weight: 700; }
     .summary-totals { margin-top: 12px; }
     .total-row { display: flex; justify-content: space-between; font-size: 13px; color: #555; margin-bottom: 8px; &.grand { font-size: 16px; font-weight: 800; color: #1A1A1A; } }
-    .discount-row { color: #2E7D32; font-weight: 600; }
-    .discount-val { color: #2E7D32; font-weight: 700; }
+    .discount-row { color: #166534; font-weight: 600; }
+    .discount-val { color: #166534; font-weight: 700; }
     .divider { height: 1px; background: #EEE; margin: 8px 0; }
 
     /* CONFIRM */
@@ -574,7 +467,7 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
       flex: 1;
     }
     .grand-row { align-items: center; }
-    .confirm-total { font-size: 20px; font-weight: 800; color: #2E7D32; }
+    .confirm-total { font-size: 20px; font-weight: 800; color: #0F172A; }
 
     /* CTA */
     .checkout-cta {
@@ -600,11 +493,11 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
-      box-shadow: 0 6px 20px rgba(46,125,50,0.35);
+      box-shadow: 0 6px 20px rgba(15,23,42,0.25);
       &:disabled { opacity: 0.7; cursor: not-allowed; }
     }
-    .btn-next { background: #2E7D32; color: #fff; &:hover { background: #1B5E20; transform: translateY(-2px); } }
-    .btn-place { background: linear-gradient(135deg, #2E7D32, #4CAF50); color: #fff; &:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(46,125,50,0.45); } }
+    .btn-next { background: #0F172A; color: #fff; &:hover { background: #1E293B; transform: translateY(-2px); } }
+    .btn-place { background: linear-gradient(135deg, #0F172A, #1E293B); color: #fff; &:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(15,23,42,0.45); } }
 
     /* EMPTY CART */
     .empty-cart-pane {
@@ -619,7 +512,7 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
     .empty-heading { font-size: 18px; font-weight: 800; color: #1F2937; margin: 0 0 6px; }
     .empty-desc { font-size: 13px; color: #6B7280; margin: 0 0 20px; line-height: 1.4; }
     .btn-browse-menu {
-      background: #2E7D32;
+      background: #0F172A;
       color: #FFFFFF;
       border: none;
       border-radius: 12px;
@@ -628,9 +521,9 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
-      box-shadow: 0 4px 14px rgba(46, 125, 50, 0.3);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.3);
       transition: all 0.2s;
-      &:hover { background: #1B5E20; transform: translateY(-2px); }
+      &:hover { background: #1E293B; transform: translateY(-2px); }
     }
 
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -670,12 +563,11 @@ export class CheckoutComponent {
   address = { 
     name: this.authService.currentUser()?.name || '', 
     phone: this.authService.currentUser()?.phone || '', 
-    addressLine1: this.authService.activeAddress().fullAddress || 'Atal Dwar, LIG, Indore', 
+    addressLine1: this.authService.activeAddress().fullAddress || '', 
     addressLine2: '', 
-    city: this.authService.activeAddress().detail || 'Indore', 
-    pincode: '452001',
-    lat: this.authService.activeAddress().lat || 22.7378,
-    lng: this.authService.activeAddress().lng || 75.8867
+    city: this.authService.activeAddress().detail || '', 
+    pincode: '',
+    state: ''
   };
 
   constructor() {
@@ -687,10 +579,8 @@ export class CheckoutComponent {
         if (user.phone) this.address.phone = user.phone;
       }
       if (active) {
-        this.address.addressLine1 = active.fullAddress;
-        this.address.city = active.detail;
-        this.address.lat = active.lat || 22.7378;
-        this.address.lng = active.lng || 75.8867;
+        if (active.fullAddress && !this.address.addressLine1) this.address.addressLine1 = active.fullAddress;
+        if (active.detail && !this.address.city) this.address.city = active.detail;
       }
     });
   }
@@ -714,28 +604,17 @@ export class CheckoutComponent {
   }
 
   nextStep(): void {
-    // Step 1 requires drop location to be selected
-    if (this.currentStep() === 1 && !this.cartService.dropDisplayName()) {
-      this.pulseDropError.set(true);
-      setTimeout(() => this.pulseDropError.set(false), 1200);
-      this.showToast('📍 Please select your delivery location on the map to continue.', 'warning');
-      this.showMapPicker.set(true);
-      return;
+    if (this.currentStep() === 1) {
+      const { name, phone, addressLine1, addressLine2, city, pincode, state } = this.address;
+      if (!name || !phone || !addressLine1 || !addressLine2 || !city || !pincode || !state) {
+        this.pulseDropError.set(true);
+        setTimeout(() => this.pulseDropError.set(false), 1200);
+        this.showToast('⚠️ Please fill out all required address fields.', 'warning');
+        return;
+      }
     }
     if (this.currentStep() < 3) {
       this.currentStep.update(v => v + 1);
-    }
-  }
-
-  onMapLocationConfirmed(): void {
-    const drop = this.cartService.dropDisplayName();
-    const lat  = this.cartService.dropLat();
-    const lng  = this.cartService.dropLng();
-    if (drop) {
-      this.address.addressLine1 = drop;
-      this.address.lat = lat;
-      this.address.lng = lng;
-      this.showToast('✓ Delivery location updated successfully!', 'success');
     }
   }
 
@@ -760,17 +639,15 @@ export class CheckoutComponent {
       deliveryAddress: {
         name: this.address.name || 'Customer',
         phone: customerPhone,
-        addressLine1: this.address.addressLine1 || 'Indore',
+        addressLine1: this.address.addressLine1 || '',
         addressLine2: this.address.addressLine2 || '',
-        city: this.address.city || 'Indore',
-        pincode: this.address.pincode || '452001',
-        lat: this.address.lat,
-        lng: this.address.lng
+        city: this.address.city || '',
+        pincode: this.address.pincode || ''
       },
       items: this.cartService.items().map(item => ({
         productId: item.product.id,
         productName: item.product.name,
-        productImage: item.product.image || 'assets/images/mix-fruit-chaat.jpg',
+        productImage: item.product.image || 'assets/images/gift-box.png',
         quantity: item.quantity,
         price: item.product.price,
         total: item.totalPrice
@@ -818,16 +695,16 @@ export class CheckoutComponent {
           key: rzpKey,
           amount: grandTotal * 100, // in paise
           currency: 'INR',
-          name: 'FruitChat',
-          description: 'Healthy Fruit & Sprouts Order',
-          image: 'assets/images/mix-fruit-chaat.jpg',
+          name: 'Gift Aura',
+          description: 'Gift Aura Luxury Gifts & Hampers',
+          image: 'assets/images/gift-box.png',
           prefill: {
             name: orderPayload.customerName,
             contact: orderPayload.customerPhone,
-            email: orderPayload.customerEmail || 'customer@fruitchat.com'
+            email: orderPayload.customerEmail || 'customer@giftaura.com'
           },
           theme: {
-            color: '#2E7D32'
+            color: '#0F172A'
           },
           handler: async (response: any) => {
             await finalizeOrder(response.razorpay_payment_id || ('RZP_' + Date.now()));

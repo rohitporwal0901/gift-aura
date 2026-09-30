@@ -1,11 +1,8 @@
-import { Component, inject, signal, computed, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { DataService } from '../../core/services/data.service';
 import { CartService } from '../../core/services/cart.service';
-import { MapService } from '../../core/services/map.service';
-
-declare const L: any;
 
 @Component({
   selector: 'app-order-success',
@@ -13,26 +10,12 @@ declare const L: any;
   imports: [CommonModule, RouterLink],
   template: `
     <div class="success-page">
-      <!-- CONFETTI CIRCLES -->
+      <!-- CELEBRATION PARTICLES -->
       <div class="confetti" aria-hidden="true">
         @for (style of confettiStyles; track $index) {
           <div class="confetti-piece" [style]="style"></div>
         }
       </div>
-
-      <!-- MINI LIVE MAP -->
-        <div class="success-map-wrap">
-          <div #miniMapEl class="success-mini-map"></div>
-          <div class="map-overlay-label">
-            <span class="mol-dot green"></span>
-            <span>Atal Dwar</span>
-            <div class="mol-line"></div>
-            <span class="mol-emoji">🛵</span>
-            <div class="mol-line"></div>
-            <span class="mol-dot red"></span>
-            <span>Your Location</span>
-          </div>
-        </div>
 
       <!-- SUCCESS CARD -->
       <div class="success-card animate-scaleIn">
@@ -43,66 +26,88 @@ declare const L: any;
         </div>
 
         <h1 class="success-title">Order Placed<br>Successfully!</h1>
-        <p class="success-sub">Thank you for choosing FruitChat!<br>Your order <strong>#{{ orderId() }}</strong> has been placed.</p>
+        <p class="success-sub">Thank you for choosing <strong>Gift Aura</strong>!<br>Your order <strong>#{{ orderId() }}</strong> has been confirmed.</p>
 
-        <div class="success-info">
-          <p>We'll notify you once it's out for delivery.</p>
+        <!-- STATUS BADGE -->
+        <div class="status-pill">
+          <span class="pulse-dot"></span>
+          <span>Order Confirmed & Being Prepared</span>
         </div>
 
-        <!-- ETA -->
-        <div class="eta-box">
-          <span class="eta-icon">🕐</span>
-          <div>
-            <p class="eta-label">Estimated Delivery</p>
-            <p class="eta-val">25–30 minutes</p>
+        <!-- DETAILS CARD -->
+        @if (order()) {
+          <div class="order-summary-box">
+            <div class="summary-row">
+              <span class="s-label">Payment</span>
+              <span class="s-val highlight">{{ order()?.paymentMethod || 'Online' }} (Paid)</span>
+            </div>
+            <div class="summary-row">
+              <span class="s-label">Total Amount</span>
+              <span class="s-val bold">₹{{ order()?.grandTotal }}</span>
+            </div>
+            @if (order()?.deliveryAddress; as addr) {
+              <div class="summary-divider"></div>
+              <div class="address-preview">
+                <div class="addr-title">📍 Delivery To</div>
+                <div class="addr-name">{{ addr.name }} ({{ addr.phone }})</div>
+                <div class="addr-text">
+                  {{ addr.addressLine1 }}{{ addr.addressLine2 ? ', ' + addr.addressLine2 : '' }},
+                  {{ addr.city }} - {{ addr.pincode }}
+                </div>
+              </div>
+            }
           </div>
-        </div>
+        }
+
+        <!-- ITEMS PREVIEW -->
+        @if (order()?.items?.length) {
+          <div class="items-list">
+            <div class="items-heading">Items Ordered ({{ order()!.items.length }})</div>
+            @for (item of order()!.items; track item.productId) {
+              <div class="item-row">
+                <img [src]="item.productImage || 'assets/images/gift-box.png'" [alt]="item.productName" class="item-img" />
+                <div class="item-details">
+                  <div class="item-name">{{ item.productName }}</div>
+                  <div class="item-qty">Qty: {{ item.quantity }} × ₹{{ item.price }}</div>
+                </div>
+                <div class="item-total">₹{{ item.total }}</div>
+              </div>
+            }
+          </div>
+        }
 
         <!-- ACTIONS -->
         <div class="success-actions">
-          <a [routerLink]="['/track-order', orderId()]" class="btn-track">
-            📍 Track Order
-          </a>
+          <button (click)="openProfileOrders()" class="btn-profile">
+            📦 View in My Orders
+          </button>
           <a routerLink="/" class="btn-home">
-            🏠 Back to Home
+            🛍️ Continue Shopping
           </a>
         </div>
       </div>
-
-      <!-- ITEMS PREVIEW -->
-      @if (order()?.items?.length) {
-        <div class="order-preview">
-          @for (item of order()!.items.slice(0, 3); track item.productId) {
-            <div class="preview-item">
-              <img [src]="item.productImage || 'assets/images/mix-fruit-chaat.jpg'" [alt]="item.productName">
-              <span>{{ item.productName }} (x{{ item.quantity }})</span>
-            </div>
-          }
-        </div>
-      }
     </div>
-
   `,
   styles: [`
     .success-page {
       min-height: 100vh;
-      background: linear-gradient(160deg, #F1F8E9 0%, #E8F5E9 40%, #DCEDC8 100%);
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px 20px 100px;
+      padding: 32px 16px 80px;
       position: relative;
       overflow: hidden;
     }
 
     /* CONFETTI */
-    .confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
     .confetti-piece {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
       animation: confettiFall linear infinite;
     }
     @keyframes confettiFall {
@@ -112,23 +117,22 @@ declare const L: any;
 
     /* SUCCESS CARD */
     .success-card {
-      background: #fff;
-      border-radius: 28px;
-      padding: 36px 28px 28px;
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 32px 24px 28px;
       text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      max-width: 380px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+      max-width: 440px;
       width: 100%;
-      margin-bottom: 20px;
       position: relative;
       z-index: 1;
     }
 
     /* CHECK CIRCLE */
     .check-circle {
-      width: 88px;
-      height: 88px;
-      margin: 0 auto 20px;
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 16px;
       position: relative;
       display: flex;
       align-items: center;
@@ -139,23 +143,23 @@ declare const L: any;
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      border: 4px solid #4CAF50;
+      border: 3px solid #10B981;
       animation: ringPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
     }
 
     .check-mark {
-      width: 72px;
-      height: 72px;
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #4CAF50, #2E7D32);
+      background: linear-gradient(135deg, #10B981, #059669);
       color: #fff;
-      font-size: 36px;
+      font-size: 32px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       animation: bounceIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
-      box-shadow: 0 8px 24px rgba(46,125,50,0.35);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
     }
 
     @keyframes ringPop {
@@ -164,234 +168,234 @@ declare const L: any;
     }
     @keyframes bounceIn {
       from { transform: scale(0); }
-      60% { transform: scale(1.2); }
+      60% { transform: scale(1.15); }
       to { transform: scale(1); }
     }
 
-    .success-title { font-size: 24px; font-weight: 800; color: #1A1A1A; line-height: 1.2; margin-bottom: 12px; }
-    .success-sub { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 16px; }
-    .success-info { background: #F1F8E9; border-radius: 12px; padding: 10px 16px; margin-bottom: 16px; font-size: 13px; color: #2E7D32; font-weight: 500; }
-
-    .eta-box {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: #FFF8E1;
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 24px;
-      text-align: left;
-      .eta-icon { font-size: 28px; }
-      .eta-label { font-size: 11px; color: #999; font-weight: 500; }
-      .eta-val { font-size: 16px; font-weight: 800; color: #F57F17; }
+    .success-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0F172A;
+      line-height: 1.2;
+      margin-bottom: 8px;
     }
 
-    .success-actions { display: flex; flex-direction: column; gap: 10px; }
+    .success-sub {
+      font-size: 13.5px;
+      color: #64748B;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
 
-    .btn-track, .btn-home {
-      display: block;
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ECFDF5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+      animation: dotPulse 1.5s infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* SUMMARY BOX */
+    .order-summary-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 14px 16px;
+      text-align: left;
+      margin-bottom: 16px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .s-label { color: #64748B; }
+    .s-val { color: #1E293B; font-weight: 600; }
+    .s-val.highlight { color: #059669; }
+    .s-val.bold { font-size: 15px; font-weight: 800; color: #0F172A; }
+
+    .summary-divider {
+      height: 1px;
+      background: #E2E8F0;
+      margin: 10px 0;
+    }
+
+    .address-preview {
+      font-size: 12.5px;
+    }
+    .addr-title {
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 2px;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .addr-name {
+      font-weight: 600;
+      color: #0F172A;
+    }
+    .addr-text {
+      color: #64748B;
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    /* ITEMS LIST */
+    .items-list {
+      background: #FFFFFF;
+      border: 1px solid #F1F5F9;
       border-radius: 14px;
-      padding: 14px;
-      font-size: 15px;
+      padding: 12px;
+      margin-bottom: 20px;
+      text-align: left;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    .items-heading {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94A3B8;
+      margin-bottom: 8px;
+    }
+    .item-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid #F8FAFC;
+    }
+    .item-row:last-child {
+      border-bottom: none;
+    }
+    .item-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #F1F5F9;
+    }
+    .item-details {
+      flex: 1;
+      min-width: 0;
+    }
+    .item-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #1E293B;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .item-qty {
+      font-size: 11px;
+      color: #64748B;
+    }
+    .item-total {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0F172A;
+    }
+
+    /* ACTIONS */
+    .success-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-profile, .btn-home {
+      display: block;
+      width: 100%;
+      border-radius: 12px;
+      padding: 13px;
+      font-size: 14px;
       font-weight: 700;
       text-align: center;
       text-decoration: none;
       transition: all 0.2s;
       cursor: pointer;
+      border: none;
+      box-sizing: border-box;
     }
-
-    .btn-track {
-      background: #2E7D32;
-      color: #fff;
-      box-shadow: 0 6px 20px rgba(46,125,50,0.3);
-      &:hover { background: #1B5E20; transform: translateY(-2px); }
+    .btn-profile {
+      background: #0F172A;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
     }
-
+    .btn-profile:hover {
+      background: #1E293B;
+      transform: translateY(-1px);
+    }
     .btn-home {
-      background: #F8F9FA;
-      color: #1A1A1A;
-      border: 1.5px solid #EEE;
-      &:hover { background: #F1F8E9; border-color: #4CAF50; color: #2E7D32; }
+      background: #F8FAFC;
+      color: #334155;
+      border: 1.5px solid #E2E8F0;
+    }
+    .btn-home:hover {
+      background: #F1F5F9;
+      color: #0F172A;
     }
 
-    /* ORDER PREVIEW */
-    .order-preview {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
     }
-
-    .preview-item {
-      background: #fff;
-      border-radius: 14px;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      width: 100px;
-
-      img {
-        width: 70px;
-        height: 70px;
-        border-radius: 10px;
-        object-fit: cover;
-        margin-bottom: 6px;
-      }
-
-      span {
-        font-size: 11px;
-        font-weight: 600;
-        color: #555;
-        display: block;
-      }
+    .animate-scaleIn {
+      animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
     }
-
-    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-    .animate-scaleIn { animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
-
-    /* MINI MAP */
-    .success-map-wrap {
-      width: 100%;
-      max-width: 420px;
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 1;
-    }
-    .success-mini-map {
-      height: 200px;
-      width: 100%;
-    }
-    .map-overlay-label {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 12px 16px;
-    }
-    .mol-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      &.green { background: #4CAF50; box-shadow: 0 0 0 2px rgba(76,175,80,0.4); }
-      &.red   { background: #F44336; box-shadow: 0 0 0 2px rgba(244,67,54,0.4); }
-    }
-    .mol-line { flex: 1; height: 1px; background: rgba(255,255,255,0.4); }
-    .mol-emoji { font-size: 18px; }
-    .map-overlay-label span:not(.mol-dot):not(.mol-emoji) { font-size: 11px; color: #fff; font-weight: 600; white-space: nowrap; }
   `]
 })
-export class OrderSuccessComponent implements OnInit, OnDestroy {
+export class OrderSuccessComponent implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   dataService = inject(DataService);
   cartService = inject(CartService);
-  mapService  = inject(MapService);
-  orderId = signal('FC12345');
-
-  @ViewChild('miniMapEl') miniMapEl!: ElementRef<HTMLDivElement>;
+  orderId = signal('');
 
   order = computed(() => this.dataService.orders().find(o => o.id === this.orderId()));
   confettiStyles: string[] = [];
 
-  private miniMap: any = null;
-  private riderMarker: any = null;
-
   ngOnInit(): void {
     const id = this.route.snapshot.queryParamMap.get('orderId');
-    if (id) this.orderId.set(id);
+    if (id) {
+      this.orderId.set(id);
+    }
 
-    // Precalculate deterministic confetti styles to prevent NG0100
-    const colors = ['#2E7D32', '#4CAF50', '#FFC107', '#FF6B35', '#9C27B0', '#2196F3'];
-    this.confettiStyles = Array.from({ length: 20 }, (_, i) => {
+    const colors = ['#E11D48', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6'];
+    this.confettiStyles = Array.from({ length: 24 }, (_, i) => {
       const color = colors[i % colors.length];
       const left = ((i * 17 + 7) % 96);
-      const delay = (i * 0.25) % 4;
-      const duration = 2.5 + ((i * 3) % 4);
+      const delay = (i * 0.2) % 3;
+      const duration = 2.2 + ((i * 3) % 3);
       return `left:${left}%;background:${color};animation-delay:${delay}s;animation-duration:${duration}s;top:-20px;`;
     });
-
-    // Init mini map after DOM renders
-    setTimeout(() => this.initMiniMap(), 400);
   }
 
-  ngOnDestroy(): void {
-    if (this.miniMap) { this.miniMap.remove(); this.miniMap = null; }
-  }
-
-  private initMiniMap(): void {
-    if (!this.miniMapEl?.nativeElement || typeof L === 'undefined') return;
-
-    const PICKUP_LAT = 22.7378;
-    const PICKUP_LNG = 75.8867;
-
-    const dropLat = this.cartService.dropLat() || 22.7196;
-    const dropLng = this.cartService.dropLng() || 75.8577;
-
-    this.miniMap = L.map(this.miniMapEl.nativeElement, {
-      zoomControl: false, attributionControl: false,
-      dragging: false, scrollWheelZoom: false
-    }).setView([PICKUP_LAT, PICKUP_LNG], 13);
-
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 }).addTo(this.miniMap);
-
-    // Pickup marker
-    const pIcon = L.divIcon({
-      html: `<div style="background:#2E7D32;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>`,
-      className: '', iconSize: [16, 16], iconAnchor: [8, 8]
-    });
-    L.marker([PICKUP_LAT, PICKUP_LNG], { icon: pIcon }).addTo(this.miniMap);
-
-    // Drop marker
-    const dIcon = L.divIcon({
-      html: '<div style="font-size:22px">🏠</div>',
-      className: '', iconSize: [22, 22], iconAnchor: [11, 22]
-    });
-    L.marker([dropLat, dropLng], { icon: dIcon }).addTo(this.miniMap);
-
-    this.miniMap.fitBounds([[PICKUP_LAT, PICKUP_LNG], [dropLat, dropLng]], { padding: [20, 20] });
-
-    // Draw route + animate rider
-    this.drawMiniRoute(PICKUP_LAT, PICKUP_LNG, dropLat, dropLng);
-  }
-
-  private async drawMiniRoute(fromLat: number, fromLng: number, toLat: number, toLng: number): Promise<void> {
-    try {
-      const url = `https://router.project-osrm.org/route/v1/driving/${fromLng},${fromLat};${toLng},${toLat}?overview=full&geometries=geojson`;
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.code !== 'Ok' || !data.routes?.length) return;
-
-      const coords: [number, number][] = data.routes[0].geometry.coordinates
-        .map((c: any) => [c[1], c[0]] as [number, number]);
-
-      L.polyline(coords, { color: '#2E7D32', weight: 3, opacity: 0.8, dashArray: '6, 4' }).addTo(this.miniMap);
-
-      // Animated rider
-      const bikeIcon = L.divIcon({
-        html: '<div style="font-size:22px">🛵</div>',
-        className: '', iconSize: [22, 22], iconAnchor: [11, 22]
-      });
-      this.riderMarker = L.marker(coords[0], { icon: bikeIcon }).addTo(this.miniMap);
-
-      let idx = 0;
-      const interval = Math.max(1200, 30000 / coords.length);
-      const move = () => {
-        if (!this.riderMarker || !this.miniMap) return;
-        if (idx >= coords.length) idx = 0;
-        this.riderMarker.setLatLng(coords[idx]);
-        idx++;
-        setTimeout(move, interval);
-      };
-      setTimeout(move, 600);
-    } catch { /* ignore */ }
+  openProfileOrders(): void {
+    this.cartService.setDrawerMode('profile');
+    this.cartService.openDrawer();
+    this.router.navigate(['/']);
   }
 }
