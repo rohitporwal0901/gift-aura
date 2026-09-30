@@ -329,3 +329,33 @@ button {
   animation: fadeInUp 0.4s ease both;
 }
 
+/* =================== DRAWER SCROLL LOCK =================== */
+html.drawer-open,
+body.drawer-open {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  touch-action: none;
+}
+
+.drawer-panel {
+  touch-action: auto !important;
+}
+
+.drawer-panel app-profile,
+.drawer-panel app-checkout,
+.drawer-panel app-auth-modal {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.drawer-body,
+.profile-page.inline,
+.checkout-wrapper {
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch;
+}
+

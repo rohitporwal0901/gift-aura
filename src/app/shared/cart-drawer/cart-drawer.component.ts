@@ -15,7 +15,7 @@ import { Product } from '../../core/models/product.model';
   imports: [CommonModule, RouterLink, FormsModule, AuthModalComponent, CheckoutComponent, ProfileComponent],
   template: `
     @if (cartService.isOpenDrawer()) {
-      <div class="drawer-backdrop" (click)="close()"></div>
+      <div class="drawer-backdrop" (click)="close()" (touchmove)="$event.preventDefault()" (wheel)="$event.preventDefault()"></div>
       <div class="drawer-panel animate-slide-left">
         @if (authService.authLoading()) {
           <div class="drawer-loading">

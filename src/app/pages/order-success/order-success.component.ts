@@ -396,8 +396,6 @@ export class OrderSuccessComponent implements OnInit {
   }
 
   openProfileOrders(): void {
-    this.cartService.setDrawerMode('profile');
-    this.cartService.openDrawer();
-    this.router.navigate(['/']);
+    this.cartService.openProfile();
   }
 }

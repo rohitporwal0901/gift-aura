@@ -18,8 +18,12 @@ export class CartService {
   isOpenDrawer = signal<boolean>(false);
   drawerMode = signal<'cart' | 'checkout' | 'profile'>('cart');
 
-  openDrawer(): void {
-    this.drawerMode.set('cart');
+  openDrawer(mode?: 'cart' | 'checkout' | 'profile'): void {
+    if (mode) {
+      this.drawerMode.set(mode);
+    } else if (this.drawerMode() === 'checkout' && !this.isOpenDrawer()) {
+      this.drawerMode.set('cart');
+    }
     this.isOpenDrawer.set(true);
   }
 
@@ -81,6 +85,20 @@ export class CartService {
 
   constructor() {
     this.loadStoredLocation();
+
+    // Lock background screen scroll when drawer is open
+    effect(() => {
+      const isOpen = this.isOpenDrawer();
+      if (typeof document !== 'undefined') {
+        if (isOpen) {
+          document.body.classList.add('drawer-open');
+          document.documentElement.classList.add('drawer-open');
+        } else {
+          document.body.classList.remove('drawer-open');
+          document.documentElement.classList.remove('drawer-open');
+        }
+      }
+    });
 
     // Auto-persist cart items
     effect(() => {
