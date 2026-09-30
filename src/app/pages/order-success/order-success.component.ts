@@ -96,9 +96,10 @@ import { CartService } from '../../core/services/cart.service';
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 32px 16px 80px;
+      padding: 20px 16px 60px;
       position: relative;
       overflow: hidden;
+      font-family: 'Outfit', sans-serif;
     }
 
     /* CONFETTI */
@@ -118,11 +119,11 @@ import { CartService } from '../../core/services/cart.service';
     /* SUCCESS CARD */
     .success-card {
       background: #FFFFFF;
-      border-radius: 24px;
-      padding: 32px 24px 28px;
+      border-radius: 20px;
+      padding: 24px 20px 22px;
       text-align: center;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-      max-width: 440px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      max-width: 420px;
       width: 100%;
       position: relative;
       z-index: 1;
@@ -173,18 +174,18 @@ import { CartService } from '../../core/services/cart.service';
     }
 
     .success-title {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       color: #0F172A;
       line-height: 1.2;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .success-sub {
-      font-size: 13.5px;
+      font-size: 12.5px;
       color: #64748B;
-      line-height: 1.5;
-      margin-bottom: 16px;
+      line-height: 1.45;
+      margin-bottom: 14px;
     }
 
     .status-pill {
@@ -323,34 +324,35 @@ import { CartService } from '../../core/services/cart.service';
     .success-actions {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     .btn-profile, .btn-home {
       display: block;
       width: 100%;
-      border-radius: 12px;
-      padding: 13px;
-      font-size: 14px;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13.5px;
       font-weight: 700;
       text-align: center;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.18s;
       cursor: pointer;
       border: none;
       box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
     }
     .btn-profile {
       background: #0F172A;
       color: #FFFFFF;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.22);
     }
     .btn-profile:hover {
       background: #1E293B;
       transform: translateY(-1px);
     }
     .btn-home {
-      background: #F8FAFC;
-      color: #334155;
+      background: transparent;
+      color: #64748B;
       border: 1.5px solid #E2E8F0;
     }
     .btn-home:hover {
