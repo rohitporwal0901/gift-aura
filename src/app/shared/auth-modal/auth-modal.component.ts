@@ -2,6 +2,7 @@ import { Component, inject, signal, ViewChildren, QueryList, ElementRef, Input }
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { CartService } from '../../core/services/cart.service';
 import { User } from '../../core/models/user.model';
 
 type AuthStep = 'phone' | 'pin' | 'register';
@@ -17,27 +18,16 @@ type AuthStep = 'phone' | 'pin' | 'register';
         <!-- DRAG HANDLE -->
         <div class="sheet-handle"></div>
 
-        <!-- HEADER -->
-        <div class="auth-header" *ngIf="!inlineMode">
-          <div class="brand-pill">
-            <svg viewBox="0 0 160 46" fill="none" xmlns="http://www.w3.org/2000/svg" height="38" width="auto">
-              <g transform="translate(0, 2)">
-                <path d="M16 7 Q20 3 24 7" stroke="#D4A017" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-                <path d="M24 7 Q28 3 32 7" stroke="#D4A017" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-                <circle cx="24" cy="7" r="1.8" fill="#D4A017"/>
-                <rect x="11" y="8" width="26" height="6" rx="1.5" fill="#D4A017"/>
-                <rect x="23" y="8" width="2.8" height="6" fill="#B8860B"/>
-                <rect x="12" y="15" width="24" height="17" rx="1.5" fill="#111111"/>
-                <rect x="23" y="15" width="2.8" height="17" fill="#D4A017"/>
-                <circle cx="9" cy="6" r="1" fill="#D4A017" opacity="0.7"/>
-                <circle cx="39" cy="4" r="0.9" fill="#D4A017" opacity="0.6"/>
-              </g>
-              <text x="44" y="28" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="21" fill="#111111" letter-spacing="-0.5">GIFT</text>
-              <text x="90" y="28" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="21" fill="#D4A017" letter-spacing="-0.5">AURA</text>
-              <text x="44" y="39" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="6.5" fill="#888888" letter-spacing="1.4">CUSTOM GIFTS &amp; PRINTING</text>
+        <!-- TOP BAR WITH BACK & CLOSE -->
+        <div class="auth-top-nav">
+          <button class="back-nav-btn" (click)="handleBack()" type="button" aria-label="Go Back">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-          </div>
-          <button class="close-btn" (click)="close()" type="button" aria-label="Close">✕</button>
+            <span>Back</span>
+          </button>
+          
         </div>
 
         <!-- ERROR ALERT -->
@@ -241,14 +231,67 @@ type AuthStep = 'phone' | 'pin' | 'register';
     .auth-inline-sheet {
       width: 100%;
       height: 100%;
-      padding: 30px 24px;
+      padding: 20px 20px 30px;
       overflow-y: auto;
       background: #ffffff;
     }
 
+    .auth-top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .back-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      color: #18181b;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #e4e4e7;
+        color: #000000;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    .close-nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
+      color: #71717a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #18181b;
+        color: #ffffff;
+      }
+    }
+
     .inline-logo-wrap {
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       margin-bottom: 20px;
       line-height: 0;
     }
@@ -801,7 +844,21 @@ export class AuthModalComponent {
     }
   }
 
+  private cartService = inject(CartService);
+
+  handleBack(): void {
+    if (this.step() !== 'phone') {
+      this.step.set('phone');
+      this.errorMessage.set('');
+    } else {
+      this.close();
+    }
+  }
+
   close(): void {
     this.authService.closeAuthModal();
+    if (this.inlineMode) {
+      this.cartService.closeDrawer();
+    }
   }
 }

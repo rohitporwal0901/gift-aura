@@ -44,11 +44,7 @@ interface ReelItem {
               <div class="hero-overlay"></div>
               <div class="container hero-content-container">
                 <div class="hero-text-block animate-fade-in-up">
-                  <div class="hero-badge-pill">
-                    <span class="badge-sparkle">✦</span> {{ slide.badge }}
-                  </div>
                   <h1 class="hero-main-title">{{ slide.title }}</h1>
-                  <p class="hero-subtext">{{ slide.subtitle }}</p>
                   <div class="hero-btn-row">
                     <a [routerLink]="slide.btnLink" [queryParams]="slide.queryParams" class="gl-btn-primary hero-btn-main">
                       <span>{{ slide.btnText }}</span>
@@ -56,9 +52,6 @@ interface ReelItem {
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
                       </svg>
-                    </a>
-                    <a href="#inquiry" class="gl-btn-outline hero-btn-sub">
-                      Bulk Order Inquiry
                     </a>
                   </div>
                 </div>
@@ -87,9 +80,6 @@ interface ReelItem {
         </div>
       </section>
 
-     
-
-      <!-- 2. INSIDE GIFTAURA (Behind-the-scenes Reels & Factory) -->
       <!-- 2. INSIDE GIFTAURA (Behind-the-scenes Reels & Factory) -->
       <section class="gl-section inside-gl-section">
         <div class="container">
@@ -123,12 +113,7 @@ interface ReelItem {
                     <div class="reel-bottom-overlay">
                       <div class="reel-tag-badge">{{ reel.name }}</div>
                       <h4 class="reel-title">{{ reel.title }}</h4>
-                      <span class="reel-action-btn">
-                        Watch Reel
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                          <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                      </span>
+                     
                     </div>
                   </div>
                 </div>
@@ -232,12 +217,22 @@ interface ReelItem {
                   <a [routerLink]="['/product', product.id]" class="pcard-title-link">
                     <h3 class="pcard-title">{{ product.name }}</h3>
                   </a>
-                  <div class="pcard-price-row">
-                    <span class="price-current">₹{{ product.price }}</span>
-                    @if (product.originalPrice && product.originalPrice > product.price) {
-                      <span class="price-original">₹{{ product.originalPrice }}</span>
-                      <span class="price-save">Save ₹{{ product.originalPrice - product.price }}</span>
-                    }
+                  <div class="pcard-footer-row">
+                    <div class="pcard-price-row">
+                      <span class="price-current">₹{{ product.price }}</span>
+                      @if (product.originalPrice && product.originalPrice > product.price) {
+                        <span class="price-original">₹{{ product.originalPrice }}</span>
+                        <span class="price-save">Save ₹{{ product.originalPrice - product.price }}</span>
+                      }
+                    </div>
+                    <button class="pcard-mobile-cart-btn" (click)="addToCart(product)" aria-label="Add to Cart">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                      </svg>
+                      <span>Add</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -262,34 +257,43 @@ interface ReelItem {
             <p class="gl-section-subtitle">From startup welcome kits to 5,000+ corporate uniform orders, we deliver uncompromised quality.</p>
           </div>
 
-          <div class="why-grid">
-            <div class="why-card">
-              <div class="why-icon-box">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="why-slider-container">
+            <div class="why-track" #whyTrack (scroll)="onWhyScroll(whyTrack)">
+              <div class="why-card" id="why-slide-0">
+                <div class="why-icon-box">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3 class="why-card-title">Executive Grade Quality</h3>
+                <p class="why-card-desc">High-density 240+ GSM cotton fabrics, stainless steel flasks &amp; precision German laser branding.</p>
               </div>
-              <h3 class="why-card-title">Executive Grade Quality</h3>
-              <p class="why-card-desc">High-density 240+ GSM cotton fabrics, stainless steel flasks &amp; precision German laser branding.</p>
+              <div class="why-card" id="why-slide-1">
+                <div class="why-icon-box">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                </div>
+                <h3 class="why-card-title">In-House Customization</h3>
+                <p class="why-card-desc">Laser engraving, multi-color UV printing, digital embroidery &amp; custom debossing directly at our facility.</p>
+              </div>
+              <div class="why-card" id="why-slide-2">
+                <div class="why-icon-box">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                </div>
+                <h3 class="why-card-title">Direct Factory Pricing</h3>
+                <p class="why-card-desc">No middle-men markup. Get tiered corporate discounts, GST tax invoicing &amp; flexible payment terms.</p>
+              </div>
+              <div class="why-card" id="why-slide-3">
+                <div class="why-icon-box">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                </div>
+                <h3 class="why-card-title">Pan-India Express Dispatch</h3>
+                <p class="why-card-desc">Reliable courier network delivering to 19,000+ pin codes with live consignment tracking.</p>
+              </div>
             </div>
-            <div class="why-card">
-              <div class="why-icon-box">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-              </div>
-              <h3 class="why-card-title">In-House Customization</h3>
-              <p class="why-card-desc">Laser engraving, multi-color UV printing, digital embroidery &amp; custom debossing directly at our facility.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-icon-box">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-              </div>
-              <h3 class="why-card-title">Direct Factory Pricing</h3>
-              <p class="why-card-desc">No middle-men markup. Get tiered corporate discounts, GST tax invoicing &amp; flexible payment terms.</p>
-            </div>
-            <div class="why-card">
-              <div class="why-icon-box">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-              </div>
-              <h3 class="why-card-title">Pan-India Express Dispatch</h3>
-              <p class="why-card-desc">Reliable courier network delivering to 19,000+ pin codes with live consignment tracking.</p>
+
+            <!-- WHY CHOOSE SLIDER INDICATORS -->
+            <div class="why-indicators">
+              @for (item of [0, 1, 2, 3]; track item) {
+                <button class="why-dot" [class.active]="currentWhyIndex() === item" (click)="setWhyIndex(item)" [attr.aria-label]="'Go to advantage ' + (item + 1)"></button>
+              }
             </div>
           </div>
         </div>
@@ -304,25 +308,46 @@ interface ReelItem {
             <p class="gl-section-subtitle">Trusted by 500+ Indian enterprises, coaching hubs &amp; high-growth startups</p>
           </div>
 
-          <div class="reviews-wrapper">
-            <div class="reviews-grid">
-              @for (rev of customerReviews; track rev.name) {
-                <div class="review-card">
-                  <div class="rev-card-header">
-                    <div class="rev-stars">★★★★★</div>
-                    <span class="rev-verified-pill">✔ Verified Order</span>
-                  </div>
-                  <h4 class="rev-card-title">{{ rev.title }}</h4>
-                  <p class="rev-body">"{{ rev.comment }}"</p>
-                  <div class="rev-author-row">
-                    <div class="rev-avatar">{{ rev.name[0] }}</div>
-                    <div class="rev-details">
-                      <span class="rev-name">{{ rev.name }}</span>
-                      <span class="rev-company">{{ rev.company }}</span>
+          <div class="reviews-slider-container">
+            <div class="reviews-track" #reviewsTrack (scroll)="onReviewsScroll(reviewsTrack)">
+              @for (rev of customerReviews; track rev.name; let i = $index) {
+                <div class="review-slide" [id]="'review-slide-' + i">
+                  <div class="review-card">
+                    <div class="rev-card-header">
+                      <div class="rev-stars">★★★★★</div>
+                      <span class="rev-verified-pill">✔ Verified Order</span>
+                    </div>
+                    <h4 class="rev-card-title">{{ rev.title }}</h4>
+                    <p class="rev-body">"{{ rev.comment }}"</p>
+                    <div class="rev-author-row">
+                      <div class="rev-avatar">{{ rev.name[0] }}</div>
+                      <div class="rev-details">
+                        <span class="rev-name">{{ rev.name }}</span>
+                        <span class="rev-company">{{ rev.company }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               }
+            </div>
+
+            <!-- REVIEWS SLIDER INDICATORS & CONTROLS -->
+            <div class="reviews-controls">
+              <button class="rev-nav-btn prev" (click)="prevReviewSlide()" aria-label="Previous Review">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <div class="reviews-indicators">
+                @for (rev of customerReviews; track rev.name; let i = $index) {
+                  <button class="rev-dot" [class.active]="currentReviewIndex() === i" (click)="setReviewIndex(i)" [attr.aria-label]="'Go to review ' + (i + 1)"></button>
+                }
+              </div>
+              <button class="rev-nav-btn next" (click)="nextReviewSlide()" aria-label="Next Review">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -416,10 +441,11 @@ interface ReelItem {
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 
       @media (max-width: 768px) {
-        margin: 12px;
+        margin: 8px 10px 18px;
         border-radius: var(--radius-lg);
-        height: 520px;
-        width: calc(100% - 24px);
+        height: 380px;
+        width: calc(100% - 20px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
       }
     }
 
@@ -447,7 +473,7 @@ interface ReelItem {
       transition: transform 6s ease-out;
 
       @media (max-width: 768px) {
-        object-position: 70% center;
+        object-position: center 38%;
       }
     }
 
@@ -459,19 +485,20 @@ interface ReelItem {
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        90deg,
-        rgba(12, 14, 20, 0.92) 0%,
-        rgba(12, 14, 20, 0.75) 45%,
-        rgba(12, 14, 20, 0.35) 75%,
-        rgba(12, 14, 20, 0.2) 100%
+        0deg,
+        rgba(10, 12, 18, 0.94) 0%,
+        rgba(10, 12, 18, 0.72) 28%,
+        rgba(10, 12, 18, 0.25) 55%,
+        rgba(10, 12, 18, 0.0) 80%
       );
 
       @media (max-width: 768px) {
         background: linear-gradient(
-          180deg,
-          rgba(12, 14, 20, 0.3) 0%,
-          rgba(12, 14, 20, 0.85) 50%,
-          rgba(12, 14, 20, 0.98) 100%
+          0deg,
+          rgba(10, 12, 18, 0.95) 0%,
+          rgba(10, 12, 18, 0.75) 45%,
+          rgba(10, 12, 18, 0.15) 75%,
+          rgba(10, 12, 18, 0.0) 100%
         );
       }
     }
@@ -480,99 +507,45 @@ interface ReelItem {
       position: absolute;
       inset: 0;
       display: flex;
-      align-items: center;
-      padding: 0 40px;
+      align-items: flex-end; /* ALIGNED TO BOTTOM ON BOTH WEB & MOBILE */
+      padding: 0 48px 56px;
 
       @media (max-width: 768px) {
-        padding: 30px 18px 48px;
-        align-items: center;
+        padding: 0 16px 26px;
       }
     }
 
     .hero-text-block {
-      max-width: 640px;
+      max-width: 700px;
       color: #ffffff;
-      padding: 24px 0;
+      padding: 0;
       z-index: 2;
 
       @media (max-width: 768px) {
-        padding: 0;
-      }
-    }
-
-    .hero-badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      color: #fbbf24;
-      font-size: 11.5px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: var(--radius-full);
-      margin-bottom: 18px;
-      backdrop-filter: blur(8px);
-
-      @media (max-width: 768px) {
-        padding: 4px 10px;
-        font-size: 10px;
-        margin-bottom: 12px;
-      }
-
-      .badge-sparkle {
-        color: #f59e0b;
-        font-size: 12px;
+        width: 100%;
       }
     }
 
     .hero-main-title {
-      font-size: clamp(30px, 4.2vw, 52px);
+      font-size: clamp(24px, 3.8vw, 48px);
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.18;
       color: #ffffff;
       letter-spacing: -0.025em;
-      margin-bottom: 16px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      margin-bottom: 22px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
 
       @media (max-width: 768px) {
-        font-size: 22px;
+        font-size: 20px;
         line-height: 1.25;
-        margin-bottom: 8px;
-      }
-    }
-
-    .hero-subtext {
-      font-size: clamp(14px, 1.6vw, 17px);
-      color: #e2e8f0;
-      line-height: 1.6;
-      margin-bottom: 28px;
-      max-width: 560px;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-
-      @media (max-width: 768px) {
-        font-size: 12px;
-        margin-bottom: 16px;
-        line-height: 1.4;
+        margin-bottom: 14px;
+        letter-spacing: -0.01em;
       }
     }
 
     .hero-btn-row {
       display: flex;
       gap: 14px;
-      flex-wrap: wrap;
-
-      @media (max-width: 768px) {
-        flex-direction: row;
-        gap: 8px;
-
-        .hero-btn-main, .hero-btn-sub {
-          padding: 11px 18px;
-          font-size: 13px;
-        }
-      }
 
       .hero-btn-main {
         background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
@@ -580,7 +553,7 @@ interface ReelItem {
         font-weight: 700;
         font-size: 15px;
         border: none;
-        padding: 14px 30px;
+        padding: 13px 28px;
         border-radius: var(--radius-full);
         box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
         display: inline-flex;
@@ -595,23 +568,13 @@ interface ReelItem {
         }
       }
 
-      .hero-btn-sub {
-        border: 1px solid rgba(255, 255, 255, 0.35);
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(8px);
-        color: #ffffff;
-        font-weight: 600;
-        font-size: 15px;
-        padding: 14px 28px;
-        border-radius: var(--radius-full);
-        transition: all 0.3s ease;
-
-        &:hover {
-          background: #ffffff;
-          color: #111111;
-          border-color: #ffffff;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+      @media (max-width: 768px) {
+        .hero-btn-main {
+          padding: 10px 18px;
+          font-size: 12.5px;
+          font-weight: 700;
+          gap: 6px;
+          box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
         }
       }
     }
@@ -664,6 +627,11 @@ interface ReelItem {
       gap: 10px;
       z-index: 10;
 
+      @media (max-width: 768px) {
+        bottom: 10px;
+        gap: 6px;
+      }
+
       .indicator-dot {
         width: 32px;
         height: 4px;
@@ -674,135 +642,20 @@ interface ReelItem {
         padding: 0;
         transition: all 0.3s;
 
+        @media (max-width: 768px) {
+          width: 20px;
+          height: 3px;
+        }
+
         &.active {
           background: #f59e0b;
           width: 52px;
           box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
-        }
-      }
-    }
-
-    /* ── TRUST BAR ── */
-    .hero-trust-bar {
-      max-width: var(--container-max);
-      margin: 0 auto 36px;
-      background: #ffffff;
-      border-radius: var(--radius-lg);
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
-      border: 1px solid #ebe7df;
-      padding: 18px 28px;
-
-      @media (max-width: 768px) {
-        margin: -2px 10px 22px;
-        padding: 10px;
-        border-radius: 16px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-      }
-    }
-
-    .trust-bar-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 0;
-
-      @media (max-width: 992px) {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-
-      @media (max-width: 768px) {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-    }
-
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex: 1;
-
-      @media (max-width: 768px) {
-        background: #fbf9f4;
-        border: 1px solid #ede8dc;
-        border-radius: 12px;
-        padding: 9px 8px;
-        gap: 8px;
-      }
-
-      .trust-icon {
-        font-size: 22px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        background: #fbf9f4;
-        border: 1px solid #eee8db;
-        flex-shrink: 0;
-
-        @media (max-width: 768px) {
-          width: 32px;
-          height: 32px;
-          font-size: 15px;
-          border-radius: 8px;
-          background: #ffffff;
-          border: 1px solid #e7e2d5;
-        }
-      }
-
-      .trust-text {
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-
-        strong {
-          font-size: 14px;
-          font-weight: 700;
-          color: #1a1a1a;
-          line-height: 1.25;
 
           @media (max-width: 768px) {
-            font-size: 11px;
-            font-weight: 700;
-            line-height: 1.2;
-            color: #11141c;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            width: 32px;
           }
         }
-
-        span {
-          font-size: 12px;
-          color: #71717a;
-          margin-top: 2px;
-
-          @media (max-width: 768px) {
-            font-size: 9.5px;
-            color: #78716c;
-            line-height: 1.2;
-            margin-top: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-        }
-      }
-    }
-
-    .trust-divider {
-      width: 1px;
-      height: 38px;
-      background: #eee8db;
-
-      @media (max-width: 992px) {
-        display: none;
       }
     }
 
@@ -1104,6 +957,12 @@ interface ReelItem {
       align-items: center;
       z-index: 5;
       pointer-events: none;
+
+      @media (max-width: 767px) {
+        top: 6px;
+        left: 6px;
+        right: 6px;
+      }
     }
 
     .badge-bestseller {
@@ -1118,6 +977,14 @@ interface ReelItem {
       display: inline-flex;
       align-items: center;
       gap: 3px;
+
+      @media (max-width: 767px) {
+        font-size: 8.5px;
+        padding: 2px 5px;
+        border-radius: 4px;
+        gap: 2px;
+        .badge-icon { font-size: 9px; }
+      }
 
       .badge-icon {
         color: #f59e0b;
@@ -1135,6 +1002,12 @@ interface ReelItem {
       border-radius: 6px;
       letter-spacing: 0.5px;
       margin-left: auto;
+
+      @media (max-width: 767px) {
+        font-size: 8.5px;
+        padding: 2px 5px;
+        border-radius: 4px;
+      }
     }
 
     .pcard-media-box {
@@ -1180,8 +1053,7 @@ interface ReelItem {
       z-index: 6;
 
       @media (max-width: 768px) {
-        opacity: 1;
-        transform: translateY(0);
+        display: none; /* Hide hover actions on mobile so product photo is 100% visible */
       }
 
       .quick-view-action-btn {
@@ -1205,10 +1077,6 @@ interface ReelItem {
           background: #11141c;
           color: #ffffff;
           border-color: #11141c;
-        }
-
-        @media (max-width: 768px) {
-          display: none;
         }
       }
 
@@ -1234,12 +1102,6 @@ interface ReelItem {
           transform: translateY(-2px);
           box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
         }
-
-        @media (max-width: 768px) {
-          flex: 1;
-          padding: 8px 10px;
-          font-size: 11px;
-        }
       }
     }
 
@@ -1250,7 +1112,7 @@ interface ReelItem {
       flex: 1;
 
       @media (max-width: 767px) {
-        padding: 10px 10px 14px;
+        padding: 10px 10px 12px;
       }
 
       .pcard-rating {
@@ -1260,6 +1122,11 @@ interface ReelItem {
         font-size: 12px;
         color: #6b7280;
         margin-bottom: 6px;
+
+        @media (max-width: 767px) {
+          font-size: 11px;
+          margin-bottom: 4px;
+        }
 
         .star { color: #f59e0b; font-size: 13px; }
         .rating-val { font-weight: 700; color: #111; }
@@ -1275,63 +1142,86 @@ interface ReelItem {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        min-height: 40px;
-        margin-bottom: 12px;
+        height: 38px; /* Fixed height so all cards align evenly */
+        margin-bottom: 8px;
         transition: color 0.2s;
 
         @media (max-width: 767px) {
-          font-size: 13px;
-          min-height: 36px;
-          margin-bottom: 8px;
+          font-size: 12.5px;
+          height: 34px;
+          margin-bottom: 6px;
+          line-height: 1.3;
         }
 
         &:hover { color: #d4af37; }
       }
 
-      .pcard-price-row {
+      .pcard-footer-row {
         margin-top: auto;
         display: flex;
-        align-items: baseline;
-        gap: 8px;
-        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        min-height: 38px; /* Consistent baseline */
+      }
+
+      .pcard-mobile-cart-btn {
+        display: none;
 
         @media (max-width: 767px) {
-          gap: 5px;
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+          color: #111111;
+          border: none;
+          border-radius: var(--radius-full);
+          padding: 6px 12px;
+          font-size: 11px;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 3px 8px rgba(245, 158, 11, 0.25);
+          flex-shrink: 0;
+
+          &:active {
+            transform: scale(0.93);
+          }
         }
+      }
+
+      .pcard-price-row {
+        display: flex;
+        flex-direction: column; /* Current price on top, strikethrough price below: NEVER WRAPS */
+        justify-content: center;
+        line-height: 1.15;
+        min-width: 0;
 
         .price-current {
-          font-size: 17px;
+          font-size: 16px;
           font-weight: 800;
           color: #11141c;
           letter-spacing: -0.02em;
+          white-space: nowrap;
 
           @media (max-width: 767px) {
-            font-size: 15px;
+            font-size: 14px;
           }
         }
 
         .price-original {
-          font-size: 12.5px;
+          font-size: 11.5px;
           color: #9ca3af;
           text-decoration: line-through;
+          white-space: nowrap;
+          margin-top: 1px;
 
           @media (max-width: 767px) {
-            font-size: 11.5px;
+            font-size: 10.5px;
           }
         }
 
         .price-save {
-          font-size: 10.5px;
-          font-weight: 700;
-          color: #15803d;
-          background: #ecfdf5;
-          padding: 2px 6px;
-          border-radius: 4px;
-          margin-left: auto;
-
-          @media (max-width: 767px) {
-            display: none;
-          }
+          display: none;
         }
       }
     }
@@ -1472,21 +1362,41 @@ interface ReelItem {
     .why-choose-section {
       background: #ffffff;
       padding: 60px 0;
+
+      @media (max-width: 767px) {
+        padding: 40px 0 32px;
+      }
     }
 
-    .why-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      margin-top: 36px;
+    .why-slider-container {
+      position: relative;
+      margin-top: 32px;
 
-      @media (min-width: 640px) {
+      @media (max-width: 767px) {
+        margin-top: 24px;
+      }
+    }
+
+    .why-track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+
+      @media (max-width: 1023px) {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
       }
 
-      @media (min-width: 1024px) {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
+      @media (max-width: 767px) {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        gap: 14px;
+        padding: 8px 16px 16px;
+        margin: 0 -16px;
+        scrollbar-width: none;
+        &::-webkit-scrollbar { display: none; }
       }
     }
 
@@ -1501,6 +1411,15 @@ interface ReelItem {
       overflow: hidden;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
+      @media (max-width: 767px) {
+        flex: 0 0 78%;
+        min-width: 78%;
+        scroll-snap-align: center;
+        padding: 28px 20px;
+        border-radius: 18px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+      }
+
       &::before {
         content: '';
         position: absolute;
@@ -1513,7 +1432,7 @@ interface ReelItem {
       }
 
       &:hover {
-        transform: translateY(-6px);
+        transform: translateY(-4px);
         box-shadow: 0 16px 36px rgba(27, 33, 59, 0.09);
         border-color: #d4af37;
 
@@ -1522,22 +1441,39 @@ interface ReelItem {
         }
 
         .why-icon-box {
-          transform: scale(1.1);
+          transform: scale(1.08);
           background: #fde68a;
         }
       }
 
       .why-icon-box {
-        width: 60px;
-        height: 60px;
+        width: 58px;
+        height: 58px;
         border-radius: 16px;
         background: #fef3c7;
         border: 1px solid #fde68a;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 20px;
+        margin: 0 auto 18px;
         transition: all 0.3s ease;
+
+        svg {
+          width: 26px;
+          height: 26px;
+        }
+
+        @media (max-width: 767px) {
+          width: 52px;
+          height: 52px;
+          border-radius: 14px;
+          margin-bottom: 16px;
+
+          svg {
+            width: 24px;
+            height: 24px;
+          }
+        }
       }
 
       .why-card-title {
@@ -1546,38 +1482,105 @@ interface ReelItem {
         color: #11141c;
         margin-bottom: 10px;
         letter-spacing: -0.01em;
+
+        @media (max-width: 767px) {
+          font-size: 15px;
+          margin-bottom: 8px;
+        }
       }
 
       .why-card-desc {
         font-size: 13.5px;
         color: #52525b;
         line-height: 1.6;
+
+        @media (max-width: 767px) {
+          font-size: 12.5px;
+          line-height: 1.5;
+        }
       }
     }
 
-    /* ── 8. REVIEWS ── */
+    .why-indicators {
+      display: none;
+
+      @media (max-width: 767px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 14px;
+
+        .why-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: var(--radius-full);
+          background: #d1d5db;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          transition: all 0.25s ease;
+
+          &.active {
+            width: 22px;
+            background: #d4af37;
+          }
+        }
+      }
+    }
+
+    /* ── 8. REVIEWS SLIDER ── */
     .reviews-section {
       background: #fbfaf8;
       border-top: 1px solid #eee8db;
       padding: 60px 0;
+
+      @media (max-width: 767px) {
+        padding: 40px 0 46px;
+      }
     }
 
-    .reviews-wrapper {
+    .reviews-slider-container {
       position: relative;
-      margin-top: 36px;
-    }
-
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
+      margin-top: 28px;
 
       @media (min-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
+        margin-top: 36px;
+      }
+    }
+
+    .reviews-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 8px 4px 16px;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
+
+      @media (min-width: 1024px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        overflow-x: visible;
+        padding: 10px 0;
+      }
+    }
+
+    .review-slide {
+      flex: 0 0 88%;
+      min-width: 88%;
+      scroll-snap-align: center;
+
+      @media (min-width: 640px) {
+        flex: 0 0 70%;
+        min-width: 70%;
       }
 
       @media (min-width: 1024px) {
-        grid-template-columns: repeat(3, 1fr);
+        flex: auto;
+        min-width: 0;
       }
     }
 
@@ -1585,14 +1588,19 @@ interface ReelItem {
       background: #ffffff;
       border: 1px solid #ebe5d8;
       border-radius: 18px;
-      padding: 32px 28px;
+      padding: 24px 20px;
       display: flex;
       flex-direction: column;
       box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+      height: 100%;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
+      @media (min-width: 768px) {
+        padding: 32px 28px;
+      }
+
       &:hover {
-        transform: translateY(-6px);
+        transform: translateY(-4px);
         box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
         border-color: #d4af37;
       }
@@ -1601,7 +1609,7 @@ interface ReelItem {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 14px;
+        margin-bottom: 12px;
       }
 
       .rev-stars {
@@ -1616,14 +1624,14 @@ interface ReelItem {
         background: #ecfdf5;
         color: #15803d;
         border: 1px solid #a7f3d0;
-        font-size: 11px;
+        font-size: 10.5px;
         font-weight: 700;
         padding: 3px 8px;
         border-radius: var(--radius-full);
       }
 
       .rev-card-title {
-        font-size: 15.5px;
+        font-size: 15px;
         font-weight: 800;
         color: #11141c;
         margin-bottom: 8px;
@@ -1631,29 +1639,29 @@ interface ReelItem {
       }
 
       .rev-body {
-        font-size: 13.5px;
+        font-size: 13px;
         color: #52525b;
-        line-height: 1.65;
-        margin-bottom: 24px;
+        line-height: 1.6;
+        margin-bottom: 20px;
         flex: 1;
       }
 
       .rev-author-row {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
         margin-top: auto;
-        padding-top: 16px;
+        padding-top: 14px;
         border-top: 1px solid #f4f1ea;
 
         .rev-avatar {
-          width: 44px;
-          height: 44px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           background: linear-gradient(135deg, #11141c 0%, #2a2c36 100%);
           color: #fbbf24;
           font-weight: 800;
-          font-size: 16px;
+          font-size: 15px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1665,16 +1673,75 @@ interface ReelItem {
           flex-direction: column;
 
           .rev-name {
-            font-size: 14.5px;
+            font-size: 13.5px;
             font-weight: 700;
             color: #11141c;
           }
 
           .rev-company {
-            font-size: 12px;
+            font-size: 11.5px;
             color: #71717a;
-            margin-top: 2px;
+            margin-top: 1px;
           }
+        }
+      }
+    }
+
+    .reviews-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 18px;
+
+      @media (min-width: 1024px) {
+        display: none;
+      }
+    }
+
+    .rev-nav-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid #e5e0d4;
+      color: #11141c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #11141c;
+        color: #fbbf24;
+        border-color: #11141c;
+      }
+
+      &:active {
+        transform: scale(0.92);
+      }
+    }
+
+    .reviews-indicators {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .rev-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: var(--radius-full);
+        background: #d1d5db;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.25s ease;
+
+        &.active {
+          width: 24px;
+          background: #d4af37;
         }
       }
     }
@@ -2029,10 +2096,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   heroSlides: HeroSlide[] = [
     {
       id: 1,
-      title: 'Custom Polo T-Shirts with Company Logo Printing',
-      subtitle: 'Corporate uniforms, coaching institutes & brand merchandise with HD printing & embroidery in 14 colors.',
-      badge: 'FACTORY DIRECT MERCHANDISE',
-      btnText: 'Shop T-Shirts Collection',
+      title: 'Custom Polo T-Shirts with Company Logo',
+      subtitle: '',
+      badge: '',
+      btnText: 'Shop T-Shirts',
       btnLink: '/menu',
       queryParams: { cat: 't-shirts' },
       image: '/assets/images/hero/hero-polo-tshirts.jpg'
@@ -2040,8 +2107,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       id: 2,
       title: 'Premium Corporate Gifts & Executive Welcome Kits',
-      subtitle: 'Branded executive organizers, vacuum flasks, card holders and pen sets in luxury presentation gift packaging.',
-      badge: 'EMPLOYEE ONBOARDING ESSENTIALS',
+      subtitle: '',
+      badge: '',
       btnText: 'Explore Welcome Kits',
       btnLink: '/menu',
       queryParams: { cat: 'welcome-kits' },
@@ -2049,9 +2116,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       id: 3,
-      title: 'Engraved Metal Pens, Keychains & Magnetic Badges',
-      subtitle: 'Crisp German laser engraving, premium metallic finish and pin-free magnetic badges for professional teams.',
-      badge: 'PRECISION LASER BRANDING',
+      title: 'Laser Engraved Metal Pens, Keychains & Badges',
+      subtitle: '',
+      badge: '',
       btnText: 'Shop Pens & Badges',
       btnLink: '/menu',
       queryParams: { cat: 'corporate-gifts' },
@@ -2117,6 +2184,58 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       comment: 'Rohit from GiftAura handled our urgent requirement of 500 insulated bottles and diaries with utmost professionalism. GiftAura is now our permanent corporate vendor.'
     }
   ];
+
+  currentReviewIndex = signal(0);
+
+  setReviewIndex(index: number) {
+    this.currentReviewIndex.set(index);
+    const el = this.document.getElementById('review-slide-' + index);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+
+  nextReviewSlide() {
+    const next = (this.currentReviewIndex() + 1) % this.customerReviews.length;
+    this.setReviewIndex(next);
+  }
+
+  prevReviewSlide() {
+    const prev = (this.currentReviewIndex() - 1 + this.customerReviews.length) % this.customerReviews.length;
+    this.setReviewIndex(prev);
+  }
+
+  onReviewsScroll(el: HTMLElement) {
+    const scrollLeft = el.scrollLeft;
+    const width = el.clientWidth;
+    if (width > 0) {
+      const idx = Math.round(scrollLeft / (width * 0.85));
+      if (idx >= 0 && idx < this.customerReviews.length && idx !== this.currentReviewIndex()) {
+        this.currentReviewIndex.set(idx);
+      }
+    }
+  }
+
+  currentWhyIndex = signal(0);
+
+  setWhyIndex(index: number) {
+    this.currentWhyIndex.set(index);
+    const el = this.document.getElementById('why-slide-' + index);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+
+  onWhyScroll(el: HTMLElement) {
+    const scrollLeft = el.scrollLeft;
+    const width = el.clientWidth;
+    if (width > 0) {
+      const idx = Math.round(scrollLeft / (width * 0.78));
+      if (idx >= 0 && idx < 4 && idx !== this.currentWhyIndex()) {
+        this.currentWhyIndex.set(idx);
+      }
+    }
+  }
 
   allProducts = computed(() => this.productService.getAll());
 
