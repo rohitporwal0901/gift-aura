@@ -137,7 +137,7 @@ import { AdminOrder } from '../../core/models/admin.model';
                   <div class="soc-btns">
                     @if (isActiveOrder(order.status)) {
                       <a [routerLink]="['/track-order', order.id]" class="soc-track-btn">
-                        <span class="track-scooter-icon">🛵</span>
+                        <span class="track-scooter-icon">🚚</span>
                         <span>Track Live</span>
                         <span class="track-arrow">→</span>
                       </a>
@@ -211,8 +211,8 @@ import { AdminOrder } from '../../core/models/admin.model';
     .orders-count-badge {
       font-size: 11px;
       font-weight: 700;
-      color: #2E7D32;
-      background: #E8F5E9;
+      color: #0F172A;
+      background: #F8FAFC;
       padding: 4px 10px;
       border-radius: 999px;
       justify-self: end;
@@ -247,10 +247,10 @@ import { AdminOrder } from '../../core/models/admin.model';
       font-family: inherit;
     }
     .of-pill.active {
-      background: #2E7D32;
+      background: #0F172A;
       color: #fff;
-      border-color: #2E7D32;
-      box-shadow: 0 2px 8px rgba(46,125,50,0.25);
+      border-color: #0F172A;
+      box-shadow: 0 2px 8px rgba(15,23,42,0.25);
     }
 
     .orders-list {
@@ -274,9 +274,9 @@ import { AdminOrder } from '../../core/models/admin.model';
         transform: translateY(-1px);
       }
       &.active-card {
-        border-color: #A5D6A7;
-        background: linear-gradient(180deg, #FAFCFA 0%, #FFFFFF 100%);
-        box-shadow: 0 4px 18px rgba(46,125,50,0.08);
+        border-color: #F59E0B;
+        background: linear-gradient(180deg, #FFFBFA 0%, #FFFFFF 100%);
+        box-shadow: 0 4px 18px rgba(245,158,11,0.08);
         &::before {
           content: '';
           position: absolute;
@@ -284,7 +284,7 @@ import { AdminOrder } from '../../core/models/admin.model';
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #2E7D32, #66BB6A);
+          background: linear-gradient(90deg, #F59E0B, #FCD34D);
         }
       }
     }
@@ -354,10 +354,10 @@ import { AdminOrder } from '../../core/models/admin.model';
       background: currentColor;
     }
     .badge-delivered { background: #F1F5F9; color: #0F172A; border: 1px solid #CBD5E1; }
-    .badge-preparing { background: #FFF3E0; color: #E65100; border: 1px solid #FFE0B2; }
-    .badge-out       { background: #EDE7F6; color: #512DA8; border: 1px solid #D1C4E9; }
-    .badge-confirmed { background: #E3F2FD; color: #1565C0; border: 1px solid #BBDEFB; }
-    .badge-cancelled { background: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2; }
+    .badge-preparing { background: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; }
+    .badge-out       { background: #E0E7FF; color: #4338CA; border: 1px solid #C7D2FE; }
+    .badge-confirmed { background: #DBEAFE; color: #1D4ED8; border: 1px solid #BFDBFE; }
+    .badge-cancelled { background: #FEE2E2; color: #B91C1C; border: 1px solid #FECACA; }
 
     /* ITEMS BOX */
     .soc-items-box {
@@ -649,8 +649,8 @@ export class MyOrdersComponent {
   getStatusLabel(status: string): string {
     switch (status) {
       case 'delivered': return 'Delivered';
-      case 'preparing': return 'Preparing';
-      case 'out-for-delivery': return 'On the way';
+      case 'preparing': return 'Processing';
+      case 'out-for-delivery': return 'Shipped';
       case 'confirmed': return 'Confirmed';
       case 'cancelled': return 'Cancelled';
       default: return 'Order Placed';
@@ -679,7 +679,7 @@ export class MyOrdersComponent {
           id: it.productId,
           name: it.productName,
           price: it.price,
-          image: it.productImage || 'assets/images/mix-fruit-chaat.jpg',
+          image: it.productImage || 'assets/images/gift-box.jpg',
           category: 'corporate-kits',
           rating: 4.8,
           ratingCount: 50,

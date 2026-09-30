@@ -30,12 +30,12 @@ export class DataService {
   homeSlides = signal<HomeSlide[]>([]);
   comboCards = signal<ComboCard[]>([]);
   offerCard  = signal<OfferCard>({
-    heading: 'Hurry, ₹50 Free Cash',
-    subtext: 'Valid on food orders above ₹99',
-    amount: 50,
-    minOrderAmount: 99,
-    code: 'FRUIT50',
-    validText: 'Valid on orders above ₹99',
+    heading: 'Special Corporate Welcome Offer',
+    subtext: 'Valid on corporate gift orders above ₹999',
+    amount: 100,
+    minOrderAmount: 999,
+    code: 'GIFT100',
+    validText: 'Valid on orders above ₹999',
     isActive: true
   });
   isOfferCardLoading = signal<boolean>(true);
@@ -131,12 +131,12 @@ export class DataService {
       if (snap.exists()) {
         const d = snap.data() as any;
         this.offerCard.set({
-          heading: d.heading || 'Hurry, ₹50 Free Cash',
-          subtext: d.subtext || 'Valid on food orders above ₹99',
-          amount: d.amount ?? 50,
-          minOrderAmount: d.minOrderAmount ?? 99,
-          code: (d.code || 'FRUIT50').toUpperCase(),
-          validText: d.validText || `Valid on orders above ₹${d.minOrderAmount ?? 99}`,
+          heading: d.heading || 'Special Corporate Welcome Offer',
+          subtext: d.subtext || 'Valid on corporate gift orders above ₹999',
+          amount: d.amount ?? 100,
+          minOrderAmount: d.minOrderAmount ?? 999,
+          code: (d.code || 'GIFT100').toUpperCase(),
+          validText: d.validText || `Valid on orders above ₹${d.minOrderAmount ?? 999}`,
           isActive: d.isActive !== false
         });
       }

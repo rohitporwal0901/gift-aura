@@ -6,8 +6,9 @@ import { CartService } from '../../core/services/cart.service';
 import { AuthService } from '../../core/services/auth.service';
 import { AuthModalComponent } from '../auth-modal/auth-modal.component';
 import { CheckoutComponent } from '../../pages/checkout/checkout.component';
-import { ProfileComponent } from '../../pages/profile/profile.component';
 import { Product } from '../../core/models/product.model';
+import { DataService } from '../../core/services/data.service';
+import { ProfileComponent } from '../../pages/profile/profile.component';
 
 @Component({
   selector: 'app-cart-drawer',
@@ -130,19 +131,32 @@ import { Product } from '../../core/models/product.model';
               <div class="promo-section">
                 <div class="promo-bar">
                   <span class="promo-icon">🏷️</span>
-                  <input type="text" [(ngModel)]="couponCodeInput" placeholder="Discount code (e.g. FIRST13)" uppercase>
+                  <input type="text" [(ngModel)]="couponCodeInput" [placeholder]="dataService.offerCard().isActive ? 'Discount code (e.g. ' + dataService.offerCard().code + ')' : 'Enter discount code'" uppercase>
                   <button class="promo-btn" (click)="applyPromo()">Apply</button>
                 </div>
-                <div class="promo-hint-row">
-                  <button type="button" class="quick-code-btn" (click)="applyQuickCoupon('FIRST13')">
-                    Apply <strong>FIRST13</strong> (13% OFF)
-                  </button>
-                  @if (promoMessage()) {
+
+                <!-- Backend Offer Card (Shows ONLY when active in admin) -->
+                @if (dataService.offerCard().isActive) {
+                  <div class="backend-offer-card" (click)="applyQuickCoupon(dataService.offerCard().code || '')">
+                    <div class="boc-left">
+                      <div class="boc-badge-row">
+                        <span class="boc-tag">⚡ SPECIAL OFFER</span>
+                        <span class="boc-code">{{ dataService.offerCard().code }}</span>
+                      </div>
+                      <strong class="boc-heading">{{ dataService.offerCard().heading }}</strong>
+                      <span class="boc-sub">{{ dataService.offerCard().subtext || ('Save ₹' + dataService.offerCard().amount + ' on orders above ₹' + dataService.offerCard().minOrderAmount) }}</span>
+                    </div>
+                    <button type="button" class="boc-apply-btn">Apply</button>
+                  </div>
+                }
+
+                @if (promoMessage()) {
+                  <div class="promo-hint-row">
                     <span class="promo-status" [class.success]="isPromoSuccess()" [class.error]="!isPromoSuccess()">
                       {{ promoMessage() }}
                     </span>
-                  }
-                </div>
+                  </div>
+                }
               </div>
 
               <!-- CLEAN BILL DETAILS -->
@@ -667,6 +681,88 @@ import { Product } from '../../core/models/product.model';
       }
     }
 
+    /* BACKEND OFFER CARD IN CART */
+    .backend-offer-card {
+      margin-top: 7px;
+      padding: 8px 10px;
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 1.5px dashed #F59E0B;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #FEF3C7;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(245, 158, 11, 0.15);
+      }
+
+      .boc-left {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+      }
+
+      .boc-badge-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .boc-tag {
+        font-size: 9.5px;
+        font-weight: 800;
+        color: #B45309;
+        letter-spacing: 0.4px;
+      }
+
+      .boc-code {
+        font-size: 10px;
+        font-weight: 800;
+        background: #F59E0B;
+        color: #FFFFFF;
+        padding: 1px 5px;
+        border-radius: 4px;
+      }
+
+      .boc-heading {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: #78350F;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .boc-sub {
+        font-size: 10.5px;
+        color: #92400E;
+        line-height: 1.25;
+      }
+
+      .boc-apply-btn {
+        background: #0F172A;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 6px;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.15s;
+
+        &:hover {
+          background: #1E293B;
+        }
+      }
+    }
+
     /* BILL SUMMARY */
     .bill-summary {
       background: #F8FAFC;
@@ -767,6 +863,7 @@ import { Product } from '../../core/models/product.model';
 export class CartDrawerComponent {
   cartService = inject(CartService);
   authService = inject(AuthService);
+  dataService = inject(DataService);
   router = inject(Router);
   freeShippingThreshold = 999;
   couponCodeInput = '';
@@ -816,8 +913,29 @@ export class CartDrawerComponent {
     const code = this.couponCodeInput.trim().toUpperCase();
     if (!code) return;
 
+    const offer = this.dataService.offerCard();
+    const itemTotal = this.cartService.itemTotal();
+
+    // Check backend active offer card
+    if (offer && offer.isActive && code === (offer.code || '').trim().toUpperCase()) {
+      const minAmount = Number(offer.minOrderAmount) || 0;
+      if (itemTotal < minAmount) {
+        this.promoMessage.set(`Add ₹${minAmount - itemTotal} more to apply code ${offer.code}`);
+        this.isPromoSuccess.set(false);
+        return;
+      }
+      this.cartService.applyCoupon({
+        code: offer.code || '',
+        discount: Number(offer.amount) || 0,
+        minOrderAmount: minAmount
+      });
+      this.promoMessage.set(`Applied! Saved ₹${offer.amount}`);
+      this.isPromoSuccess.set(true);
+      return;
+    }
+
     if (code === 'FIRST13') {
-      const discountAmount = Math.round(this.cartService.itemTotal() * 0.13);
+      const discountAmount = Math.round(itemTotal * 0.13);
       this.cartService.applyCoupon({
         code: 'FIRST13',
         discount: discountAmount,
@@ -825,17 +943,16 @@ export class CartDrawerComponent {
       });
       this.promoMessage.set(`Applied! Saved ₹${discountAmount}`);
       this.isPromoSuccess.set(true);
-    } else if (code === 'GIFT50') {
-      this.cartService.applyCoupon({
-        code: 'GIFT50',
-        discount: 50,
-        minOrderAmount: 499
-      });
-      this.promoMessage.set('Applied! Saved ₹50');
-      this.isPromoSuccess.set(true);
-    } else {
-      this.promoMessage.set('Invalid code');
-      this.isPromoSuccess.set(false);
+      return;
     }
+
+    if (offer && !offer.isActive && code === (offer.code || '').trim().toUpperCase()) {
+      this.promoMessage.set('This offer is currently inactive or expired');
+      this.isPromoSuccess.set(false);
+      return;
+    }
+
+    this.promoMessage.set('Invalid discount code');
+    this.isPromoSuccess.set(false);
   }
 }

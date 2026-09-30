@@ -48,8 +48,9 @@ export class AdminProductsComponent implements OnInit {
       name: '', categoryId: '', description: '',
       price: 0, originalPrice: undefined as any, stock: 100,
       status: 'active' as const, images: [],
-      isVeg: true, isBestseller: false,
-      preparationTime: undefined as any, calories: undefined as any
+      isBestseller: false,
+      minQty: 1, offerText: '',
+      rating: 4.8, ratingCount: 15
     };
   }
 
@@ -132,18 +133,19 @@ export class AdminProductsComponent implements OnInit {
     }
     // Agar koi image nahi upload ki, default placeholder use karo
     if (!this.newProduct.images.length) {
-      this.newProduct.images = ['assets/images/mix-fruit-chaat.jpg'];
+      this.newProduct.images = ['assets/images/gift-box.jpg'];
     }
     this.isSaving.set(true);
     try {
       const data: any = {
         ...this.newProduct,
-        sku: this.newProduct.sku || ('FC-' + Math.floor(1000 + Math.random() * 9000)),
+        sku: this.newProduct.sku || ('GA-' + Math.floor(1000 + Math.random() * 9000)),
         price: Number(this.newProduct.price || 0),
         originalPrice: this.newProduct.originalPrice ? Number(this.newProduct.originalPrice) : null,
         stock: Number(this.newProduct.stock ?? 100),
-        preparationTime: this.newProduct.preparationTime ? Number(this.newProduct.preparationTime) : null,
-        calories: this.newProduct.calories ? Number(this.newProduct.calories) : null,
+        minQty: Number(this.newProduct.minQty || 1),
+        offerText: this.newProduct.offerText?.trim() || null,
+        isBestseller: Boolean(this.newProduct.isBestseller)
       };
       if (this.isEditing() && 'id' in this.newProduct) {
         await this.dataService.updateProduct((this.newProduct as any).id, data);

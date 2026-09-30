@@ -2,7 +2,7 @@
 <div class="ap-header">
   <div>
     <h1 class="ap-title">Products</h1>
-    <p class="ap-sub">Manage your fruit chat menu items</p>
+    <p class="ap-sub">Manage your curated gift collections and custom printing catalog</p>
   </div>
   <button class="ap-add-btn" (click)="openAddDrawer()">
     <span class="material-symbols-outlined">add</span>
@@ -61,10 +61,10 @@
         <!-- Name + Badges -->
         <div class="apc-name">{{ product.name }}</div>
         <div class="apc-tags">
-          <span class="apc-tag veg" [class.nonveg]="!product.isVeg">
-            {{ product.isVeg ? '🟢 Veg' : '🔴 Non-Veg' }}
-          </span>
+          <span class="apc-tag cat-tag">{{ getCategoryName(product.categoryId) }}</span>
+          <span class="apc-tag moq" *ngIf="product.minQty && product.minQty > 1">MOQ: {{ product.minQty }}</span>
           <span class="apc-tag best" *ngIf="product.isBestseller">⭐ Bestseller</span>
+          <span class="apc-tag offer" *ngIf="product.offerText">🏷️ {{ product.offerText }}</span>
         </div>
 
         <!-- Category -->
@@ -119,7 +119,7 @@
     <div class="ap-field">
       <label>Product Name *</label>
       <input type="text" [(ngModel)]="newProduct.name" name="name" required
-             placeholder="e.g. Mix Fruit Chaat" #nameF="ngModel"
+             placeholder="e.g. Executive Diary & Pen Gift Set" #nameF="ngModel"
              [class.invalid]="nameF.invalid && nameF.touched">
       <span class="field-err" *ngIf="nameF.invalid && nameF.touched">Name is required</span>
     </div>
@@ -158,17 +158,17 @@
       </div>
     </div>
 
-    <!-- Extra Info Row -->
+    <!-- Gift Aura Specifics Row -->
     <div class="ap-field-row">
       <div class="ap-field">
-        <label>Prep Time (min)</label>
-        <input type="number" [(ngModel)]="newProduct.preparationTime" name="preparationTime"
-               min="0" (keydown)="preventInvalid($event)" placeholder="10">
+        <label>Min Order Qty (MOQ)</label>
+        <input type="number" [(ngModel)]="newProduct.minQty" name="minQty" min="1"
+               (keydown)="preventInvalid($event)" placeholder="e.g. 1 or 10">
       </div>
       <div class="ap-field">
-        <label>Calories</label>
-        <input type="number" [(ngModel)]="newProduct.calories" name="calories"
-               min="0" (keydown)="preventInvalid($event)" placeholder="145">
+        <label>Offer / Discount Tag</label>
+        <input type="text" [(ngModel)]="newProduct.offerText" name="offerText"
+               placeholder="e.g. 13% off on ₹1599">
       </div>
     </div>
 
@@ -176,16 +176,9 @@
     <div class="ap-toggle-row">
       <div class="ap-toggle">
         <label class="fc-toggle-label">
-          <input type="checkbox" [(ngModel)]="newProduct.isVeg" name="isVeg">
-          <span class="fc-toggle-switch"></span>
-          <span>Vegetarian</span>
-        </label>
-      </div>
-      <div class="ap-toggle">
-        <label class="fc-toggle-label">
           <input type="checkbox" [(ngModel)]="newProduct.isBestseller" name="isBestseller">
           <span class="fc-toggle-switch"></span>
-          <span>Bestseller</span>
+          <span>Mark as Bestseller</span>
         </label>
       </div>
     </div>

@@ -135,9 +135,10 @@
 .apc-tag {
   font-size: 0.66rem; font-weight: 600; padding: 2px 7px; border-radius: 4px;
 }
-.apc-tag.veg { background: #E8F5E9; color: #2E7D32; }
-.apc-tag.nonveg { background: #FFEBEE; color: #C62828; }
-.apc-tag.best { background: #FFF8E1; color: #F57F17; }
+.apc-tag.cat-tag { background: #F1F5F9; color: #475569; }
+.apc-tag.moq { background: #EFF6FF; color: #1D4ED8; font-weight: 700; }
+.apc-tag.best { background: #FFFBEB; color: #B45309; }
+.apc-tag.offer { background: #ECFDF5; color: #047857; font-weight: 600; }
 
 .apc-meta-row {
   display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;

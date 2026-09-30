@@ -13,9 +13,13 @@ export interface AdminProduct {
   stock?: number;
   status: 'active' | 'disabled';
   images: string[];
-  isVeg: boolean;
+  isVeg?: boolean;
   isBestseller?: boolean;
-  preparationTime?: number;  // in minutes
+  minQty?: number;
+  offerText?: string;
+  rating?: number;
+  ratingCount?: number;
+  preparationTime?: number;
   calories?: number;
   customizations?: AdminCustomization[];
   createdAt?: string;

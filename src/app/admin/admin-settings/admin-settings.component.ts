@@ -25,10 +25,10 @@ export class AdminSettingsComponent {
 
   // Quick Presets
   presets = [
-    { label: '₹50 OFF (Min ₹99)', amount: 50, minOrder: 99, code: 'FRUIT50' },
-    { label: '₹100 OFF (Min ₹249)', amount: 100, minOrder: 249, code: 'FRUIT100' },
-    { label: '₹150 OFF (Min ₹399)', amount: 150, minOrder: 399, code: 'FRUIT150' },
-    { label: '₹200 OFF (Min ₹499)', amount: 200, minOrder: 499, code: 'BIGFRUIT' }
+    { label: '₹100 OFF (Min ₹999)', amount: 100, minOrder: 999, code: 'GIFT100' },
+    { label: '₹250 OFF (Min ₹1999)', amount: 250, minOrder: 1999, code: 'AURA250' },
+    { label: '₹500 OFF (Min ₹3999)', amount: 500, minOrder: 3999, code: 'CORP500' },
+    { label: '₹150 OFF (Min ₹1499)', amount: 150, minOrder: 1499, code: 'FIRST13' }
   ];
 
   startEditOffer() {
@@ -44,8 +44,8 @@ export class AdminSettingsComponent {
     this.offerDraft.amount = preset.amount;
     this.offerDraft.minOrderAmount = preset.minOrder;
     this.offerDraft.code = preset.code;
-    this.offerDraft.heading = `Hurry, ₹${preset.amount} Free Cash expiring soon!`;
-    this.offerDraft.subtext = `Valid on orders above ₹${preset.minOrder}`;
+    this.offerDraft.heading = `Special Offer: ₹${preset.amount} OFF`;
+    this.offerDraft.subtext = `Valid on corporate orders above ₹${preset.minOrder}`;
     this.offerDraft.validText = `Valid on orders above ₹${preset.minOrder}`;
   }
 
@@ -65,7 +65,7 @@ export class AdminSettingsComponent {
     try {
       const payload: OfferCard = {
         ...this.offerDraft,
-        code: (this.offerDraft.code || 'FRUIT50').trim().toUpperCase(),
+        code: (this.offerDraft.code || 'GIFT100').trim().toUpperCase(),
         amount: Number(this.offerDraft.amount) || 0,
         minOrderAmount: Number(this.offerDraft.minOrderAmount) || 0,
         validText: this.offerDraft.validText || `Valid on orders above ₹${this.offerDraft.minOrderAmount || 0}`

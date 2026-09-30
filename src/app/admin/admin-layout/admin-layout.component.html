@@ -9,17 +9,18 @@
       <div class="fc-logo-badge fc-logo-badge-sm">
         <svg class="fc-logo-crest" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="42" height="42" rx="12" fill="url(#crestGradMob)" />
-          <text x="21" y="26" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="14" fill="#ffffff">FC</text>
+          <text x="21" y="26" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="14"
+            fill="#ffffff" letter-spacing="0.5">GA</text>
           <defs>
             <linearGradient id="crestGradMob" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#1b5e20"/>
-              <stop offset="1" stop-color="#0b2912"/>
+              <stop stop-color="#1E293B" />
+              <stop offset="1" stop-color="#0F172A" />
             </linearGradient>
           </defs>
         </svg>
       </div>
       <div class="fc-mobile-title">
-        <span class="fc-mob-name">Fruit Chat</span>
+        <span class="fc-mob-name">Gift Aura</span>
         <span class="fc-mob-sub">Admin</span>
       </div>
     </div>
@@ -42,25 +43,27 @@
         <svg class="fc-logo-crest" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="42" height="42" rx="12" fill="url(#crestGrad)" />
           <rect x="0.75" y="0.75" width="40.5" height="40.5" rx="11.25" stroke="url(#borderGrad)" stroke-width="1.5" />
-          <circle cx="21" cy="21" r="15" stroke="#b58738" stroke-width="1" stroke-dasharray="2.5 2.5" opacity="0.65"/>
-          <!-- Gold Leaf Crown & FC Monogram -->
-          <text x="21" y="26" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="14" fill="#ffffff" letter-spacing="0.5">FC</text>
-          <path d="M21 9 C22.5 7, 25.5 7, 26.5 8.5 C26.5 10.5, 24 12, 21 11" stroke="#b58738" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="21" cy="9" r="1.5" fill="#b58738"/>
+          <circle cx="21" cy="21" r="15" stroke="#F59E0B" stroke-width="1" stroke-dasharray="2.5 2.5" opacity="0.65" />
+          <!-- GA Monogram -->
+          <text x="21" y="26" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="14"
+            fill="#ffffff" letter-spacing="0.5">GA</text>
+          <path d="M21 9 C22.5 7, 25.5 7, 26.5 8.5 C26.5 10.5, 24 12, 21 11" stroke="#F59E0B" stroke-width="1.5"
+            stroke-linecap="round" />
+          <circle cx="21" cy="9" r="1.5" fill="#F59E0B" />
           <defs>
             <linearGradient id="crestGrad" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#1b5e20"/>
-              <stop offset="1" stop-color="#0b2912"/>
+              <stop stop-color="#1E293B" />
+              <stop offset="1" stop-color="#0F172A" />
             </linearGradient>
             <linearGradient id="borderGrad" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#b58738" stop-opacity="0.9"/>
-              <stop offset="1" stop-color="#2e7d32" stop-opacity="0.5"/>
+              <stop stop-color="#F59E0B" stop-opacity="0.9" />
+              <stop offset="1" stop-color="#D97706" stop-opacity="0.6" />
             </linearGradient>
           </defs>
         </svg>
       </div>
       <div class="fc-logo-text">
-        <h2>Fruit Chat</h2>
+        <h2>Gift Aura</h2>
         <div class="fc-admin-status">
           <span class="fc-status-dot"></span>
           <span>Admin Portal</span>
@@ -76,7 +79,8 @@
       <!-- OVERVIEW -->
       <div class="fc-nav-section">OVERVIEW</div>
 
-      <a routerLink="/admin/dashboard" routerLinkActive="fc-nav-active" class="fc-nav-item" (click)="closeMobileDrawer()">
+      <a routerLink="/admin/dashboard" routerLinkActive="fc-nav-active" class="fc-nav-item"
+        (click)="closeMobileDrawer()">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="fc-nav-label">Dashboard</span>
       </a>
@@ -87,7 +91,8 @@
         <span class="fc-badge" *ngIf="pendingOrdersCount() > 0">{{ pendingOrdersCount() }}</span>
       </a>
 
-      <a routerLink="/admin/transactions" routerLinkActive="fc-nav-active" class="fc-nav-item" (click)="closeMobileDrawer()">
+      <a routerLink="/admin/transactions" routerLinkActive="fc-nav-active" class="fc-nav-item"
+        (click)="closeMobileDrawer()">
         <span class="material-symbols-outlined">receipt_long</span>
         <span class="fc-nav-label">Transactions</span>
       </a>
@@ -95,25 +100,28 @@
       <!-- CATALOG -->
       <div class="fc-nav-section">CATALOG</div>
 
-      <a routerLink="/admin/categories" routerLinkActive="fc-nav-active" class="fc-nav-item" (click)="closeMobileDrawer()">
+      <a routerLink="/admin/categories" routerLinkActive="fc-nav-active" class="fc-nav-item"
+        (click)="closeMobileDrawer()">
         <span class="material-symbols-outlined">category</span>
         <span class="fc-nav-label">Categories</span>
       </a>
 
-      <a routerLink="/admin/products" routerLinkActive="fc-nav-active" class="fc-nav-item" (click)="closeMobileDrawer()">
+      <a routerLink="/admin/products" routerLinkActive="fc-nav-active" class="fc-nav-item"
+        (click)="closeMobileDrawer()">
         <span class="material-symbols-outlined">inventory_2</span>
         <span class="fc-nav-label">Products</span>
       </a>
 
-      <a routerLink="/admin/combo-cards" routerLinkActive="fc-nav-active" class="fc-nav-item" (click)="closeMobileDrawer()">
+      <!-- <a routerLink="/admin/combo-cards" routerLinkActive="fc-nav-active" class="fc-nav-item" (click)="closeMobileDrawer()">
         <span class="material-symbols-outlined">auto_awesome</span>
         <span class="fc-nav-label">Combo Cards</span>
-      </a>
+      </a> -->
 
       <!-- CONFIG -->
       <div class="fc-nav-section">CONFIG</div>
 
-      <a routerLink="/admin/settings" routerLinkActive="fc-nav-active" class="fc-nav-item" (click)="closeMobileDrawer()">
+      <a routerLink="/admin/settings" routerLinkActive="fc-nav-active" class="fc-nav-item"
+        (click)="closeMobileDrawer()">
         <span class="material-symbols-outlined">settings</span>
         <span class="fc-nav-label">Settings</span>
       </a>
@@ -122,10 +130,10 @@
     <!-- Footer: Logout -->
     <div class="fc-sidebar-footer">
       <div class="fc-sidebar-user">
-        <div class="fc-user-avatar">🛒</div>
+        <div class="fc-user-avatar">🎁</div>
         <div class="fc-user-info">
           <strong>Admin</strong>
-          <span>Fruit Chat Admin</span>
+          <span>Gift Aura Admin</span>
         </div>
       </div>
       <button class="fc-logout-btn" (click)="promptLogout()">
@@ -145,14 +153,9 @@
 </div>
 
 <!-- Logout modal -->
-<app-confirmation-modal
-  [isOpen]="isLogoutModalOpen"
-  title="Confirm Logout"
-  message="Are you sure you want to log out of the admin panel?"
-  confirmText="Logout"
-  cancelText="Stay"
-  (confirm)="confirmLogout()"
-  (cancel)="cancelLogout()">
+<app-confirmation-modal [isOpen]="isLogoutModalOpen" title="Confirm Logout"
+  message="Are you sure you want to log out of the admin panel?" confirmText="Logout" cancelText="Stay"
+  (confirm)="confirmLogout()" (cancel)="cancelLogout()">
 </app-confirmation-modal>
 
 <app-snackbar></app-snackbar>

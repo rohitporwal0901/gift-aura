@@ -130,6 +130,17 @@ export class AdminOrdersComponent {
     return map[s] || '';
   }
 
+  getStatusLabel(status: string): string {
+    switch (status) {
+      case 'delivered': return 'Delivered';
+      case 'preparing': return 'Processing';
+      case 'out-for-delivery': return 'Shipped';
+      case 'confirmed': return 'Confirmed';
+      case 'cancelled': return 'Cancelled';
+      default: return 'Pending';
+    }
+  }
+
   statusCounts = computed(() => {
     const orders = this.dateFilteredOrders();
     const c: any = { all: orders.length };

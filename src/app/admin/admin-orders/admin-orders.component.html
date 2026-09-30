@@ -66,10 +66,10 @@
     Confirmed <span class="ao-tab-count">{{ statusCounts().confirmed }}</span>
   </button>
   <button [class.active]="statusFilter() === 'preparing'" (click)="setFilter('preparing')">
-    Preparing <span class="ao-tab-count">{{ statusCounts().preparing }}</span>
+    Processing <span class="ao-tab-count">{{ statusCounts().preparing }}</span>
   </button>
   <button [class.active]="statusFilter() === 'out-for-delivery'" (click)="setFilter('out-for-delivery')">
-    Out for Delivery <span class="ao-tab-count">{{ statusCounts()['out-for-delivery'] }}</span>
+    Shipped <span class="ao-tab-count">{{ statusCounts()['out-for-delivery'] }}</span>
   </button>
   <button [class.active]="statusFilter() === 'delivered'" (click)="setFilter('delivered')">
     Delivered <span class="ao-tab-count">{{ statusCounts().delivered }}</span>
@@ -103,7 +103,7 @@
          (click)="viewOrder(order)">
       <div class="ao-order-top">
         <div class="ao-order-id">#{{ order.id.slice(-6).toUpperCase() }}</div>
-        <span class="ao-status" [class]="getStatusClass(order.status)">{{ order.status }}</span>
+        <span class="ao-status" [class]="getStatusClass(order.status)">{{ getStatusLabel(order.status) }}</span>
       </div>
       <div class="ao-order-name">{{ order.customerName }}</div>
       <div class="ao-order-meta">
@@ -133,7 +133,7 @@
       </div>
       <div class="ao-detail-header-right">
         <span class="ao-status ao-status-detail" [class]="getStatusClass(selectedOrder()!.status)">
-          {{ selectedOrder()!.status }}
+          {{ getStatusLabel(selectedOrder()!.status) }}
         </span>
         <button class="ao-close-btn" (click)="closeDetail()" type="button" aria-label="Close details">
           <span class="material-symbols-outlined">close</span>
@@ -195,7 +195,7 @@
                   [class.current]="selectedOrder()!.status === s"
                   [disabled]="isUpdating() === selectedOrder()!.id"
                   (click)="updateStatus(selectedOrder()!.id, s)">
-            {{ s }}
+            {{ getStatusLabel(s) }}
           </button>
         </div>
       </div>

@@ -52,9 +52,9 @@
   background: #f9f9f9;
 }
 .as-toggle-status-btn.active {
-  background: #E8F5E9;
-  border-color: #A5D6A7;
-  color: #2E7D32;
+  background: #FEF3C7;
+  border-color: #FCD34D;
+  color: #92400E;
 }
 
 .status-indicator-dot {
@@ -65,8 +65,8 @@
   transition: all 0.2s;
 }
 .as-toggle-status-btn.active .status-indicator-dot {
-  background: #4CAF50;
-  box-shadow: 0 0 8px #4CAF50;
+  background: #F59E0B;
+  box-shadow: 0 0 8px #F59E0B;
 }
 
 .as-edit-btn {
@@ -74,7 +74,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.55rem 1.15rem;
-  background: linear-gradient(135deg, #1B5E20, #2E7D32);
+  background: linear-gradient(135deg, #0F172A, #1E293B);
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -83,11 +83,11 @@
   cursor: pointer;
   font-family: inherit;
   transition: all 0.2s;
-  box-shadow: 0 3px 10px rgba(46,125,50,0.25);
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.25);
 }
 .as-edit-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 5px 14px rgba(46,125,50,0.35);
+  box-shadow: 0 5px 14px rgba(15, 23, 42, 0.35);
 }
 .as-edit-btn span.material-symbols-outlined {
   font-size: 1.1rem;
@@ -176,10 +176,10 @@
 
 .as-voucher-ticket {
   position: relative;
-  background: linear-gradient(135deg, #093114 0%, #0d461d 45%, #186c31 100%);
+  background: linear-gradient(135deg, #0B1120 0%, #0F172A 45%, #1E293B 100%);
   border-radius: 18px;
-  border: 1.5px solid rgba(212, 160, 23, 0.45);
-  box-shadow: 0 14px 40px rgba(13, 59, 26, 0.22);
+  border: 1.5px solid rgba(245, 158, 11, 0.45);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.25);
   display: flex;
   align-items: stretch;
   overflow: hidden;

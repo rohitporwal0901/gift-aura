@@ -54,21 +54,21 @@
               </span>
             </div>
 
-            <h2 class="vt-heading">{{ (editingOffer() ? offerDraft.heading : offerCard().heading) || 'Hurry, ₹50 Free Cash expiring soon!' }}</h2>
-            <p class="vt-sub">{{ (editingOffer() ? offerDraft.subtext : offerCard().subtext) || 'Valid on orders above minimum amount' }}</p>
+            <h2 class="vt-heading">{{ (editingOffer() ? offerDraft.heading : offerCard().heading) || 'Special Corporate Welcome Offer' }}</h2>
+            <p class="vt-sub">{{ (editingOffer() ? offerDraft.subtext : offerCard().subtext) || 'Valid on corporate orders above minimum amount' }}</p>
 
             <div class="vt-footer-row">
               <!-- Coupon Code Box -->
-              <div class="vt-coupon-box" (click)="copyCouponCode(editingOffer() ? (offerDraft.code || 'FRUIT50') : (offerCard().code || 'FRUIT50'))" title="Click to copy code">
+              <div class="vt-coupon-box" (click)="copyCouponCode(editingOffer() ? (offerDraft.code || 'GIFT100') : (offerCard().code || 'GIFT100'))" title="Click to copy code">
                 <span class="vt-coupon-lbl">CODE:</span>
-                <span class="vt-coupon-code">{{ ((editingOffer() ? offerDraft.code : offerCard().code) || 'FRUIT50').toUpperCase() }}</span>
+                <span class="vt-coupon-code">{{ ((editingOffer() ? offerDraft.code : offerCard().code) || 'GIFT100').toUpperCase() }}</span>
                 <span class="material-symbols-outlined vt-copy-icon">content_copy</span>
               </div>
 
               <!-- Conditions -->
               <div class="vt-cond">
                 <span class="material-symbols-outlined">shopping_bag</span>
-                Min Cart: <strong>₹{{ (editingOffer() ? offerDraft.minOrderAmount : offerCard().minOrderAmount) || 99 }}</strong>
+                Min Cart: <strong>₹{{ (editingOffer() ? offerDraft.minOrderAmount : offerCard().minOrderAmount) || 999 }}</strong>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@
             <span class="vt-stub-label">DISCOUNT</span>
             <div class="vt-amount">
               <span class="currency">₹</span>
-              <span class="value">{{ (editingOffer() ? offerDraft.amount : offerCard().amount) || 50 }}</span>
+              <span class="value">{{ (editingOffer() ? offerDraft.amount : offerCard().amount) || 100 }}</span>
             </div>
             <span class="vt-off-tag">OFF</span>
             <span class="vt-valid-text">{{ (editingOffer() ? offerDraft.validText : offerCard().validText) || 'On your order' }}</span>
@@ -95,7 +95,7 @@
       <div class="as-callout" *ngIf="!editingOffer()">
         <span class="material-symbols-outlined callout-icon">info</span>
         <div>
-          When enabled, customers can apply code <strong>{{ (offerCard().code || 'FRUIT50').toUpperCase() }}</strong> at checkout to receive <strong>₹{{ offerCard().amount || 0 }} OFF</strong> on orders above <strong>₹{{ offerCard().minOrderAmount || 0 }}</strong>.
+          When enabled, customers can apply code <strong>{{ (offerCard().code || 'GIFT100').toUpperCase() }}</strong> at checkout to receive <strong>₹{{ offerCard().amount || 0 }} OFF</strong> on orders above <strong>₹{{ offerCard().minOrderAmount || 0 }}</strong>.
         </div>
       </div>
     </div>

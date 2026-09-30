@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
@@ -9,7 +9,7 @@ import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 @Component({
   selector: 'app-admin-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, SnackbarComponent],
+  imports: [CommonModule, FormsModule, RouterLink, SnackbarComponent],
   templateUrl: './admin-login.component.html',
   styleUrls: ['./admin-login.component.css']
 })
@@ -18,7 +18,7 @@ export class AdminLoginComponent {
   private router = inject(Router);
   snackbar = inject(SnackbarService);
 
-  email = 'admin@fruitchat.com';
+  email = 'admin@giftaura.com';
   password = '123456';
 
   isLoading = signal(false);
@@ -28,7 +28,7 @@ export class AdminLoginComponent {
   togglePassword() { this.showPassword.update(v => !v); }
 
   fillDemoCredentials() {
-    this.email = 'admin@fruitchat.com';
+    this.email = 'admin@giftaura.com';
     this.password = '123456';
     this.errorMsg.set('');
   }
@@ -42,9 +42,10 @@ export class AdminLoginComponent {
     this.isLoading.set(true);
     this.errorMsg.set('');
 
-    // Quick admin credentials (just like Khandelwal cards)
+    const cleanEmail = this.email.trim().toLowerCase();
+    // Quick admin credentials
     if (
-      (this.email.trim().toLowerCase() === 'admin@fruitchat.com' || this.email.trim().toLowerCase() === 'fruitchat.admin@gmail.com') &&
+      (cleanEmail === 'admin@giftaura.com' || cleanEmail === 'admin@fruitchat.com' || cleanEmail === 'fruitchat.admin@gmail.com') &&
       (this.password === '123456' || this.password === 'admin' || this.password === 'admin123')
     ) {
       setTimeout(() => {
