@@ -16,13 +16,30 @@ export class CartService {
   private _items = signal<CartItem[]>(this.loadStoredItems());
   appliedCoupon = signal<AppliedCoupon | null>(this.loadStoredCoupon());
   isOpenDrawer = signal<boolean>(false);
+  drawerMode = signal<'cart' | 'checkout' | 'profile'>('cart');
 
   openDrawer(): void {
+    this.drawerMode.set('cart');
     this.isOpenDrawer.set(true);
+  }
+
+  openCheckout(): void {
+    this.drawerMode.set('checkout');
+    this.isOpenDrawer.set(true);
+  }
+
+  openProfile(): void {
+    this.drawerMode.set('profile');
+    this.isOpenDrawer.set(true);
+  }
+
+  setDrawerMode(mode: 'cart' | 'checkout' | 'profile'): void {
+    this.drawerMode.set(mode);
   }
 
   closeDrawer(): void {
     this.isOpenDrawer.set(false);
+    setTimeout(() => this.drawerMode.set('cart'), 300); // reset after animation
   }
 
   // ── Map / Distance signals ────────────────────────────────

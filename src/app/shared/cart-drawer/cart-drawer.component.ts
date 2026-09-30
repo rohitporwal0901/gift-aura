@@ -1,15 +1,17 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../core/services/cart.service';
 import { AuthService } from '../../core/services/auth.service';
 import { AuthModalComponent } from '../auth-modal/auth-modal.component';
+import { CheckoutComponent } from '../../pages/checkout/checkout.component';
+import { ProfileComponent } from '../../pages/profile/profile.component';
 
 @Component({
   selector: 'app-cart-drawer',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, AuthModalComponent],
+  imports: [CommonModule, RouterLink, FormsModule, AuthModalComponent, CheckoutComponent, ProfileComponent],
   template: `
     @if (cartService.isOpenDrawer()) {
       <div class="drawer-backdrop" (click)="close()"></div>
@@ -21,8 +23,12 @@ import { AuthModalComponent } from '../auth-modal/auth-modal.component';
           </div>
         } @else if (!authService.isLoggedIn()) {
           <app-auth-modal [inlineMode]="true"></app-auth-modal>
+        } @else if (cartService.drawerMode() === 'checkout') {
+          <app-checkout [inlineMode]="true"></app-checkout>
+        } @else if (cartService.drawerMode() === 'profile') {
+          <app-profile [inlineMode]="true"></app-profile>
         } @else {
-          <!-- DRAWER HEADER -->
+          <!-- DRAWER HEADER (CART) -->
           <div class="drawer-header">
           <div class="dh-title">
             <span>Shopping Cart</span>
@@ -139,16 +145,16 @@ import { AuthModalComponent } from '../auth-modal/auth-modal.component';
             </div>
 
             <div class="drawer-buttons">
-              <a routerLink="/checkout" (click)="close()" class="gl-btn-primary drawer-checkout-btn">
+              <button (click)="cartService.openCheckout()" class="gl-btn-primary drawer-checkout-btn">
                 Proceed to Checkout
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
-              </a>
-              <a routerLink="/cart" (click)="close()" class="view-cart-link">
+              </button>
+              <button (click)="closeAndNavigate('/cart')" class="view-cart-link">
                 View Full Cart Details
-              </a>
+              </button>
             </div>
           </div>
         }
@@ -515,6 +521,9 @@ import { AuthModalComponent } from '../auth-modal/auth-modal.component';
         text-align: center;
         font-size: 12.5px;
         color: #666666;
+        background: transparent;
+        border: none;
+        cursor: pointer;
         text-decoration: underline;
         transition: color 0.2s;
         &:hover { color: #111111; }
@@ -525,6 +534,7 @@ import { AuthModalComponent } from '../auth-modal/auth-modal.component';
 export class CartDrawerComponent {
   cartService = inject(CartService);
   authService = inject(AuthService);
+  router = inject(Router);
   freeShippingThreshold = 999;
   couponCodeInput = '';
   promoMessage = signal<string>('');
@@ -532,6 +542,11 @@ export class CartDrawerComponent {
 
   close(): void {
     this.cartService.closeDrawer();
+  }
+
+  closeAndNavigate(url: string): void {
+    this.cartService.closeDrawer();
+    this.router.navigate([url]);
   }
 
   applyPromo(): void {

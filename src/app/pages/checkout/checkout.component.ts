@@ -1,4 +1,4 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, inject, signal, effect, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,12 +14,22 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
   standalone: true,
   imports: [CommonModule, FormsModule, MapPickerComponent],
   template: `
-    <div class="checkout-page">
+    <div class="checkout-page" [class.inline]="inlineMode">
       <!-- HEADER -->
-      <div class="checkout-header">
+      <div class="checkout-header" *ngIf="!inlineMode">
         <button class="back-btn" (click)="router.navigate(['/cart'])" aria-label="Back to Cart">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
           <span>Cart</span>
+        </button>
+        <h2 class="checkout-title">Checkout</h2>
+        <div class="header-spacer"></div>
+      </div>
+
+      <!-- INLINE HEADER (Drawer Mode) -->
+      <div class="inline-header" *ngIf="inlineMode">
+        <button class="back-btn" (click)="cartService.setDrawerMode('cart')" aria-label="Back to Cart">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span>Back</span>
         </button>
         <h2 class="checkout-title">Checkout</h2>
         <div class="header-spacer"></div>
@@ -64,9 +74,9 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
           <div class="empty-cart-pane animate-fadeInUp">
             <div class="empty-icon-bubble">🛒</div>
             <h3 class="empty-heading">Your cart is empty</h3>
-            <p class="empty-desc">Please add delicious fresh fruit chaat or salad to your cart before proceeding.</p>
-            <button class="btn-browse-menu" (click)="router.navigate(['/menu'])">
-              Explore Fresh Menu 🥗
+            <p class="empty-desc">Please add customized merchandise or corporate gifts to your cart before proceeding.</p>
+            <button class="btn-browse-menu" (click)="closeAndNavigate('/menu')">
+              Explore Collections 🎁
             </button>
           </div>
         } @else {
@@ -81,8 +91,8 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
               <div class="addr-dot green"></div>
               <div class="addr-info">
                 <span class="addr-label green-tag">STORE PICKUP</span>
-                <p class="addr-main">Atal Dwar, LIG, Indore</p>
-                <span class="addr-sub">Fresh Fruit & Chaat Kitchen</span>
+                <p class="addr-main">Corporate Headquarters, Indore</p>
+                <span class="addr-sub">GiftAura Printing & Merchandise Hub</span>
               </div>
               <div class="store-badge">🏪 Store</div>
             </div>
@@ -628,6 +638,7 @@ import { MapPickerComponent } from '../../shared/map-picker/map-picker.component
   `]
 })
 export class CheckoutComponent {
+  @Input() inlineMode = false;
   router = inject(Router);
   cartService = inject(CartService);
   authService = inject(AuthService);
@@ -640,6 +651,19 @@ export class CheckoutComponent {
   showMapPicker   = signal(false);
   pulseDropError  = signal(false);
   toast           = signal<{ message: string; type: 'warning' | 'error' | 'success' } | null>(null);
+
+  closeAndNavigate(url: string) {
+    if (this.inlineMode) {
+      this.cartService.closeDrawer();
+    }
+    const [path, query] = url.split('?');
+    if (query) {
+      const qParams = Object.fromEntries(new URLSearchParams(query));
+      this.router.navigate([path], { queryParams: qParams });
+    } else {
+      this.router.navigate([path]);
+    }
+  }
 
   private toastTimer: any = null;
 
@@ -776,7 +800,7 @@ export class CheckoutComponent {
 
         this.cartService.clearCart();
         this.loading.set(false);
-        this.router.navigate(['/order-success'], { queryParams: { orderId } });
+        this.closeAndNavigate('/order-success?orderId=' + orderId);
       } catch (err) {
         console.error('Failed to save order:', err);
         this.loading.set(false);

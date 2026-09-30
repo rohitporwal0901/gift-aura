@@ -46,16 +46,16 @@ import { Product } from '../../core/models/product.model';
         <div class="header-actions">
           <!-- USER ACCOUNT -->
           @if (authService.isLoggedIn()) {
-            <a routerLink="/profile" class="action-btn user-btn" title="My Account">
+            <button class="action-btn user-btn" (click)="openProfile()" title="My Account" style="background: none; border: none; cursor: pointer;">
               <span class="avatar-initial">{{ getUserInitial() }}</span>
-            </a>
+            </button>
           } @else {
-            <a routerLink="/auth" class="action-btn" title="Login / Register">
+            <button class="action-btn" (click)="openAuth()" title="Login / Register" style="background: none; border: none; cursor: pointer;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
-            </a>
+            </button>
           }
 
           <!-- CART TRIGGER -->
@@ -648,6 +648,15 @@ export class NavbarComponent {
 
   openCart() {
     this.cartService.openDrawer();
+  }
+
+  openProfile() {
+    this.cartService.openProfile();
+  }
+
+  openAuth() {
+    this.cartService.openDrawer();
+    // It will show auth modal automatically because of isLoggedIn() check in drawer
   }
 
   onSearchChange() {

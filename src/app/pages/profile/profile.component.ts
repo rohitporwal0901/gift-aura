@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -20,11 +20,16 @@ interface MenuItem {
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-    <div class="profile-page">
+    <div class="profile-page" [class.inline]="inlineMode">
       
       @if (authService.isLoggedIn()) {
         <!-- LOGGED-IN PROFILE HEADER -->
         <div class="profile-header">
+          @if (inlineMode) {
+            <button class="back-btn" (click)="cartService.setDrawerMode('cart')" aria-label="Back">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+          }
           <div class="ph-bg-circle c1"></div>
           <div class="ph-bg-circle c2"></div>
 
@@ -65,24 +70,24 @@ interface MenuItem {
           <h2 class="profile-name">{{ authService.currentUser()?.name }}</h2>
           <p class="profile-phone">+91 {{ authService.currentUser()?.phone }}</p>
           <div class="health-member-badge">
-            <span>🥑 Fruit Club • <b>Gold Member</b></span>
+            <span>🎁 GiftAura • <b>Gold Corporate</b></span>
           </div>
 
           <!-- STATS CARD -->
           <div class="profile-stats">
             <div class="stat">
               <span class="stat-val">{{ userOrders().length }}</span>
-              <span class="stat-label">&#129367; Orders</span>
+              <span class="stat-label">📦 Orders</span>
             </div>
             <div class="stat-divider"></div>
             <div class="stat">
-              <span class="stat-val">14d</span>
-              <span class="stat-label">&#128293; Streak</span>
+              <span class="stat-val">14k</span>
+              <span class="stat-label">✨ Points</span>
             </div>
             <div class="stat-divider"></div>
             <div class="stat">
               <span class="stat-val">&#8377;{{ totalSpent() }}</span>
-              <span class="stat-label">&#10024; Total Spent</span>
+              <span class="stat-label">💳 Spent</span>
             </div>
           </div>
         </div>
@@ -152,9 +157,9 @@ interface MenuItem {
         <!-- LOGGED-OUT CARD -->
         <div class="logged-out-container">
           <div class="guest-card">
-            <div class="guest-icon">🥑</div>
+            <div class="guest-icon">🎁</div>
             <h2 class="guest-title">Account & Preferences</h2>
-            <p class="guest-sub">Log in to view your orders, exclusive fruit club offers, and healthy streaks.</p>
+            <p class="guest-sub">Log in to view your orders, corporate offers, and track shipments.</p>
             
             <button class="guest-login-btn" (click)="goToLogin()">
               Login / Sign Up
@@ -170,9 +175,32 @@ interface MenuItem {
       padding-bottom: 20px;
     }
 
+    .profile-page.inline {
+      padding-bottom: 0;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+
     /* HEADER */
     .profile-header {
-      background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 60%, #174218 100%);
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #334155 100%);
       color: #fff;
       padding: 36px 16px 28px;
       text-align: center;
@@ -210,8 +238,8 @@ interface MenuItem {
       width: 82px;
       height: 82px;
       border-radius: 50%;
-      background: #E8F5E9;
-      color: #2E7D32;
+      background: #F8FAFC;
+      color: #0F172A;
       font-size: 28px;
       font-weight: 800;
       display: flex;
@@ -235,7 +263,7 @@ interface MenuItem {
       bottom: -2px;
       right: -2px;
       background: #FFFFFF;
-      border: 2px solid #2E7D32;
+      border: 2px solid #0F172A;
       width: 28px;
       height: 28px;
       border-radius: 50%;
@@ -283,11 +311,11 @@ interface MenuItem {
       border-radius: 999px;
       padding: 4px 12px;
       font-size: 11.5px;
-      color: #E8F5E9;
+      color: #F8FAFC;
       margin-bottom: 14px;
     }
     .health-member-badge b {
-      color: #FFD54F;
+      color: #fbbc04;
       font-weight: 700;
     }
 
@@ -323,7 +351,7 @@ interface MenuItem {
       font-size: 11px;
       opacity: 0.85;
       font-weight: 500;
-      color: #E8F5E9;
+      color: #F8FAFC;
     }
     .stat-divider {
       width: 1px;
@@ -367,7 +395,7 @@ interface MenuItem {
     }
     /* ACTIVE ORDER STRIP */
     .active-order-strip {
-      background: linear-gradient(135deg, #1B5E20, #2E7D32);
+      background: linear-gradient(135deg, #1E293B, #0F172A);
       border-radius: 16px;
       padding: 14px 18px;
       display: flex;
@@ -408,7 +436,7 @@ interface MenuItem {
     }
     .aos-sub {
       font-size: 11px;
-      color: #C8E6C9;
+      color: #94A3B8;
       font-weight: 500;
     }
     .aos-link {
@@ -422,8 +450,8 @@ interface MenuItem {
     }
 
     .orders-chip {
-      background: #E8F5E9;
-      color: #2E7D32;
+      background: #F1F5F9;
+      color: #0F172A;
       font-size: 11px;
       font-weight: 700;
       padding: 2px 8px;
@@ -484,7 +512,7 @@ interface MenuItem {
       transition: background 0.2s;
     }
     .toggle.on {
-      background: #2E7D32;
+      background: #0F172A;
     }
     .toggle-thumb {
       width: 20px;
@@ -543,7 +571,7 @@ interface MenuItem {
     .guest-sub { font-size: 13.5px; color: #6B7280; line-height: 1.5; margin: 0 0 24px; }
     .guest-login-btn {
       width: 100%;
-      background: #2E7D32;
+      background: #0F172A;
       color: #ffffff;
       border: none;
       border-radius: 14px;
@@ -559,6 +587,7 @@ interface MenuItem {
   `]
 })
 export class ProfileComponent {
+  @Input() inlineMode = false;
   authService = inject(AuthService);
   dataService = inject(DataService);
   cartService = inject(CartService);
@@ -754,11 +783,20 @@ export class ProfileComponent {
 
   async handleLogout(): Promise<void> {
     await this.authService.logout();
-    this.router.navigate(['/auth']);
+    if (this.inlineMode) {
+      this.cartService.closeDrawer();
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   goToLogin(): void {
-    this.router.navigate(['/auth']);
+    if (this.inlineMode) {
+      this.cartService.setDrawerMode('cart');
+      setTimeout(() => this.cartService.openDrawer(), 10);
+    } else {
+      this.router.navigate(['/auth']);
+    }
   }
 
   activityItems: MenuItem[] = [
@@ -771,6 +809,6 @@ export class ProfileComponent {
     { icon: '🔔', label: 'Notifications', toggle: true, on: true },
     { icon: '🌙', label: 'Dark Mode', toggle: true, on: false },
     { icon: '📞', label: 'Help & Support', toggle: false },
-    { icon: 'ℹ️', label: 'About FruitChat', toggle: false },
+    { icon: 'ℹ️', label: 'About GiftAura', toggle: false },
   ];
 }
