@@ -213,70 +213,6 @@ interface ReelItem {
         </div>
       </section>
 
-      <!-- 4. VISUAL IMAGE CARDS SHOWCASE (Actual Graphic Line layout) -->
-      <section class="gl-section feature-cards-section">
-        <div class="container">
-          <div class="feature-cards-grid">
-            <div class="feature-card">
-              <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphic-line-3_83fd0b55-0b03-495f-b0b3-d60e41ccabb6.webp?v=1780416698&width=2000" alt="Corporate T-Shirt Branding" class="fc-bg-img">
-            </div>
-
-            <div class="feature-card">
-              <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphic-line_21257e89-1af5-4888-82ba-77a81f87d737.webp?v=1780414367&width=2000" alt="Precision Laser Engraving" class="fc-bg-img">
-            </div>
-
-            <div class="feature-card">
-              <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphic-line-2.webp?v=1780414367&width=2000" alt="Executive Welcome Kits" class="fc-bg-img">
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 6. TRUST BANNER (India's Trusted Partner) -->
-      <section class="gl-section trust-banner-section">
-        <div class="container">
-          <div class="trust-banner-card">
-            <h2 class="trust-title">India's Trusted Partner for Custom T-Shirts, Corporate Gifts & Branding Solutions</h2>
-            <div class="trust-stats-grid">
-              <div class="trust-stat-box">
-                <span class="trust-check">✅</span>
-                <div class="trust-text">
-                  <strong>1000+ Corporate Clients</strong>
-                  <span>Trusted by corporates, start-ups & brands across India</span>
-                </div>
-              </div>
-              <div class="trust-stat-box">
-                <span class="trust-check">✅</span>
-                <div class="trust-text">
-                  <strong>50,000+ Products Delivered</strong>
-                  <span>High-volume bulk production with zero compromise</span>
-                </div>
-              </div>
-              <div class="trust-stat-box">
-                <span class="trust-check">✅</span>
-                <div class="trust-text">
-                  <strong>Utkarsh Classes & Top Institutes</strong>
-                  <span>Official merchandise & uniform vendor</span>
-                </div>
-              </div>
-              <div class="trust-stat-box">
-                <span class="trust-check">✅</span>
-                <div class="trust-text">
-                  <strong>In-House Factory & QC</strong>
-                  <span>Direct manufacturing & rigorous quality check</span>
-                </div>
-              </div>
-              <div class="trust-stat-box">
-                <span class="trust-check">✅</span>
-                <div class="trust-text">
-                  <strong>Pan-India Express Delivery</strong>
-                  <span>Fast, tracked logistics to all pincodes</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <!-- 7. WHY CHOOSE GRAPHIC LINE -->
       <section class="gl-section why-choose-section" id="why-choose">
@@ -355,100 +291,8 @@ interface ReelItem {
         </div>
       </section>
 
-      <!-- CTA BANNER -->
-      <section class="gl-section cta-banner-section">
-        <div class="container">
-          <div class="cta-banner">
-            <div class="cta-content">
-              <span class="cta-pill">CUSTOM GIFTS FOR EVERY OCCASION</span>
-              <h2>Let's Create Something Special</h2>
-              <p>Get custom printed gifts, t-shirts and more for your business or event.</p>
-              <a routerLink="/menu" class="cta-btn">Start Your Order →</a>
-            </div>
-            <div class="cta-image">
-              <img src="https://cdn.shopify.com/s/files/1/0681/7257/8864/files/gift-box-illustration.webp" alt="Gift Box" onerror="this.src='https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphic-line-2.webp?v=1780414367&width=800'">
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- 9. BULK CORPORATE INQUIRY FORM -->
-      <section class="gl-section inquiry-section" id="inquiry">
-        <div class="container">
-          <div class="inquiry-card">
-            <div class="inquiry-info">
-              <span class="gl-badge-pill">CORPORATE QUOTE</span>
-              <h2 class="inquiry-title">Need Bulk Gifting or Custom Logo Printing?</h2>
-              <p class="inquiry-sub">Get direct factory pricing, complimentary sample digital mockups, and GST invoicing for your company.</p>
-              
-              <div class="inquiry-perks">
-                <div class="perk-item">✓ Best Price Guaranteed on 50+ Units</div>
-                <div class="perk-item">✓ Free 3D Digital Logo Mockup Before Printing</div>
-                <div class="perk-item">✓ Fast Pan-India Dispatch from Jodhpur Hub</div>
-              </div>
 
-              <div class="inquiry-direct">
-                <span>Or speak directly with our Sales Team:</span>
-                <a href="https://wa.me/917877605311?text=Hello%20Graphic%20Line%2C%20I%20need%20a%20bulk%20corporate%20order%20quotation." 
-                   target="_blank" 
-                   rel="noopener" 
-                   class="inquiry-wa-btn">
-                  💬 Chat on WhatsApp (+91 78776-05311)
-                </a>
-              </div>
-            </div>
-
-            <form class="inquiry-form" (submit)="submitInquiry($event)">
-              <div class="form-group">
-                <label>Your Name *</label>
-                <input type="text" [(ngModel)]="inquiryForm.name" name="name" placeholder="E.g. Rajesh Sharma" required>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Company / Institute *</label>
-                  <input type="text" [(ngModel)]="inquiryForm.company" name="company" placeholder="E.g. Apex Tech Ltd" required>
-                </div>
-                <div class="form-group">
-                  <label>WhatsApp / Phone *</label>
-                  <input type="tel" [(ngModel)]="inquiryForm.phone" name="phone" placeholder="+91 98765-43210" required>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Product Interested In</label>
-                  <select [(ngModel)]="inquiryForm.product" name="product">
-                    <option value="Customized Polo T-Shirts">Customized Polo T-Shirts</option>
-                    <option value="Executive Welcome Kits">Executive Welcome Kits</option>
-                    <option value="Engraved Metal Pens">Engraved Metal Pens</option>
-                    <option value="Custom Metal Keychains">Custom Metal Keychains</option>
-                    <option value="Magnetic Name Badges">Magnetic Name Badges</option>
-                    <option value="Stainless Steel Flasks">Stainless Steel Flasks</option>
-                    <option value="Multiple Products Combo">Multiple Products Combo</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Approx Quantity</label>
-                  <input type="number" [(ngModel)]="inquiryForm.quantity" name="quantity" placeholder="50">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Message / Branding Requirements</label>
-                <textarea rows="3" [(ngModel)]="inquiryForm.message" name="message" placeholder="Tell us your logo colors, delivery deadline, or any specific requests..."></textarea>
-              </div>
-
-              <button type="submit" class="gl-btn-primary inquiry-submit-btn">
-                Request Instant Quotation →
-              </button>
-
-              @if (inquirySubmitted()) {
-                <div class="inquiry-success-msg">
-                  ✓ Thank you! Your request has been sent to our sales manager. We will contact you on WhatsApp shortly.
-                </div>
-              }
-            </form>
-          </div>
-        </div>
-      </section>
 
       <!-- VIDEO MODAL -->
       @if (activeVideoReel()) {
@@ -519,7 +363,7 @@ interface ReelItem {
     }
 
     .gl-section {
-      padding: 70px 0;
+      padding: 40px 0;
     }
 
     /* ── 1. HERO SECTION ── */
@@ -1181,17 +1025,23 @@ interface ReelItem {
     /* ── 7. WHY CHOOSE US ── */
     .why-choose-section {
       background: #ffffff;
-      padding: 60px 0;
+      padding: 40px 0;
     }
 
     .why-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 12px;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
 
       @media (min-width: 640px) {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
+        overflow-x: visible;
       }
 
       @media (min-width: 1024px) {
@@ -1202,11 +1052,24 @@ interface ReelItem {
 
     .why-card {
       text-align: center;
-      padding: 0 20px;
+      padding: 24px 16px;
       position: relative;
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      flex: 0 0 45%;
+      scroll-snap-align: start;
+
+      @media (min-width: 640px) {
+        flex: auto;
+      }
 
       @media (min-width: 1024px) {
+        border: none;
+        border-radius: 0;
         border-right: 1px solid #eaeaea;
+        padding: 0 20px;
+        background: transparent;
 
         &:last-child {
           border-right: none;
@@ -1214,20 +1077,30 @@ interface ReelItem {
       }
 
       .why-icon-box {
-        margin-bottom: 20px;
+        margin-bottom: 16px;
       }
 
       .why-card-title {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 800;
         color: #111111;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+        
+        @media (min-width: 1024px) {
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
       }
 
       .why-card-desc {
-        font-size: 13.5px;
+        font-size: 12px;
         color: #666666;
-        line-height: 1.55;
+        line-height: 1.4;
+        
+        @media (min-width: 1024px) {
+          font-size: 13.5px;
+          line-height: 1.55;
+        }
       }
     }
 
@@ -1354,93 +1227,7 @@ interface ReelItem {
       }
     }
 
-    /* ── CTA BANNER ── */
-    .cta-banner-section {
-      padding: 40px 0 60px;
-    }
 
-    .cta-banner {
-      background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
-      border-radius: 16px;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      position: relative;
-      overflow: hidden;
-
-      @media (min-width: 768px) {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 50px 60px;
-      }
-    }
-
-    .cta-content {
-      color: #ffffff;
-      z-index: 2;
-      flex: 1;
-      max-width: 500px;
-
-      .cta-pill {
-        display: inline-block;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 1px;
-        color: #fbbc04;
-        margin-bottom: 12px;
-        text-transform: uppercase;
-      }
-
-      h2 {
-        font-size: clamp(24px, 4vw, 32px);
-        font-weight: 800;
-        margin-bottom: 12px;
-        line-height: 1.2;
-      }
-
-      p {
-        font-size: 15px;
-        color: #cbd5e1;
-        margin-bottom: 24px;
-        line-height: 1.5;
-      }
-
-      .cta-btn {
-        display: inline-flex;
-        background: #fbbc04;
-        color: #111111;
-        font-weight: 800;
-        font-size: 14px;
-        padding: 12px 24px;
-        border-radius: 8px;
-        transition: transform 0.2s;
-
-        &:hover {
-          transform: translateY(-2px);
-          background: #e6ab03;
-        }
-      }
-    }
-
-    .cta-image {
-      position: relative;
-      z-index: 2;
-      display: none;
-
-      @media (min-width: 768px) {
-        display: block;
-        flex: 1;
-        text-align: right;
-
-        img {
-          max-width: 100%;
-          max-height: 250px;
-          object-fit: contain;
-        }
-      }
-    }
 
     /* ── 9. INQUIRY SECTION ── */
     .inquiry-card {

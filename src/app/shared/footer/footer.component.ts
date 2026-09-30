@@ -15,8 +15,10 @@ import { FormsModule } from '@angular/forms';
           <!-- COL 1: BRAND & SOCIAL -->
           <div class="footer-col brand-col">
             <div class="footer-logo">
-              <strong>GRAPHICLINE</strong>
-              <span>Custom Gifts & Printing</span>
+              <span class="logo-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fbbc04" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+              </span>
+              <strong>GIFT AURA</strong>
             </div>
             <p class="brand-desc">
               Your one-stop destination for custom printed t-shirts, corporate gifts and more.
@@ -41,8 +43,8 @@ import { FormsModule } from '@angular/forms';
             </ul>
           </div>
 
-          <!-- COL 3: CATEGORIES -->
-          <div class="footer-col">
+          <!-- COL 3: CATEGORIES (Hidden on mobile) -->
+          <div class="footer-col hide-on-mobile">
             <h4 class="footer-title">Categories</h4>
             <ul class="footer-links">
               <li><a [routerLink]="['/menu']" [queryParams]="{cat: 't-shirts'}">Polo T-Shirts</a></li>
@@ -53,8 +55,8 @@ import { FormsModule } from '@angular/forms';
             </ul>
           </div>
 
-          <!-- COL 4: HELP -->
-          <div class="footer-col">
+          <!-- COL 4: HELP (Hidden on mobile) -->
+          <div class="footer-col hide-on-mobile">
             <h4 class="footer-title">Help</h4>
             <ul class="footer-links">
               <li><a routerLink="/">Shipping Info</a></li>
@@ -87,7 +89,7 @@ import { FormsModule } from '@angular/forms';
         <!-- BOTTOM ROW -->
         <div class="footer-bottom">
           <div class="footer-copy">
-            <p>© 2025 Graphic Line. All rights reserved.</p>
+            <p>© 2025 Gift Aura. All rights reserved.</p>
           </div>
           <div class="payment-methods">
             <span class="pay-badge">VISA</span>
@@ -105,6 +107,10 @@ import { FormsModule } from '@angular/forms';
       color: #b5c0d0;
       padding: 60px 0 30px;
       font-size: 13.5px;
+
+      @media (max-width: 767px) {
+        display: none;
+      }
     }
 
     .footer-grid {
@@ -117,8 +123,14 @@ import { FormsModule } from '@angular/forms';
       }
 
       @media (min-width: 1024px) {
-        grid-template-columns: 1.4fr 0.8fr 1fr 1.3fr;
-        gap: 40px;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hide-on-mobile {
+        display: none;
       }
     }
 
@@ -132,8 +144,14 @@ import { FormsModule } from '@angular/forms';
     .footer-logo {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 16px;
+
+      .logo-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       strong {
         font-size: 20px;

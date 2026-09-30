@@ -285,26 +285,26 @@ export const PRODUCTS: Product[] = [
     isBestseller: true,
     minQty: 1
   },
-  {
-    id: "7967812976688",
-    handle: "premium-custom-logo-water-bottles-collection",
-    name: "Premium Custom Logo Water Bottles Collection",
-    fullName: "Premium Custom Logo Water Bottles Collection",
-    description: "Insulated stainless steel sports and executive water bottles with laser engraving or permanent UV print. Available in Matte Black, Silver, Rose Gold, and Navy Blue.",
-    price: 899,
-    originalPrice: 1099,
-    image: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-engraved-water-bottle-collection_webp.webp?v=1779795052",
-    secondaryImage: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-engraved-water-bottle-collection_webp.webp?v=1779795052",
-    images: [
-      "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-engraved-water-bottle-collection_webp.webp?v=1779795052"
-    ],
-    category: "drinkware",
-    rating: 4.8,
-    ratingCount: 155,
-    isVeg: true,
-    isBestseller: false,
-    minQty: 1
-  },
+  // {
+  //   id: "7967812976688",
+  //   handle: "premium-custom-logo-water-bottles-collection",
+  //   name: "Premium Custom Logo Water Bottles Collection",
+  //   fullName: "Premium Custom Logo Water Bottles Collection",
+  //   description: "Insulated stainless steel sports and executive water bottles with laser engraving or permanent UV print. Available in Matte Black, Silver, Rose Gold, and Navy Blue.",
+  //   price: 899,
+  //   originalPrice: 1099,
+  //   image: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-engraved-water-bottle-collection_webp.webp?v=1779795052",
+  //   secondaryImage: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-engraved-water-bottle-collection_webp.webp?v=1779795052",
+  //   images: [
+  //     "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-engraved-water-bottle-collection_webp.webp?v=1779795052"
+  //   ],
+  //   category: "drinkware",
+  //   rating: 4.8,
+  //   ratingCount: 155,
+  //   isVeg: true,
+  //   isBestseller: false,
+  //   minQty: 1
+  // },
   {
     id: "7967735349296",
     handle: "premium-mobile-stand-with-branding-graphicline-in",
@@ -327,28 +327,28 @@ export const PRODUCTS: Product[] = [
     isBestseller: true,
     minQty: 1
   },
-  {
-    id: "7966779408432",
-    handle: "corporate-diary-gift-kit-diary-pen-keychain-graphicline-in",
-    name: "Corporate Diary Gift Kit | Diary + Pen + Keychain",
-    fullName: "Corporate Diary Gift Kit | Diary+Pen+Keychain | Graphicline.in",
-    description: "The quintessential 3-piece corporate gift set: A5 hardbound organizer diary, heavy metal executive pen, and matching keychain delivered in a padded presentation box.",
-    price: 1499,
-    originalPrice: 1799,
-    image: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-corporate-welcome-kit-diary-pen-bottle-keychain-1_webp.webp?v=1779796030",
-    secondaryImage: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-corporate-welcome-kit-diary-pen-bottle-keychain_webp.webp?v=1779796030",
-    images: [
-      "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-corporate-welcome-kit-diary-pen-bottle-keychain-1_webp.webp?v=1779796030",
-      "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-corporate-welcome-kit-diary-pen-bottle-keychain_webp.webp?v=1779796030",
-      "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-branded-welcome-box_webp.webp?v=1779796030"
-    ],
-    category: "welcome-kits",
-    rating: 4.9,
-    ratingCount: 275,
-    isVeg: true,
-    isBestseller: true,
-    minQty: 1
-  },
+  // {
+  //   id: "7966779408432",
+  //   handle: "corporate-diary-gift-kit-diary-pen-keychain-graphicline-in",
+  //   name: "Corporate Diary Gift Kit | Diary + Pen + Keychain",
+  //   fullName: "Corporate Diary Gift Kit | Diary+Pen+Keychain | Graphicline.in",
+  //   description: "The quintessential 3-piece corporate gift set: A5 hardbound organizer diary, heavy metal executive pen, and matching keychain delivered in a padded presentation box.",
+  //   price: 1499,
+  //   originalPrice: 1799,
+  //   image: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-corporate-welcome-kit-diary-pen-bottle-keychain-1_webp.webp?v=1779796030",
+  //   secondaryImage: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-corporate-welcome-kit-diary-pen-bottle-keychain_webp.webp?v=1779796030",
+  //   images: [
+  //     "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-corporate-welcome-kit-diary-pen-bottle-keychain-1_webp.webp?v=1779796030",
+  //     "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-corporate-welcome-kit-diary-pen-bottle-keychain_webp.webp?v=1779796030",
+  //     "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-branded-welcome-box_webp.webp?v=1779796030"
+  //   ],
+  //   category: "welcome-kits",
+  //   rating: 4.9,
+  //   ratingCount: 275,
+  //   isVeg: true,
+  //   isBestseller: true,
+  //   minQty: 1
+  // },
   {
     id: "7966763483184",
     handle: "custom-metal-keychains-for-branding-graphicline-in",
