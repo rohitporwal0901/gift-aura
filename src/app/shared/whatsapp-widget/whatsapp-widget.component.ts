@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
                 <span class="gl-wa-online-dot"></span>
               </div>
               <div>
-                <h4 class="gl-wa-header-title">Graphic Line Support</h4>
+                <h4 class="gl-wa-header-title">GiftAura Support</h4>
                 <p class="gl-wa-header-sub">Typically replies within 15 minutes</p>
               </div>
             </div>
@@ -26,39 +26,20 @@ import { CommonModule } from '@angular/common';
 
           <div class="gl-wa-body">
             <div class="gl-wa-msg-bubble">
-              <p>Hi there! 👋 Welcome to <strong>Graphic Line</strong>.</p>
-              <p class="gl-wa-msg-sub">Select your dedicated sales manager to start a direct WhatsApp chat for custom branding, samples, or bulk order pricing:</p>
+              <p>Hi there! 👋 Welcome to <strong>GiftAura</strong>.</p>
+              <p class="gl-wa-msg-sub">Chat directly with Rohit for custom branding, samples, or bulk order pricing:</p>
             </div>
 
-            <!-- AGENT 1 -->
-            <a href="https://wa.me/916376167116?text=Hi%20Akash%2C%20I%20am%20at%20your%20website%20graphicline.in%20and%20interested%20in%20corporate%20gifting%20products." 
+            <!-- ROHIT PORWAL -->
+            <a href="https://wa.me/918461909143?text=Hi%20Rohit%2C%20I%20am%20interested%20in%20your%20GiftAura%20products%20and%20would%20like%20to%20know%20more%20about%20custom%20gifting%20options." 
                target="_blank" 
                rel="noopener" 
                class="gl-agent-card">
-              <div class="gl-agent-avatar">AK</div>
+              <div class="gl-agent-avatar">RP</div>
               <div class="gl-agent-details">
-                <div class="gl-agent-name">AKASH</div>
-                <div class="gl-agent-title">SR. SALES MANAGER</div>
-                <div class="gl-agent-phone">+91 63761-67116</div>
-              </div>
-              <div class="gl-agent-chat-btn">
-                <span>Chat</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.59 1.38 5.1L2 22l4.99-1.35A9.95 9.95 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/>
-                </svg>
-              </div>
-            </a>
-
-            <!-- AGENT 2 -->
-            <a href="https://wa.me/917877605311?text=Hi%20Ajay%2C%20I%20am%20at%20your%20website%20graphicline.in%20and%20want%20to%20inquire%20about%20bulk%20orders." 
-               target="_blank" 
-               rel="noopener" 
-               class="gl-agent-card">
-              <div class="gl-agent-avatar">AJ</div>
-              <div class="gl-agent-details">
-                <div class="gl-agent-name">AJAY</div>
-                <div class="gl-agent-title">JR. SALES MANAGER</div>
-                <div class="gl-agent-phone">+91 78776-05311</div>
+                <div class="gl-agent-name">ROHIT PORWAL</div>
+                <div class="gl-agent-title">GIFT AURA</div>
+                <div class="gl-agent-phone">+91 84619-09143</div>
               </div>
               <div class="gl-agent-chat-btn">
                 <span>Chat</span>

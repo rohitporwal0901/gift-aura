@@ -20,7 +20,22 @@ type AuthStep = 'phone' | 'pin' | 'register';
         <!-- HEADER -->
         <div class="auth-header" *ngIf="!inlineMode">
           <div class="brand-pill">
-            <span class="brand-title" style="color: #111; font-weight: 800; letter-spacing: -0.5px;">GIFT<span style="color: #fbbc04;">AURA</span></span>
+            <svg viewBox="0 0 160 46" fill="none" xmlns="http://www.w3.org/2000/svg" height="38" width="auto">
+              <g transform="translate(0, 2)">
+                <path d="M16 7 Q20 3 24 7" stroke="#D4A017" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                <path d="M24 7 Q28 3 32 7" stroke="#D4A017" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                <circle cx="24" cy="7" r="1.8" fill="#D4A017"/>
+                <rect x="11" y="8" width="26" height="6" rx="1.5" fill="#D4A017"/>
+                <rect x="23" y="8" width="2.8" height="6" fill="#B8860B"/>
+                <rect x="12" y="15" width="24" height="17" rx="1.5" fill="#111111"/>
+                <rect x="23" y="15" width="2.8" height="17" fill="#D4A017"/>
+                <circle cx="9" cy="6" r="1" fill="#D4A017" opacity="0.7"/>
+                <circle cx="39" cy="4" r="0.9" fill="#D4A017" opacity="0.6"/>
+              </g>
+              <text x="44" y="28" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="21" fill="#111111" letter-spacing="-0.5">GIFT</text>
+              <text x="90" y="28" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="21" fill="#D4A017" letter-spacing="-0.5">AURA</text>
+              <text x="44" y="39" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="6.5" fill="#888888" letter-spacing="1.4">CUSTOM GIFTS &amp; PRINTING</text>
+            </svg>
           </div>
           <button class="close-btn" (click)="close()" type="button" aria-label="Close">✕</button>
         </div>
@@ -44,6 +59,25 @@ type AuthStep = 'phone' | 'pin' | 'register';
         <!-- STEP 1: ENTER PHONE NUMBER -->
         @if (step() === 'phone') {
           <div class="step-container animate-fade">
+            <!-- LOGO (shown in inline/drawer mode) -->
+            <div class="inline-logo-wrap" *ngIf="inlineMode">
+              <svg viewBox="0 0 160 46" fill="none" xmlns="http://www.w3.org/2000/svg" height="44" width="auto">
+                <g transform="translate(0, 2)">
+                  <path d="M16 7 Q20 3 24 7" stroke="#D4A017" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <path d="M24 7 Q28 3 32 7" stroke="#D4A017" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <circle cx="24" cy="7" r="1.8" fill="#D4A017"/>
+                  <rect x="11" y="8" width="26" height="6" rx="1.5" fill="#D4A017"/>
+                  <rect x="23" y="8" width="2.8" height="6" fill="#B8860B"/>
+                  <rect x="12" y="15" width="24" height="17" rx="1.5" fill="#111111"/>
+                  <rect x="23" y="15" width="2.8" height="17" fill="#D4A017"/>
+                  <circle cx="9" cy="6" r="1" fill="#D4A017" opacity="0.7"/>
+                  <circle cx="39" cy="4" r="0.9" fill="#D4A017" opacity="0.6"/>
+                </g>
+                <text x="44" y="28" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="21" fill="#111111" letter-spacing="-0.5">GIFT</text>
+                <text x="90" y="28" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="21" fill="#D4A017" letter-spacing="-0.5">AURA</text>
+                <text x="44" y="39" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="6.5" fill="#888888" letter-spacing="1.4">CUSTOM GIFTS &amp; PRINTING</text>
+              </svg>
+            </div>
             <div class="title-wrap">
               <h3 class="step-title">Welcome to GiftAura</h3>
               <p class="step-subtitle">Enter your 10-digit mobile number to continue</p>
@@ -212,6 +246,13 @@ type AuthStep = 'phone' | 'pin' | 'register';
       background: #ffffff;
     }
 
+    .inline-logo-wrap {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+      line-height: 0;
+    }
+
     .auth-backdrop {
       position: fixed;
       inset: 0;
@@ -281,19 +322,9 @@ type AuthStep = 'phone' | 'pin' | 'register';
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #F1F8E9;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid #DCEDC8;
-    }
-
-    .brand-emoji { font-size: 16px; }
-
-    .brand-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 13px;
-      font-weight: 800;
-      color: #2E7D32;
+      padding: 2px 4px;
+      border-radius: 8px;
+      line-height: 0;
     }
 
     .close-btn {
@@ -352,7 +383,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
     .edit-link {
       background: transparent;
       border: none;
-      color: #2E7D32;
+      color: #D4A017;
       font-size: 11px;
       font-weight: 700;
       cursor: pointer;
@@ -372,8 +403,8 @@ type AuthStep = 'phone' | 'pin' | 'register';
       margin-bottom: 20px;
       transition: all 0.2s ease;
       &:focus-within {
-        border-color: #2E7D32;
-        box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.12);
+        border-color: #D4A017;
+        box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.15);
       }
     }
 
@@ -425,14 +456,14 @@ type AuthStep = 'phone' | 'pin' | 'register';
       transition: all 0.2s ease;
       font-family: inherit;
       &:focus {
-        border-color: #2E7D32;
+        border-color: #D4A017;
         background: #ffffff;
-        box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+        box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.2);
         transform: scale(1.05);
       }
       &.filled {
-        border-color: #2E7D32;
-        background: #F1F8E9;
+        border-color: #D4A017;
+        background: #FFFBEA;
       }
     }
 
@@ -440,8 +471,8 @@ type AuthStep = 'phone' | 'pin' | 'register';
     .primary-submit-btn {
       width: 100%;
       height: 50px;
-      background: #2E7D32;
-      color: #ffffff;
+      background: linear-gradient(135deg, #D4A017 0%, #F0C040 100%);
+      color: #111111;
       border: none;
       border-radius: 14px;
       font-family: 'Outfit', sans-serif;
@@ -451,23 +482,29 @@ type AuthStep = 'phone' | 'pin' | 'register';
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 14px rgba(46, 125, 50, 0.35);
+      box-shadow: 0 4px 14px rgba(212, 160, 23, 0.4);
       transition: all 0.2s ease;
+      &:hover {
+        background: linear-gradient(135deg, #C49010 0%, #D4A017 100%);
+        box-shadow: 0 6px 20px rgba(212, 160, 23, 0.5);
+        transform: translateY(-1px);
+      }
       &:active {
         transform: scale(0.98);
-        background: #1B5E20;
+        background: #B8860B;
       }
       &:disabled {
         opacity: 0.5;
         cursor: not-allowed;
         box-shadow: none;
+        transform: none;
       }
     }
 
     .btn-spinner {
       width: 20px;
       height: 20px;
-      border: 2.5px solid #ffffff;
+      border: 2.5px solid #111111;
       border-top-color: transparent;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -486,7 +523,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
     }
 
     .link-text {
-      color: #2E7D32;
+      color: #D4A017;
       font-weight: 600;
       cursor: pointer;
     }
@@ -499,7 +536,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
     .text-action-btn {
       background: transparent;
       border: none;
-      color: #2E7D32;
+      color: #D4A017;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
@@ -538,8 +575,8 @@ type AuthStep = 'phone' | 'pin' | 'register';
       outline: none;
       font-family: inherit;
       &:focus {
-        border-color: #2E7D32;
-        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.12);
+        border-color: #D4A017;
+        box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
       }
     }
 

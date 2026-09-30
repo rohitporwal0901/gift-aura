@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit, OnDestroy, effect } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, OnDestroy, AfterViewInit, DOCUMENT, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -73,13 +73,13 @@ interface ReelItem {
         </div>
       </section>
 
-      <!-- 2. INSIDE GRAPHIC LINE (Behind-the-scenes Reels & Factory) -->
+      <!-- 2. INSIDE GIFTAURA (Behind-the-scenes Reels & Factory) -->
       <section class="gl-section inside-gl-section">
         <div class="container">
           <div class="gl-section-header">
             <span class="gl-section-pill gl-badge-pill">BEHIND THE SCENES</span>
-            <h2 class="gl-section-title">Inside Graphic Line</h2>
-            <p class="gl-section-subtitle">Real look into our in-house manufacturing, precision laser engraving & daily order dispatches.</p>
+            <h2 class="gl-section-title">Inside GiftAura</h2>
+            <p class="gl-section-subtitle">Real look into our in-house manufacturing, precision laser engraving &amp; daily order dispatches.</p>
           </div>
 
           <div class="reels-slider-wrap">
@@ -215,11 +215,11 @@ interface ReelItem {
       </section>
 
 
-      <!-- 7. WHY CHOOSE GRAPHIC LINE -->
+      <!-- 7. WHY CHOOSE GIFTAURA -->
       <section class="gl-section why-choose-section" id="why-choose">
         <div class="container">
           <div class="gl-section-header left-aligned">
-            <h2 class="gl-section-title">Why Choose Graphic Line?</h2>
+            <h2 class="gl-section-title">Why Choose GiftAura?</h2>
           </div>
 
           <div class="why-grid">
@@ -1553,7 +1553,7 @@ interface ReelItem {
     }
   `]
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
   private authService = inject(AuthService);
@@ -1663,7 +1663,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       name: 'Manish Jain',
       company: 'Apex Logistics, Jaipur',
       title: 'Great pricing and prompt WhatsApp support',
-      comment: 'Akash and Ajay handled our urgent requirement of 500 insulated bottles and diaries with utmost professionalism. Graphic Line is now our permanent corporate vendor.'
+      comment: 'Rohit from GiftAura handled our urgent requirement of 500 insulated bottles and diaries with utmost professionalism. GiftAura is now our permanent corporate vendor.'
     }
   ];
 
@@ -1677,6 +1677,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   });
 
   private pendingCartItem = signal<{product: Product, qty: number} | null>(null);
+
+  private document = inject(DOCUMENT);
 
   constructor() {
     effect(() => {
@@ -1692,6 +1694,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.startHeroAutoplay();
+  }
+
+  ngAfterViewInit() {
+    // Force autoplay on reel videos (browsers block autoplay without user gesture on deployed sites)
+    setTimeout(() => {
+      const videos = this.document.querySelectorAll<HTMLVideoElement>('video.reel-img');
+      videos.forEach(video => {
+        video.muted = true;
+        video.play().catch(() => {
+          // silently ignore if blocked
+        });
+      });
+    }, 500);
   }
 
   ngOnDestroy() {
@@ -1753,6 +1768,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // Pre-fill WhatsApp message
     const msg = `*New Bulk Inquiry from Website*%0A*Name:* ${this.inquiryForm.name}%0A*Company:* ${this.inquiryForm.company}%0A*Phone:* ${this.inquiryForm.phone}%0A*Product:* ${this.inquiryForm.product}%0A*Quantity:* ${this.inquiryForm.quantity}%0A*Message:* ${this.inquiryForm.message || 'None'}`;
-    window.open(`https://wa.me/917877605311?text=${msg}`, '_blank');
+    window.open(`https://wa.me/918461909143?text=${msg}`, '_blank');
   }
 }

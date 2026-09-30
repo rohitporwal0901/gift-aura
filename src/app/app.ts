@@ -48,7 +48,7 @@ import { AuthService } from './core/services/auth.service';
   `]
 })
 export class App {
-  title = 'Graphic Line';
+  title = 'GiftAura';
   private router = inject(Router);
   authService = inject(AuthService);
   readonly isAuthRoute = signal<boolean>(false);

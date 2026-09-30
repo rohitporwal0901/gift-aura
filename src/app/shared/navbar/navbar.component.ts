@@ -26,9 +26,35 @@ import { Product } from '../../core/models/product.model';
 
         <!-- BRAND LOGO -->
         <a routerLink="/" class="gl-brand" title="Gift Aura Home">
-          <div class="brand-text-fallback" id="textBrand">
-            <span class="bt-name">GIFT<span class="bt-gold">AURA</span></span>
-            <span class="bt-tag">CUSTOM GIFTS & PRINTING</span>
+          <div class="brand-logo-svg">
+            <svg viewBox="0 0 180 52" fill="none" xmlns="http://www.w3.org/2000/svg" height="48" width="auto">
+              <!-- Gift box icon -->
+              <g transform="translate(0, 2)">
+                <!-- ribbon top -->
+                <path d="M20 8 Q24 4 28 8" stroke="#D4A017" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M28 8 Q32 4 36 8" stroke="#D4A017" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <!-- bow center -->
+                <circle cx="28" cy="8" r="2" fill="#D4A017"/>
+                <!-- lid -->
+                <rect x="14" y="9" width="28" height="7" rx="1.5" fill="#D4A017"/>
+                <!-- vertical ribbon on lid -->
+                <rect x="26.5" y="9" width="3" height="7" fill="#B8860B"/>
+                <!-- box body -->
+                <rect x="15" y="17" width="26" height="19" rx="1.5" fill="#111111"/>
+                <!-- vertical ribbon on box -->
+                <rect x="26.5" y="17" width="3" height="19" fill="#D4A017"/>
+                <!-- sparkles -->
+                <circle cx="12" cy="7" r="1.2" fill="#D4A017" opacity="0.7"/>
+                <circle cx="44" cy="5" r="1" fill="#D4A017" opacity="0.6"/>
+                <circle cx="46" cy="14" r="0.8" fill="#D4A017" opacity="0.5"/>
+              </g>
+              <!-- GIFT text -->
+              <text x="52" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#111111" letter-spacing="-0.5">GIFT</text>
+              <!-- AURA text in gold -->
+              <text x="103" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#D4A017" letter-spacing="-0.5">AURA</text>
+              <!-- tagline -->
+              <text x="52" y="44" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="7.5" fill="#888888" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
+            </svg>
           </div>
         </a>
 
@@ -136,7 +162,24 @@ import { Product } from '../../core/models/product.model';
       <div class="mobile-drawer-backdrop" (click)="toggleMobileMenu()"></div>
       <div class="mobile-drawer">
         <div class="md-header">
-          <div class="bt-name">GIFT<span class="bt-gold">AURA</span></div>
+          <div class="brand-logo-svg">
+            <svg viewBox="0 0 180 52" fill="none" xmlns="http://www.w3.org/2000/svg" height="42" width="auto">
+              <g transform="translate(0, 2)">
+                <path d="M20 8 Q24 4 28 8" stroke="#D4A017" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M28 8 Q32 4 36 8" stroke="#D4A017" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <circle cx="28" cy="8" r="2" fill="#D4A017"/>
+                <rect x="14" y="9" width="28" height="7" rx="1.5" fill="#D4A017"/>
+                <rect x="26.5" y="9" width="3" height="7" fill="#B8860B"/>
+                <rect x="15" y="17" width="26" height="19" rx="1.5" fill="#111111"/>
+                <rect x="26.5" y="17" width="3" height="19" fill="#D4A017"/>
+                <circle cx="12" cy="7" r="1.2" fill="#D4A017" opacity="0.7"/>
+                <circle cx="44" cy="5" r="1" fill="#D4A017" opacity="0.6"/>
+              </g>
+              <text x="52" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#111111" letter-spacing="-0.5">GIFT</text>
+              <text x="103" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#D4A017" letter-spacing="-0.5">AURA</text>
+              <text x="52" y="44" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="7.5" fill="#888888" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
+            </svg>
+          </div>
           <button class="md-close" (click)="toggleMobileMenu()">✕</button>
         </div>
 
@@ -178,12 +221,12 @@ import { Product } from '../../core/models/product.model';
 
           <div class="md-contact-box">
             <div class="md-contact-title">Quick Corporate Support</div>
-            <p>Direct WhatsApp with our Sales Managers for bulk inquiries and quotation:</p>
-            <a href="https://wa.me/917877605311?text=Hi%20Graphic%20Line%2C%20I%20want%20to%20inquire%20about%20corporate%20gifting" 
+            <p>Direct WhatsApp with Rohit Porwal for bulk inquiries and quotation:</p>
+            <a href="https://wa.me/918461909143?text=Hi%20Rohit%2C%20I%20want%20to%20inquire%20about%20corporate%20gifting" 
                target="_blank" 
                rel="noopener" 
                class="md-wa-btn">
-              <span>WhatsApp Us: +91 78776-05311</span>
+              <span>WhatsApp Us: +91 84619-09143</span>
             </a>
           </div>
         </div>
@@ -219,34 +262,16 @@ import { Product } from '../../core/models/product.model';
       text-decoration: none;
       
       @media (min-width: 769px) {
-        flex: 1; /* take space on left to center the nav on desktop */
+        flex: 1;
       }
     }
 
-    .brand-text-fallback {
+    .brand-logo-svg {
       display: flex;
-      flex-direction: column;
-
-      .bt-name {
-        font-family: var(--font-heading);
-        font-size: 22px;
-        font-weight: 900;
-        letter-spacing: -0.5px;
-        color: #111111;
-        line-height: 1;
-
-        .bt-gold {
-          color: var(--color-accent);
-        }
-      }
-
-      .bt-tag {
-        font-size: 9px;
-        font-weight: 800;
-        letter-spacing: 2px;
-        color: #777777;
-        margin-top: 3px;
-      }
+      align-items: center;
+      line-height: 0;
+      transition: transform 0.2s ease;
+      &:hover { transform: scale(1.02); }
     }
 
     /* ── DESKTOP NAV ── */

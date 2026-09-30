@@ -613,8 +613,8 @@ export class ProductDetailComponent implements OnInit {
 
   getWhatsAppInquiryUrl(): string {
     const p = this.product();
-    if (!p) return 'https://wa.me/917877605311';
-    const text = `Hi Graphic Line, I want to inquire about bulk ordering ${p.name} (Quantity: ${this.qty()} units).`;
-    return `https://wa.me/917877605311?text=${encodeURIComponent(text)}`;
+    if (!p) return 'https://wa.me/918461909143';
+    const text = `Hi Rohit, I want to inquire about bulk ordering ${p.name} (Quantity: ${this.qty()} units).`;
+    return `https://wa.me/918461909143?text=${encodeURIComponent(text)}`;
   }
 }
