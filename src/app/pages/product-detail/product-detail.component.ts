@@ -1,8 +1,9 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Product } from '../../core/models/product.model';
 
 @Component({
@@ -525,11 +526,26 @@ export class ProductDetailComponent implements OnInit {
   private router = inject(Router);
   private productService = inject(ProductService);
   private cartService = inject(CartService);
+  private authService = inject(AuthService);
 
   readonly product = signal<Product | null>(null);
   readonly activeImage = signal<string>('');
   readonly galleryImages = signal<string[]>([]);
   readonly qty = signal<number>(1);
+
+  private pendingCartItem = signal<{product: Product, qty: number} | null>(null);
+
+  constructor() {
+    effect(() => {
+      if (this.authService.isLoggedIn() && this.pendingCartItem()) {
+        const item = this.pendingCartItem()!;
+        this.cartService.addToCart(item.product, item.qty);
+        this.cartService.openDrawer();
+        this.pendingCartItem.set(null);
+        this.authService.closeAuthModal();
+      }
+    }, { allowSignalWrites: true });
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -574,6 +590,11 @@ export class ProductDetailComponent implements OnInit {
   addToCart() {
     const p = this.product();
     if (!p) return;
+    if (!this.authService.isLoggedIn()) {
+      this.pendingCartItem.set({product: p, qty: this.qty()});
+      this.cartService.openDrawer();
+      return;
+    }
     this.cartService.addToCart(p, this.qty());
     this.cartService.openDrawer();
   }

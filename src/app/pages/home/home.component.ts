@@ -1,9 +1,10 @@
-import { Component, inject, signal, computed, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, OnDestroy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Product } from '../../core/models/product.model';
 
 interface HeroSlide {
@@ -1555,6 +1556,7 @@ interface ReelItem {
 export class HomeComponent implements OnInit, OnDestroy {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
+  private authService = inject(AuthService);
 
   readonly currentHeroIndex = signal<number>(0);
   readonly selectedCategory = signal<string>('all');
@@ -1674,6 +1676,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     return list.filter(p => p.category === cat);
   });
 
+  private pendingCartItem = signal<{product: Product, qty: number} | null>(null);
+
+  constructor() {
+    effect(() => {
+      if (this.authService.isLoggedIn() && this.pendingCartItem()) {
+        const item = this.pendingCartItem()!;
+        this.cartService.addToCart(item.product, item.qty);
+        this.cartService.openDrawer();
+        this.pendingCartItem.set(null);
+        this.authService.closeAuthModal();
+      }
+    }, { allowSignalWrites: true });
+  }
+
   ngOnInit() {
     this.startHeroAutoplay();
   }
@@ -1706,6 +1722,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   addToCart(product: Product) {
+    if (!this.authService.isLoggedIn()) {
+      this.pendingCartItem.set({product, qty: 1});
+      this.cartService.openDrawer();
+      return;
+    }
     this.cartService.addToCart(product, 1);
     this.cartService.openDrawer();
   }

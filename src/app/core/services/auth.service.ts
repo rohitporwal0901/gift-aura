@@ -127,7 +127,7 @@ export class AuthService {
   // Firebase Auth requires minimum 6 characters for a password
   private pinToPassword(pin: string): string {
     const clean = pin.trim();
-    return `${clean}`;
+    return `GIFT-${clean}`;
   }
 
   openAuthModal(): void {
@@ -209,35 +209,42 @@ export class AuthService {
     const email = this.phoneToEmail(cleanPhone);
     const password = this.pinToPassword(data.pin);
 
-    // Create Firebase Auth user
-    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
-    const uid = cred.user.uid;
+    try {
+      // Create Firebase Auth user
+      const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+      const uid = cred.user.uid;
 
-    const newUser: User = {
-      uid,
-      phone: cleanPhone,
-      name: data.name.trim(),
-      pin: data.pin.trim(),
-      email,
-      addresses: data.address ? [data.address] : [],
-      createdAt: new Date().toISOString(),
-      role: 'user'
-    };
-    if (data.address) {
-      newUser.activeAddress = data.address;
+      const newUser: User = {
+        uid,
+        phone: cleanPhone,
+        name: data.name.trim(),
+        pin: data.pin.trim(),
+        email,
+        addresses: data.address ? [data.address] : [],
+        createdAt: new Date().toISOString(),
+        role: 'user'
+      };
+      if (data.address) {
+        newUser.activeAddress = data.address;
+      }
+
+      // Save profile to Firestore
+      const userDocRef = doc(this.firestore, `users/${uid}`);
+      await setDoc(userDocRef, newUser);
+
+      this._currentUser.set(newUser);
+      if (data.address) {
+        this._activeAddress.set(data.address);
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
+
+      return newUser;
+    } catch (e: any) {
+      if (e.code === 'auth/email-already-in-use') {
+        throw new Error('This phone number is already registered. Please login instead.');
+      }
+      throw new Error(e.message?.replace('Firebase: ', '') || 'Registration failed. Please try again.');
     }
-
-    // Save profile to Firestore
-    const userDocRef = doc(this.firestore, `users/${uid}`);
-    await setDoc(userDocRef, newUser);
-
-    this._currentUser.set(newUser);
-    if (data.address) {
-      this._activeAddress.set(data.address);
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
-
-    return newUser;
   }
 
   // ─── Forgot PIN / Reset PIN (Khandelwal Architecture) ────

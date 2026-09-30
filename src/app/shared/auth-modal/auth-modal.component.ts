@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, inject, signal, ViewChildren, QueryList, ElementRef, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
@@ -11,17 +11,16 @@ type AuthStep = 'phone' | 'pin' | 'register';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="auth-backdrop" (click)="close()">
-      <div class="auth-sheet" (click)="$event.stopPropagation()">
+    <div [class]="inlineMode ? 'auth-inline' : 'auth-backdrop'" (click)="!inlineMode && close()">
+      <div [class]="inlineMode ? 'auth-inline-sheet' : 'auth-sheet'" (click)="$event.stopPropagation()">
         
         <!-- DRAG HANDLE -->
         <div class="sheet-handle"></div>
 
         <!-- HEADER -->
-        <div class="auth-header">
+        <div class="auth-header" *ngIf="!inlineMode">
           <div class="brand-pill">
-            <span class="brand-emoji">🥑</span>
-            <span class="brand-title">FruitChat</span>
+            <span class="brand-title" style="color: #111; font-weight: 800; letter-spacing: -0.5px;">GIFT<span style="color: #fbbc04;">AURA</span></span>
           </div>
           <button class="close-btn" (click)="close()" type="button" aria-label="Close">✕</button>
         </div>
@@ -46,8 +45,8 @@ type AuthStep = 'phone' | 'pin' | 'register';
         @if (step() === 'phone') {
           <div class="step-container animate-fade">
             <div class="title-wrap">
-              <h3 class="step-title">Welcome to FruitChat</h3>
-              <p class="step-subtitle">Enter your 10-digit mobile number to login or signup</p>
+              <h3 class="step-title">Welcome to GiftAura</h3>
+              <p class="step-subtitle">Enter your 10-digit mobile number to continue</p>
             </div>
 
             <div class="input-group phone-group">
@@ -77,7 +76,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
             </button>
 
             <p class="terms-text">
-              By continuing, you agree to FruitChat's 
+              By continuing, you agree to GiftAura's 
               <span class="link-text">Terms of Service</span> & 
               <span class="link-text">Privacy Policy</span>
             </p>
@@ -158,15 +157,22 @@ type AuthStep = 'phone' | 'pin' | 'register';
 
               <!-- SET 4-DIGIT PIN -->
               <div class="input-field-wrap">
-                <label class="field-label">Set 4-Digit Security PIN</label>
-                <input 
-                  type="password" 
-                  inputmode="numeric" 
-                  maxlength="4" 
-                  class="text-input pin-set-input" 
-                  placeholder="Set 4-digit PIN" 
-                  [(ngModel)]="newPin"
-                />
+                <label class="field-label" style="margin-bottom: 12px; display: block;">Set 4-Digit Security PIN</label>
+                <div class="pin-digits-wrap">
+                  @for (digit of registerPinDigits; track $index; let i = $index) {
+                    <input 
+                      #regPinInput
+                      type="password" 
+                      inputmode="numeric"
+                      maxlength="1" 
+                      class="pin-box"
+                      [value]="digit"
+                      (input)="onRegPinInput($event, i)"
+                      (keydown)="onRegPinKeyDown($event, i)"
+                      [class.filled]="digit !== ''"
+                    />
+                  }
+                </div>
               </div>
 
             </div>
@@ -174,7 +180,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
             <button 
               type="button" 
               class="primary-submit-btn" 
-              [disabled]="!name.trim() || newPin.length !== 4 || isLoading()"
+              [disabled]="!name.trim() || getRegisterPin().length !== 4 || isLoading()"
               (click)="submitRegister()"
             >
               @if (isLoading()) {
@@ -190,6 +196,22 @@ type AuthStep = 'phone' | 'pin' | 'register';
     </div>
   `,
   styles: [`
+    .auth-inline {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-inline-sheet {
+      width: 100%;
+      height: 100%;
+      padding: 30px 24px;
+      overflow-y: auto;
+      background: #ffffff;
+    }
+
     .auth-backdrop {
       position: fixed;
       inset: 0;
@@ -568,9 +590,12 @@ type AuthStep = 'phone' | 'pin' | 'register';
   `]
 })
 export class AuthModalComponent {
+  @Input() inlineMode = false;
+
   private authService = inject(AuthService);
 
   @ViewChildren('pinInput') pinInputRefs!: QueryList<ElementRef<HTMLInputElement>>;
+  @ViewChildren('regPinInput') regPinInputRefs!: QueryList<ElementRef<HTMLInputElement>>;
 
   readonly step = signal<AuthStep>('phone');
   readonly isLoading = signal<boolean>(false);
@@ -586,7 +611,7 @@ export class AuthModalComponent {
 
   // Step 3
   name = '';
-  newPin = '';
+  registerPinDigits = ['', '', '', ''];
 
   async checkPhone(): Promise<void> {
     const cleanPhone = this.phone.trim();
@@ -609,6 +634,10 @@ export class AuthModalComponent {
       } else {
         // New user -> Register with Name and PIN
         this.step.set('register');
+        setTimeout(() => {
+          const arr = this.regPinInputRefs?.toArray();
+          if (arr && arr[0]) arr[0].nativeElement.focus();
+        }, 150);
       }
     } catch (e: any) {
       this.errorMessage.set(e.message || 'Network error. Please try again.');
@@ -669,10 +698,40 @@ export class AuthModalComponent {
       this.isLoading.set(false);
     }
   }
+  getRegisterPin(): string {
+    return this.registerPinDigits.join('');
+  }
+
+  onRegPinInput(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    const val = input.value.replace(/\D/g, '');
+    this.registerPinDigits[index] = val ? val[val.length - 1] : '';
+
+    if (val && index < 3) {
+      const arr = this.regPinInputRefs.toArray();
+      if (arr[index + 1]) arr[index + 1].nativeElement.focus();
+    }
+
+    if (this.getRegisterPin().length === 4 && this.name.trim()) {
+      this.submitRegister();
+    }
+  }
+
+  onRegPinKeyDown(event: KeyboardEvent, index: number): void {
+    if (event.key === 'Backspace' && !this.registerPinDigits[index] && index > 0) {
+      this.registerPinDigits[index - 1] = '';
+      const arr = this.regPinInputRefs.toArray();
+      if (arr[index - 1]) arr[index - 1].nativeElement.focus();
+    }
+  }
 
   resetToRegister(): void {
     this.errorMessage.set('');
     this.step.set('register');
+    setTimeout(() => {
+      const arr = this.regPinInputRefs?.toArray();
+      if (arr && arr[0]) arr[0].nativeElement.focus();
+    }, 150);
   }
 
   async submitRegister(): Promise<void> {
@@ -680,7 +739,8 @@ export class AuthModalComponent {
       this.errorMessage.set('Please enter your full name');
       return;
     }
-    if (this.newPin.trim().length !== 4 || !/^\d{4}$/.test(this.newPin)) {
+    const pin = this.getRegisterPin();
+    if (pin.length !== 4) {
       this.errorMessage.set('Please set a 4-digit numeric PIN');
       return;
     }
@@ -692,7 +752,7 @@ export class AuthModalComponent {
       await this.authService.registerUser({
         phone: this.phone,
         name: this.name,
-        pin: this.newPin
+        pin: pin
       });
 
       this.successMessage.set('Account created successfully!');

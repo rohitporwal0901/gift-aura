@@ -3,17 +3,27 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../core/services/cart.service';
+import { AuthService } from '../../core/services/auth.service';
+import { AuthModalComponent } from '../auth-modal/auth-modal.component';
 
 @Component({
   selector: 'app-cart-drawer',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, AuthModalComponent],
   template: `
     @if (cartService.isOpenDrawer()) {
       <div class="drawer-backdrop" (click)="close()"></div>
       <div class="drawer-panel animate-slide-left">
-        <!-- DRAWER HEADER -->
-        <div class="drawer-header">
+        @if (authService.authLoading()) {
+          <div class="drawer-loading">
+            <div class="loader-spinner"></div>
+            <p>Loading your session...</p>
+          </div>
+        } @else if (!authService.isLoggedIn()) {
+          <app-auth-modal [inlineMode]="true"></app-auth-modal>
+        } @else {
+          <!-- DRAWER HEADER -->
+          <div class="drawer-header">
           <div class="dh-title">
             <span>Shopping Cart</span>
             <span class="dh-count">({{ cartService.totalItems() }})</span>
@@ -142,6 +152,7 @@ import { CartService } from '../../core/services/cart.service';
             </div>
           </div>
         }
+        } <!-- End of else block for isLoggedIn -->
       </div>
     }
   `,
@@ -166,6 +177,31 @@ import { CartService } from '../../core/services/cart.service';
       display: flex;
       flex-direction: column;
       box-shadow: -8px 0 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .drawer-loading {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      color: #666;
+      font-size: 14px;
+
+      .loader-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f4f6;
+        border-top-color: #ffc107;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 16px;
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     @keyframes slideInRight {
@@ -488,6 +524,7 @@ import { CartService } from '../../core/services/cart.service';
 })
 export class CartDrawerComponent {
   cartService = inject(CartService);
+  authService = inject(AuthService);
   freeShippingThreshold = 999;
   couponCodeInput = '';
   promoMessage = signal<string>('');
