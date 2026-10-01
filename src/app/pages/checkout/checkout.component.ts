@@ -17,12 +17,23 @@ import { environment } from '../../../environments/environment';
 
       <!-- HEADER -->
       <div class="checkout-header">
-        <button class="back-btn" (click)="goBack()" aria-label="Back">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        <button type="button" class="back-btn" (click)="goBack()" aria-label="Back">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
           <span>Back</span>
         </button>
         <span class="header-title">Checkout</span>
-        <div class="header-spacer"></div>
+        @if (inlineMode) {
+          <button type="button" class="close-icon-btn" (click)="cartService.closeDrawer()" aria-label="Close checkout">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        } @else {
+          <div class="header-spacer"></div>
+        }
       </div>
 
       <!-- TOAST -->
@@ -37,7 +48,9 @@ import { environment } from '../../../environments/environment';
       <!-- STEPPER -->
       <div class="stepper-bar">
         @for (step of steps; track step.num) {
-          <div class="step" [class.active]="currentStep() >= step.num" [class.done]="currentStep() > step.num">
+          <div class="step" [class.active]="currentStep() >= step.num" [class.done]="currentStep() > step.num"
+               [class.clickable]="currentStep() > step.num"
+               (click)="goToStep(step.num)">
             <div class="step-dot">
               @if (currentStep() > step.num) {
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -295,40 +308,90 @@ import { environment } from '../../../environments/environment';
     .checkout-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       background: #FFFFFF;
       border-bottom: 1px solid #E2E8F0;
       padding: 10px 14px;
-      gap: 10px;
       flex-shrink: 0;
+      position: relative;
+      min-height: 50px;
     }
 
     .back-btn {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 4px;
-      background: none;
-      border: none;
+      gap: 5px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
       font-size: 12.5px;
-      font-weight: 600;
-      color: #64748B;
+      font-weight: 700;
+      color: #334155;
       cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 5px 11px;
+      border-radius: 7px;
       font-family: inherit;
-      transition: background 0.15s;
-      &:hover { background: #F1F5F9; }
+      position: relative;
+      z-index: 10;
+      transition: all 0.15s ease;
+
+      svg {
+        transition: transform 0.15s ease;
+      }
+
+      &:hover {
+        background: #F1F5F9;
+        color: #0F172A;
+        border-color: #CBD5E1;
+
+        svg {
+          transform: translateX(-2px);
+        }
+      }
+
+      &:active {
+        transform: scale(0.96);
+      }
     }
 
     .header-title {
-      flex: 1;
-      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 15px;
       font-weight: 800;
       color: #0F172A;
-      margin-left: -60px;
+      letter-spacing: -0.2px;
+      pointer-events: none;
+      z-index: 1;
+      white-space: nowrap;
     }
 
-    .header-spacer { width: 60px; }
+    .close-icon-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #E2E8F0;
+      background: #F8FAFC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748B;
+      cursor: pointer;
+      position: relative;
+      z-index: 10;
+      transition: all 0.15s;
+
+      &:hover {
+        background: #E2E8F0;
+        color: #0F172A;
+      }
+    }
+
+    .header-spacer {
+      width: 30px;
+      position: relative;
+      z-index: 10;
+    }
 
     /* TOAST */
     .toast {
@@ -383,6 +446,20 @@ import { environment } from '../../../environments/environment';
       flex-direction: column;
       align-items: center;
       gap: 5px;
+
+      &.clickable {
+        cursor: pointer;
+
+        &:hover .step-name {
+          color: #0F172A;
+          font-weight: 800;
+        }
+
+        &:hover .step-dot {
+          transform: scale(1.08);
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+        }
+      }
     }
 
     .step-dot {
@@ -890,6 +967,12 @@ export class CheckoutComponent {
       this.cartService.setDrawerMode('cart');
     } else {
       this.router.navigate(['/']);
+    }
+  }
+
+  goToStep(stepNum: number): void {
+    if (this.currentStep() > stepNum) {
+      this.currentStep.set(stepNum);
     }
   }
 

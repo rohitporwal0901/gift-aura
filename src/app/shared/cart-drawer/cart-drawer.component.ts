@@ -30,31 +30,31 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
         } @else if (cartService.drawerMode() === 'profile') {
           <app-profile [inlineMode]="true"></app-profile>
         } @else {
-          <!-- HEADER -->
+          <!-- CLEAN HEADER -->
           <div class="drawer-header">
             <div class="header-title-box">
               <span class="cart-title">My Cart</span>
               <span class="item-count-chip">{{ cartService.totalItems() }} {{ cartService.totalItems() === 1 ? 'item' : 'items' }}</span>
             </div>
             <button class="close-icon-btn" (click)="close()" aria-label="Close cart">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             </button>
           </div>
 
-          <!-- COMPACT DELIVERY STRIP -->
+          <!-- REFINED DELIVERY STRIP -->
           <div class="delivery-strip" [class.is-free]="cartService.itemTotal() >= freeShippingThreshold">
             @if (cartService.itemTotal() >= freeShippingThreshold) {
               <div class="ds-row">
-                <span class="ds-icon">⚡</span>
-                <span class="ds-text">Yay! <strong>FREE Express Delivery</strong> unlocked on this order</span>
+                <span class="ds-icon-bubble">⚡</span>
+                <span class="ds-text"><strong>FREE Express Delivery</strong> unlocked on this order!</span>
               </div>
             } @else {
               <div class="ds-column">
                 <div class="ds-row">
-                  <span class="ds-icon">🚚</span>
+                  <span class="ds-icon-bubble">🚚</span>
                   <span class="ds-text">Add <strong>₹{{ freeShippingThreshold - cartService.itemTotal() }}</strong> more for <strong>FREE Delivery</strong></span>
                 </div>
                 <div class="ds-progress-track">
@@ -81,14 +81,14 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
                   <div class="item-card">
                     <!-- PRODUCT IMAGE -->
                     <div class="item-img-wrap">
-                      <img [src]="item.product.image" [alt]="item.product.name" onerror="this.src='assets/images/gift-box.png'">
+                      <img [src]="getItemImage(item.product)" [alt]="item.product.name" onerror="this.src='assets/images/gift-box.png'">
                     </div>
 
                     <!-- PRODUCT INFO -->
                     <div class="item-details">
                       <div class="item-head">
                         <h4 class="item-name" [title]="item.product.name">{{ item.product.name }}</h4>
-                        <button class="trash-btn" (click)="cartService.removeFromCart(item.product.id)" title="Remove item">
+                        <button class="trash-btn" (click)="cartService.removeFromCart(item.product.id)" title="Remove item" aria-label="Remove item">
                           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="3 6 5 6 21 6"></polyline>
                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -96,7 +96,7 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
                         </button>
                       </div>
 
-                      <!-- PRICE ROW WITH OFFER -->
+                      <!-- PRICING ROW -->
                       <div class="item-pricing">
                         <span class="price-val">₹{{ item.product.price }}</span>
                         @if (item.product.originalPrice && item.product.originalPrice > item.product.price) {
@@ -107,12 +107,12 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
                         }
                       </div>
 
-                      <!-- FOOTER ROW: STEPPER & SUBTOTAL -->
+                      <!-- CONTROLS ROW -->
                       <div class="item-controls">
                         <div class="qty-stepper">
-                          <button class="step-btn" [disabled]="item.quantity <= 1" (click)="cartService.updateQty(item.product.id, item.quantity - 1)">−</button>
+                          <button class="step-btn" [disabled]="item.quantity <= 1" (click)="cartService.updateQty(item.product.id, item.quantity - 1)" aria-label="Decrease quantity">−</button>
                           <span class="qty-val">{{ item.quantity }}</span>
-                          <button class="step-btn" (click)="cartService.updateQty(item.product.id, item.quantity + 1)">+</button>
+                          <button class="step-btn" (click)="cartService.updateQty(item.product.id, item.quantity + 1)" aria-label="Increase quantity">+</button>
                         </div>
 
                         <span class="item-subtotal">₹{{ item.totalPrice }}</span>
@@ -121,48 +121,80 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
                   </div>
                 }
               </div>
+
+              <!-- TRUST ASSURANCE PILLS -->
+              <div class="cart-trust-bar">
+                <div class="ctb-item">
+                  <span class="ctb-icon">🛡️</span>
+                  <span>100% Quality Assured</span>
+                </div>
+                <span class="ctb-dot">•</span>
+                <div class="ctb-item">
+                  <span class="ctb-icon">⚡</span>
+                  <span>Fast Dispatch</span>
+                </div>
+                <span class="ctb-dot">•</span>
+                <div class="ctb-item">
+                  <span class="ctb-icon">🔒</span>
+                  <span>Secure Checkout</span>
+                </div>
+              </div>
             }
           </div>
 
-          <!-- FOOTER: BILL & CHECKOUT (CLEAN & COMPACT) -->
+          <!-- FOOTER: BILL & CHECKOUT (CLEAN, UNIFIED, COMPACT) -->
           @if (cartService.items().length > 0) {
             <div class="drawer-footer">
-              <!-- COMPACT PROMO ROW -->
+              <!-- UNIFIED COUPON SECTION -->
               <div class="promo-section">
-                <div class="promo-bar">
-                  <span class="promo-icon">🏷️</span>
-                  <input type="text" [(ngModel)]="couponCodeInput" [placeholder]="dataService.offerCard().isActive ? 'Discount code (e.g. ' + dataService.offerCard().code + ')' : 'Enter discount code'" uppercase>
-                  <button class="promo-btn" (click)="applyPromo()">Apply</button>
-                </div>
-
-                <!-- Backend Offer Card (Shows ONLY when active in admin) -->
-                @if (dataService.offerCard().isActive) {
-                  <div class="backend-offer-card" (click)="applyQuickCoupon(dataService.offerCard().code || '')">
-                    <div class="boc-left">
-                      <div class="boc-badge-row">
-                        <span class="boc-tag">⚡ SPECIAL OFFER</span>
-                        <span class="boc-code">{{ dataService.offerCard().code }}</span>
-                      </div>
-                      <strong class="boc-heading">{{ dataService.offerCard().heading }}</strong>
-                      <span class="boc-sub">{{ dataService.offerCard().subtext || ('Save ₹' + dataService.offerCard().amount + ' on orders above ₹' + dataService.offerCard().minOrderAmount) }}</span>
+                <!-- If Coupon Applied -->
+                @if (cartService.appliedCoupon()) {
+                  <div class="coupon-applied-bar animate-fade">
+                    <div class="cab-left">
+                      <span class="cab-icon">🏷️</span>
+                      <span class="cab-code">{{ cartService.appliedCoupon()?.code }}</span>
+                      <span class="cab-saved">Saved ₹{{ cartService.discount() }}</span>
                     </div>
-                    <button type="button" class="boc-apply-btn">Apply</button>
+                    <button type="button" class="cab-remove-btn" (click)="removeCoupon()">Remove ✕</button>
+                  </div>
+                } @else {
+                  <!-- Active Backend Offer Quick Pill -->
+                  @if (dataService.offerCard().isActive) {
+                    <div class="quick-offer-pill" (click)="applyQuickCoupon(dataService.offerCard().code || '')">
+                      <div class="qop-left">
+                        <span class="qop-badge">⚡ {{ dataService.offerCard().code }}</span>
+                        <span class="qop-text">Save ₹{{ dataService.offerCard().amount }} on orders above ₹{{ dataService.offerCard().minOrderAmount }}</span>
+                      </div>
+                      <button type="button" class="qop-apply-btn">Apply</button>
+                    </div>
+                  }
+
+                  <!-- Streamlined Promo Input Bar -->
+                  <div class="promo-input-box">
+                    <span class="promo-input-icon">🏷️</span>
+                    <input 
+                      type="text" 
+                      [(ngModel)]="couponCodeInput" 
+                      placeholder="Enter promo code" 
+                      (keyup.enter)="applyPromo()"
+                    />
+                    <button class="promo-apply-action-btn" (click)="applyPromo()" [disabled]="!couponCodeInput.trim()">
+                      Apply
+                    </button>
                   </div>
                 }
 
                 @if (promoMessage()) {
-                  <div class="promo-hint-row">
-                    <span class="promo-status" [class.success]="isPromoSuccess()" [class.error]="!isPromoSuccess()">
-                      {{ promoMessage() }}
-                    </span>
+                  <div class="promo-msg-line" [class.success]="isPromoSuccess()" [class.error]="!isPromoSuccess()">
+                    {{ promoMessage() }}
                   </div>
                 }
               </div>
 
-              <!-- CLEAN BILL DETAILS -->
-              <div class="bill-summary">
+              <!-- CLEAN BILL BREAKDOWN -->
+              <div class="bill-summary-card">
                 <div class="summary-line">
-                  <span class="line-label">Items Total</span>
+                  <span class="line-label">Items Total (MRP)</span>
                   <span class="line-val">₹{{ totalOriginalPrice() }}</span>
                 </div>
                 @if (totalSavings() > 0) {
@@ -188,22 +220,22 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
 
                 <div class="bill-divider"></div>
 
-                <div class="summary-line total-line">
-                  <span class="line-label total-label">Grand Total</span>
-                  <span class="line-val total-val">₹{{ cartService.grandTotal() }}</span>
+                <div class="summary-line grand-total-line">
+                  <span class="grand-label">Grand Total</span>
+                  <span class="grand-val">₹{{ cartService.grandTotal() }}</span>
                 </div>
 
                 @if (totalSavings() + cartService.discount() > 0) {
-                  <div class="savings-alert">
+                  <div class="savings-alert-pill">
                     ✨ You're saving ₹{{ totalSavings() + cartService.discount() + (cartService.itemTotal() >= freeShippingThreshold ? 49 : 0) }} on this order!
                   </div>
                 }
               </div>
 
-              <!-- CHECKOUT BUTTON -->
+              <!-- CHECKOUT SUBMIT BUTTON -->
               <button (click)="cartService.openCheckout()" class="checkout-submit-btn">
                 <span>Proceed to Checkout</span>
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
@@ -450,25 +482,26 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
     .item-card {
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
-      border-radius: 10px;
-      padding: 10px 12px;
+      border-radius: 11px;
+      padding: 11px 13px;
       display: flex;
       gap: 12px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-      transition: border-color 0.15s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      transition: all 0.15s ease;
 
       &:hover {
         border-color: #CBD5E1;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
       }
 
       .item-img-wrap {
-        width: 64px;
-        height: 64px;
-        border-radius: 8px;
+        width: 66px;
+        height: 66px;
+        border-radius: 9px;
         overflow: hidden;
         background: #F1F5F9;
         flex-shrink: 0;
-        border: 1px solid #F1F5F9;
+        border: 1px solid #E2E8F0;
 
         img {
           width: 100%;
@@ -493,7 +526,7 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
       }
 
       .item-name {
-        font-size: 13px;
+        font-size: 13.5px;
         font-weight: 700;
         color: #0F172A;
         margin: 0;
@@ -509,13 +542,17 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
         color: #94A3B8;
         cursor: pointer;
         padding: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: color 0.15s;
+        transition: all 0.15s;
 
         &:hover {
           color: #EF4444;
+          background: #FEE2E2;
         }
       }
 
@@ -523,18 +560,18 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
       .item-pricing {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 7px;
         margin: 3px 0 6px;
         flex-wrap: wrap;
 
         .price-val {
-          font-size: 14px;
+          font-size: 14.5px;
           font-weight: 800;
           color: #0F172A;
         }
 
         .mrp-val {
-          font-size: 11.5px;
+          font-size: 12px;
           color: #94A3B8;
           text-decoration: line-through;
         }
@@ -544,8 +581,10 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
           font-weight: 700;
           color: #047857;
           background: #ECFDF5;
-          padding: 1px 5px;
+          border: 1px solid #A7F3D0;
+          padding: 1px 6px;
           border-radius: 4px;
+          letter-spacing: 0.2px;
         }
       }
 
@@ -560,17 +599,18 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
         display: inline-flex;
         align-items: center;
         border: 1px solid #CBD5E1;
-        border-radius: 5px;
+        border-radius: 6px;
         overflow: hidden;
-        height: 24px;
+        height: 27px;
+        background: #F8FAFC;
       }
 
       .step-btn {
-        width: 24px;
+        width: 27px;
         height: 100%;
         background: #F8FAFC;
         border: none;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 700;
         color: #334155;
         cursor: pointer;
@@ -590,177 +630,174 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
       }
 
       .qty-val {
-        min-width: 22px;
+        min-width: 24px;
         text-align: center;
-        font-size: 11.5px;
+        font-size: 12px;
         font-weight: 700;
         color: #0F172A;
       }
 
       .item-subtotal {
-        font-size: 13px;
+        font-size: 13.5px;
         font-weight: 800;
         color: #0F172A;
+      }
+    }
+
+    /* TRUST ASSURANCE BAR */
+    .cart-trust-bar {
+      margin-top: 14px;
+      padding: 9px 12px;
+      background: #FFFFFF;
+      border: 1px dashed #CBD5E1;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 6px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #64748B;
+
+      .ctb-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+      }
+
+      .ctb-icon {
+        font-size: 12px;
+      }
+
+      .ctb-dot {
+        color: #CBD5E1;
+        font-weight: bold;
       }
     }
 
     /* FOOTER */
     .drawer-footer {
       background: #FFFFFF;
-      border-top: 1px solid #E2E8F0;
-      padding: 12px 16px;
-      box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.04);
+      border-top: 1px solid #F1F5F9;
+      padding: 13px 16px 16px;
+      box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    /* PROMO */
+    /* UNIFIED PROMO SECTION */
     .promo-section {
-      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
 
-      .promo-bar {
+    /* Coupon Applied Banner */
+    .coupon-applied-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #F0FDF4;
+      border: 1px dashed #22C55E;
+      border-radius: 8px;
+      padding: 7px 11px;
+
+      .cab-left {
         display: flex;
         align-items: center;
         gap: 6px;
-        border: 1px solid #CBD5E1;
-        border-radius: 6px;
-        padding: 3px 6px 3px 8px;
-        background: #F8FAFC;
-
-        .promo-icon {
-          font-size: 12px;
-        }
-
-        input {
-          flex: 1;
-          border: none;
-          background: transparent;
-          font-size: 11.5px;
-          outline: none;
-          color: #0F172A;
-          font-weight: 600;
-        }
-
-        .promo-btn {
-          background: #0F172A;
-          color: #FFFFFF;
-          border: none;
-          border-radius: 4px;
-          padding: 4px 10px;
-          font-size: 11px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: background 0.15s;
-
-          &:hover {
-            background: #1E293B;
-          }
-        }
       }
 
-      .promo-hint-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 4px;
+      .cab-icon {
+        font-size: 12px;
       }
 
-      .quick-code-btn {
+      .cab-code {
+        font-size: 11px;
+        font-weight: 800;
+        color: #15803D;
+        background: #DCFCE7;
+        padding: 2px 6px;
+        border-radius: 4px;
+        letter-spacing: 0.3px;
+      }
+
+      .cab-saved {
+        font-size: 11px;
+        font-weight: 700;
+        color: #166534;
+      }
+
+      .cab-remove-btn {
         background: none;
         border: none;
-        color: #475569;
+        color: #EF4444;
         font-size: 11px;
+        font-weight: 700;
         cursor: pointer;
-        padding: 0;
-        text-decoration: underline;
-
-        strong {
-          color: #0F172A;
-        }
+        padding: 2px 6px;
+        border-radius: 4px;
+        transition: background 0.15s;
 
         &:hover {
-          color: #0F172A;
+          background: #FEE2E2;
         }
-      }
-
-      .promo-status {
-        font-size: 11px;
-        font-weight: 600;
-
-        &.success { color: #059669; }
-        &.error { color: #DC2626; }
       }
     }
 
-    /* BACKEND OFFER CARD IN CART */
-    .backend-offer-card {
-      margin-top: 7px;
-      padding: 8px 10px;
-      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-      border: 1.5px dashed #F59E0B;
-      border-radius: 8px;
+    /* Quick Offer Pill */
+    .quick-offer-pill {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      padding: 6px 10px;
+      background: #FFFBEB;
+      border: 1px dashed #F59E0B;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
 
       &:hover {
         background: #FEF3C7;
-        transform: translateY(-1px);
-        box-shadow: 0 3px 10px rgba(245, 158, 11, 0.15);
+        border-color: #D97706;
       }
 
-      .boc-left {
+      .qop-left {
         display: flex;
-        flex-direction: column;
-        gap: 2px;
+        align-items: center;
+        gap: 7px;
         min-width: 0;
       }
 
-      .boc-badge-row {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .boc-tag {
-        font-size: 9.5px;
-        font-weight: 800;
-        color: #B45309;
-        letter-spacing: 0.4px;
-      }
-
-      .boc-code {
+      .qop-badge {
         font-size: 10px;
         font-weight: 800;
-        background: #F59E0B;
-        color: #FFFFFF;
-        padding: 1px 5px;
+        color: #B45309;
+        background: #FDE68A;
+        padding: 2px 6px;
         border-radius: 4px;
+        white-space: nowrap;
       }
 
-      .boc-heading {
-        font-size: 11.5px;
-        font-weight: 700;
-        color: #78350F;
+      .qop-text {
+        font-size: 11px;
+        font-weight: 600;
+        color: #92400E;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
-      .boc-sub {
-        font-size: 10.5px;
-        color: #92400E;
-        line-height: 1.25;
-      }
-
-      .boc-apply-btn {
+      .qop-apply-btn {
         background: #0F172A;
         color: #FFFFFF;
         border: none;
-        border-radius: 6px;
-        padding: 4px 10px;
-        font-size: 11px;
+        border-radius: 5px;
+        padding: 3px 9px;
+        font-size: 10.5px;
         font-weight: 700;
         cursor: pointer;
         flex-shrink: 0;
@@ -772,100 +809,203 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
       }
     }
 
-    /* BILL SUMMARY */
-    .bill-summary {
-      background: #F8FAFC;
+    /* Streamlined Promo Input Bar */
+    .promo-input-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       border: 1px solid #E2E8F0;
       border-radius: 8px;
-      padding: 9px 12px;
-      margin-bottom: 10px;
+      padding: 3px 4px 3px 10px;
+      background: #F8FAFC;
+      transition: all 0.15s ease;
+
+      &:focus-within {
+        border-color: #0F172A;
+        background: #FFFFFF;
+        box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.05);
+      }
+
+      .promo-input-icon {
+        font-size: 12px;
+        opacity: 0.6;
+      }
+
+      input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        font-size: 11.5px;
+        outline: none;
+        color: #0F172A;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        &::placeholder {
+          text-transform: none;
+          color: #94A3B8;
+          font-weight: 500;
+        }
+      }
+
+      .promo-apply-action-btn {
+        background: #0F172A;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 6px;
+        padding: 5px 12px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s;
+
+        &:hover:not([disabled]) {
+          background: #1E293B;
+        }
+
+        &[disabled] {
+          opacity: 0.35;
+          cursor: not-allowed;
+          background: #94A3B8;
+        }
+      }
+    }
+
+    .promo-msg-line {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 0 2px;
+
+      &.success { color: #059669; }
+      &.error { color: #DC2626; }
+    }
+
+    /* CLEAN BILL SUMMARY CARD */
+    .bill-summary-card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 10px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
 
       .summary-line {
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 12px;
-        color: #475569;
-        margin-bottom: 4px;
+        color: #64748B;
+
+        .line-label {
+          color: #64748B;
+        }
+
+        .line-val {
+          font-weight: 600;
+          color: #334155;
+        }
 
         &.green {
           color: #059669;
-          font-weight: 600;
-        }
-
-        &.total-line {
-          margin-bottom: 0;
-          margin-top: 6px;
+          .line-label { color: #059669; }
+          .line-val { color: #059669; font-weight: 700; }
         }
 
         .line-val.free {
           color: #059669;
-          font-weight: 700;
+          font-weight: 800;
         }
 
         .strike {
           color: #94A3B8;
           font-weight: 400;
-          margin-right: 3px;
-        }
-
-        .total-label {
-          font-size: 13.5px;
-          font-weight: 800;
-          color: #0F172A;
-        }
-
-        .total-val {
-          font-size: 15px;
-          font-weight: 800;
-          color: #0F172A;
+          margin-right: 4px;
         }
       }
 
       .bill-divider {
         height: 1px;
         background: #E2E8F0;
-        margin: 5px 0;
+        margin: 3px 0;
       }
 
-      .savings-alert {
-        background: #DCFCE7;
-        color: #065F46;
-        border-radius: 5px;
-        padding: 4px 6px;
+      .grand-total-line {
+        margin-top: 1px;
+
+        .grand-label {
+          font-size: 13.5px;
+          font-weight: 800;
+          color: #0F172A;
+          letter-spacing: -0.2px;
+        }
+
+        .grand-val {
+          font-size: 16px;
+          font-weight: 900;
+          color: #0F172A;
+          letter-spacing: -0.3px;
+        }
+      }
+
+      .savings-alert-pill {
+        background: #ECFDF5;
+        color: #047857;
+        border: 1px solid #A7F3D0;
+        border-radius: 6px;
+        padding: 5px 8px;
         font-size: 11px;
         font-weight: 700;
         text-align: center;
-        margin-top: 6px;
+        margin-top: 4px;
+        letter-spacing: 0.1px;
       }
     }
 
     /* CHECKOUT SUBMIT BUTTON */
     .checkout-submit-btn {
       width: 100%;
-      background: #0F172A;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
       color: #FFFFFF;
       border: none;
       border-radius: 10px;
-      height: 42px;
+      height: 44px;
       font-size: 13.5px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
+      gap: 8px;
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.2);
-      transition: all 0.15s;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2);
+      transition: all 0.2s ease;
+
+      svg {
+        transition: transform 0.2s ease;
+      }
 
       &:hover {
-        background: #1E293B;
+        background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
         transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.25);
+
+        svg {
+          transform: translateX(3px);
+        }
       }
 
       &:active {
-        transform: scale(0.99);
+        transform: translateY(0) scale(0.99);
       }
+    }
+
+    .animate-fade {
+      animation: fadeIn 0.2s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-3px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   `]
 })
@@ -898,19 +1038,32 @@ export class CartDrawerComponent {
     this.cartService.closeDrawer();
   }
 
-  // Returns clean offer text e.g. "13% off on ₹1599" or backend text
+  // Returns clean offer badge e.g. "14% OFF"
   getProductOfferText(product: Product): string {
-    if (product.offerText) {
-      return product.offerText;
-    }
     if (product.discountPercent) {
-      return `${product.discountPercent}% off on ₹${product.price}`;
+      return `${product.discountPercent}% OFF`;
     }
     if (product.originalPrice && product.originalPrice > product.price) {
       const pct = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
-      return `${pct}% off on ₹${product.price}`;
+      return `${pct}% OFF`;
+    }
+    if (product.offerText) {
+      return product.offerText;
     }
     return 'Special Offer';
+  }
+
+  getItemImage(product: Product): string {
+    const p = product as any;
+    if (p.image && typeof p.image === 'string' && p.image.trim()) return p.image;
+    if (Array.isArray(p.images) && p.images.length > 0 && p.images[0]) return p.images[0];
+    return 'assets/images/gift-box.png';
+  }
+
+  removeCoupon(): void {
+    this.cartService.removeCoupon();
+    this.couponCodeInput = '';
+    this.promoMessage.set('');
   }
 
   applyQuickCoupon(code: string): void {
