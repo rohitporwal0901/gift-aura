@@ -38,6 +38,15 @@ export interface GiftParticle {
 
         <!-- MAIN SUCCESS CARD -->
         <div class="success-card">
+          <!-- TOP-RIGHT CORNER CONTINUE SHOPPING BADGE -->
+          <a routerLink="/" class="corner-shop-badge" title="Continue Shopping">
+            <span>Continue Shopping</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+
           <!-- TOP STATUS SECTION -->
           <div class="card-hero">
             <div class="check-badge-wrapper">
@@ -337,6 +346,7 @@ export interface GiftParticle {
     }
 
     .success-card {
+      position: relative;
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
       border-radius: 20px;
@@ -348,11 +358,58 @@ export interface GiftParticle {
       transition: all 0.2s ease;
     }
 
+    /* TOP-RIGHT CORNER CONTINUE SHOPPING BADGE */
+    .corner-shop-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      color: #475569;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.18s ease;
+      z-index: 10;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+
+      svg {
+        transition: transform 0.18s ease;
+      }
+
+      &:hover {
+        background: #0F172A;
+        border-color: #0F172A;
+        color: #FFFFFF;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+
+        svg {
+          transform: translateX(3px);
+        }
+      }
+
+      &:active {
+        transform: scale(0.96);
+      }
+    }
+
     @media (max-width: 520px) {
       .success-card {
         padding: 24px 18px 20px;
         border-radius: 16px;
         gap: 16px;
+      }
+
+      .corner-shop-badge {
+        top: 12px;
+        right: 12px;
+        font-size: 10.5px;
+        padding: 4px 9px;
       }
     }
 
