@@ -229,12 +229,21 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
       right: 0;
       bottom: 0;
       width: 100%;
-      max-width: 410px;
+      max-width: 420px;
       background: #FFFFFF;
       z-index: 99999;
       display: flex;
       flex-direction: column;
-      box-shadow: -8px 0 32px rgba(0, 0, 0, 0.18);
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.22);
+      border-left: 1px solid rgba(226, 232, 240, 0.8);
+      overflow: hidden;
+    }
+
+    @media (max-width: 480px) {
+      .drawer-panel {
+        max-width: 100%;
+        border-left: none;
+      }
     }
 
     .drawer-loading {
