@@ -4,368 +4,851 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { DataService } from '../../core/services/data.service';
 import { CartService } from '../../core/services/cart.service';
 
+export interface GiftParticle {
+  type: 'gift' | 'ribbon' | 'sparkle' | 'star' | 'coin';
+  style: string;
+}
+
 @Component({
   selector: 'app-order-success',
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
     <div class="success-page">
-      <!-- CELEBRATION PARTICLES -->
-      <div class="confetti" aria-hidden="true">
-        @for (style of confettiStyles; track $index) {
-          <div class="confetti-piece" [style]="style"></div>
+      <!-- GIFT CELEBRATION BACKGROUND LAYER -->
+      <div class="gift-confetti-layer" aria-hidden="true">
+        @for (item of giftParticles; track $index) {
+          <div class="gift-particle" [style]="item.style">
+            @if (item.type === 'gift') {
+              <span class="particle-icon gift-box">🎁</span>
+            } @else if (item.type === 'ribbon') {
+              <span class="particle-icon ribbon">🎀</span>
+            } @else if (item.type === 'sparkle') {
+              <span class="particle-icon sparkle">✨</span>
+            } @else if (item.type === 'star') {
+              <span class="particle-icon star">✦</span>
+            } @else {
+              <span class="particle-coin"></span>
+            }
+          </div>
         }
       </div>
 
-      <!-- SUCCESS CARD -->
-      <div class="success-card animate-scaleIn">
-        <!-- CHECK ICON -->
-        <div class="check-circle">
-          <div class="check-ring"></div>
-          <div class="check-mark">✓</div>
-        </div>
+      <div class="success-container animate-fade-up">
 
-        <h1 class="success-title">Order Placed<br>Successfully!</h1>
-        <p class="success-sub">Thank you for choosing <strong>Gift Aura</strong>!<br>Your order <strong>#{{ orderId() }}</strong> has been confirmed.</p>
-
-        <!-- STATUS BADGE -->
-        <div class="status-pill">
-          <span class="pulse-dot"></span>
-          <span>Order Confirmed & Being Prepared</span>
-        </div>
-
-        <!-- DETAILS CARD -->
-        @if (order()) {
-          <div class="order-summary-box">
-            <div class="summary-row">
-              <span class="s-label">Payment</span>
-              <span class="s-val highlight">{{ order()?.paymentMethod || 'Online' }} (Paid)</span>
+        <!-- MAIN SUCCESS CARD -->
+        <div class="success-card">
+          <!-- TOP STATUS SECTION -->
+          <div class="card-hero">
+            <div class="check-badge-wrapper">
+              <div class="check-badge-glow"></div>
+              <div class="check-badge">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
             </div>
-            <div class="summary-row">
-              <span class="s-label">Total Amount</span>
-              <span class="s-val bold">₹{{ order()?.grandTotal }}</span>
+
+            <h1 class="success-title">Order Placed Successfully!</h1>
+            <p class="success-desc">
+              Thank you for shopping with <strong>GiftAura</strong>. We've received your order and are preparing it with care.
+            </p>
+
+            <!-- ORDER ID & STATUS BADGE -->
+            <div class="order-meta-pill-bar">
+              <div class="order-id-chip" (click)="copyOrderId()" [title]="'Click to copy order ID'">
+                <span class="chip-label">ORDER ID:</span>
+                <span class="chip-id">#{{ orderId() }}</span>
+                <button type="button" class="copy-btn" aria-label="Copy Order ID">
+                  @if (copied()) {
+                    <span class="copied-indicator">✓ Copied</span>
+                  } @else {
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                  }
+                </button>
+              </div>
+
+              <div class="status-indicator-chip">
+                <span class="status-pulse-dot"></span>
+                <span>Confirmed & In Preparation</span>
+              </div>
             </div>
-            @if (order()?.deliveryAddress; as addr) {
-              <div class="summary-divider"></div>
-              <div class="address-preview">
-                <div class="addr-title">📍 Delivery To</div>
-                <div class="addr-name">{{ addr.name }} ({{ addr.phone }})</div>
-                <div class="addr-text">
-                  {{ addr.addressLine1 }}{{ addr.addressLine2 ? ', ' + addr.addressLine2 : '' }},
-                  {{ addr.city }} - {{ addr.pincode }}
+          </div>
+
+          <!-- KEY ORDER METRICS -->
+          @if (order(); as ord) {
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span class="metric-label">Date Placed</span>
+                <span class="metric-val">{{ formatDate(ord.placedAt) }}</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Payment</span>
+                <span class="metric-val payment-val">
+                  <span class="verified-dot">✓</span>
+                  {{ ord.paymentMethod || 'Online' }} (Paid)
+                </span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Total Amount</span>
+                <span class="metric-val price-val">₹{{ ord.grandTotal }}</span>
+              </div>
+            </div>
+
+            <!-- DELIVERY ADDRESS CARD -->
+            @if (ord.deliveryAddress; as addr) {
+              <div class="delivery-address-card">
+                <div class="dac-header">
+                  <div class="dac-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <span class="dac-title">Delivery Address</span>
+                </div>
+                <div class="dac-body">
+                  <div class="dac-recipient">
+                    <strong>{{ addr.name }}</strong>
+                    <span class="dac-phone">({{ addr.phone }})</span>
+                  </div>
+                  <p class="dac-address">
+                    {{ addr.addressLine1 }}{{ addr.addressLine2 ? ', ' + addr.addressLine2 : '' }},
+                    {{ addr.city }} - {{ addr.pincode }}
+                  </p>
                 </div>
               </div>
             }
-          </div>
-        }
 
-        <!-- ITEMS PREVIEW -->
-        @if (order()?.items?.length) {
-          <div class="items-list">
-            <div class="items-heading">Items Ordered ({{ order()!.items.length }})</div>
-            @for (item of order()!.items; track item.productId) {
-              <div class="item-row">
-                <img [src]="item.productImage || 'assets/images/gift-box.png'" [alt]="item.productName" class="item-img" />
-                <div class="item-details">
-                  <div class="item-name">{{ item.productName }}</div>
-                  <div class="item-qty">Qty: {{ item.quantity }} × ₹{{ item.price }}</div>
+            <!-- ITEMS ORDERED -->
+            @if (ord.items?.length) {
+              <div class="items-card">
+                <div class="items-card-head">
+                  <span class="ich-title">Items Ordered</span>
+                  <span class="ich-count">{{ ord.items.length }} {{ ord.items.length === 1 ? 'item' : 'items' }}</span>
                 </div>
-                <div class="item-total">₹{{ item.total }}</div>
+
+                <div class="items-list">
+                  @for (item of ord.items; track item.productId) {
+                    <div class="item-row">
+                      <div class="item-img-wrap">
+                        <img [src]="getItemImage(item)" [alt]="item.productName" onerror="this.src='assets/images/gift-box.png'" />
+                      </div>
+                      <div class="item-info">
+                        <h4 class="item-name" [title]="item.productName">{{ item.productName }}</h4>
+                        <div class="item-meta">
+                          <span class="item-qty-badge">Qty: {{ item.quantity }}</span>
+                          <span class="item-unit-price">× ₹{{ item.price }}</span>
+                        </div>
+                      </div>
+                      <div class="item-subtotal">₹{{ item.total }}</div>
+                    </div>
+                  }
+                </div>
+
+                <!-- BILL BREAKDOWN SUMMARY -->
+                <div class="bill-summary-wrap">
+                  <div class="bill-row">
+                    <span>Items Subtotal</span>
+                    <span>₹{{ ord.itemTotal || ord.grandTotal }}</span>
+                  </div>
+                  @if (ord.discount > 0) {
+                    <div class="bill-row discount-row">
+                      <span>Discount {{ ord.couponCode ? '(' + ord.couponCode + ')' : '' }}</span>
+                      <span>− ₹{{ ord.discount }}</span>
+                    </div>
+                  }
+                  <div class="bill-row">
+                    <span>Delivery Charges</span>
+                    <span class="free-text">{{ ord.deliveryCharge === 0 ? 'FREE' : '₹' + ord.deliveryCharge }}</span>
+                  </div>
+                  <div class="bill-divider"></div>
+                  <div class="bill-row grand-total-row">
+                    <span class="grand-label">Grand Total</span>
+                    <span class="grand-total-val">₹{{ ord.grandTotal }}</span>
+                  </div>
+                </div>
               </div>
             }
-          </div>
-        }
+          }
 
-        <!-- ACTIONS -->
-        <div class="success-actions">
-          <button (click)="openProfileOrders()" class="btn-profile">
-            📦 View in My Orders
-          </button>
-          <a routerLink="/" class="btn-home">
-            🛍️ Continue Shopping
-          </a>
+          <!-- ACTIONS SECTION -->
+          <div class="actions-section">
+            <button type="button" (click)="openProfileOrders()" class="action-btn-primary">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+              <span>View in My Orders</span>
+            </button>
+
+            <a routerLink="/" class="action-btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+              <span>Continue Shopping</span>
+            </a>
+          </div>
+
+          <!-- FOOTER REASSURANCE -->
+          <div class="reassurance-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 14 14"></polyline>
+            </svg>
+            <span>Live order status & dispatch tracking are updated directly in your profile.</span>
+          </div>
+
         </div>
       </div>
     </div>
   `,
   styles: [`
     .success-page {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      min-height: calc(100vh - 120px);
+      background: #F8FAFC;
+      background-image: 
+        radial-gradient(at 15% 15%, rgba(16, 185, 129, 0.05) 0px, transparent 40%),
+        radial-gradient(at 85% 15%, rgba(245, 158, 11, 0.05) 0px, transparent 40%),
+        radial-gradient(at 50% 85%, rgba(15, 23, 42, 0.03) 0px, transparent 50%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px 16px 60px;
+      padding: 32px 16px 64px;
+      font-family: 'Outfit', sans-serif;
+      box-sizing: border-box;
       position: relative;
       overflow: hidden;
-      font-family: 'Outfit', sans-serif;
     }
 
-    /* CONFETTI */
-    .confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-    .confetti-piece {
+    /* GIFT CELEBRATION BACKGROUND */
+    .gift-confetti-layer {
       position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 2px;
-      animation: confettiFall linear infinite;
-    }
-    @keyframes confettiFall {
-      0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-    }
-
-    /* SUCCESS CARD */
-    .success-card {
-      background: #FFFFFF;
-      border-radius: 20px;
-      padding: 24px 20px 22px;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-      max-width: 420px;
-      width: 100%;
-      position: relative;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
       z-index: 1;
     }
 
-    /* CHECK CIRCLE */
-    .check-circle {
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 16px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .check-ring {
+    .gift-particle {
       position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 3px solid #10B981;
-      animation: ringPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      top: -40px;
+      will-change: transform, opacity;
+      animation: giftFloatFall linear infinite;
+      user-select: none;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+
+      .particle-icon {
+        display: inline-block;
+        line-height: 1;
+
+        &.gift-box {
+          animation: giftWobble 3s ease-in-out infinite alternate;
+        }
+
+        &.ribbon {
+          animation: ribbonSway 2.4s ease-in-out infinite alternate;
+        }
+
+        &.sparkle {
+          animation: sparkleSpin 3.5s linear infinite;
+        }
+
+        &.star {
+          color: #F59E0B;
+          animation: starGlow 2s ease-in-out infinite alternate;
+        }
+      }
+
+      .particle-coin {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%);
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+        animation: coinTumble 2s linear infinite;
+      }
     }
 
-    .check-mark {
-      width: 62px;
-      height: 62px;
+    @keyframes giftFloatFall {
+      0% {
+        transform: translateY(-40px) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateY(50vh) translateX(28px) rotate(15deg);
+      }
+      75% {
+        transform: translateY(75vh) translateX(-22px) rotate(-12deg);
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(105vh) translateX(16px) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes giftWobble {
+      from { transform: rotate(-8deg) scale(0.95); }
+      to { transform: rotate(10deg) scale(1.05); }
+    }
+
+    @keyframes ribbonSway {
+      from { transform: rotate(-15deg); }
+      to { transform: rotate(15deg); }
+    }
+
+    @keyframes sparkleSpin {
+      0% { transform: scale(0.85) rotate(0deg); }
+      50% { transform: scale(1.2) rotate(180deg); }
+      100% { transform: scale(0.85) rotate(360deg); }
+    }
+
+    @keyframes starGlow {
+      from { transform: scale(0.8); opacity: 0.5; }
+      to { transform: scale(1.25); opacity: 1; filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.6)); }
+    }
+
+    @keyframes coinTumble {
+      0% { transform: scaleX(1); }
+      50% { transform: scaleX(0.2); }
+      100% { transform: scaleX(1); }
+    }
+
+    /* CONTAINER & MAIN CARD */
+    .success-container {
+      width: 100%;
+      max-width: 540px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .success-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 32px 28px 28px;
+      box-shadow: 0 12px 36px -8px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: all 0.2s ease;
+    }
+
+    @media (max-width: 520px) {
+      .success-card {
+        padding: 24px 18px 20px;
+        border-radius: 16px;
+        gap: 16px;
+      }
+    }
+
+    /* TOP HERO */
+    .card-hero {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .check-badge-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .check-badge-glow {
+      position: absolute;
+      inset: -6px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #10B981, #059669);
-      color: #fff;
-      font-size: 32px;
-      font-weight: 700;
+      background: rgba(16, 185, 129, 0.2);
+      filter: blur(8px);
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+
+    .check-badge {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: bounceIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
-      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
     }
 
-    @keyframes ringPop {
-      from { transform: scale(0); opacity: 0; }
+    @keyframes popIn {
+      from { transform: scale(0.6); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
-    @keyframes bounceIn {
-      from { transform: scale(0); }
-      60% { transform: scale(1.15); }
-      to { transform: scale(1); }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.15); opacity: 0.3; }
     }
 
     .success-title {
       font-size: 22px;
       font-weight: 800;
       color: #0F172A;
-      line-height: 1.2;
-      margin-bottom: 6px;
+      margin: 0 0 6px;
+      letter-spacing: -0.3px;
+      line-height: 1.25;
     }
 
-    .success-sub {
-      font-size: 12.5px;
+    .success-desc {
+      font-size: 13px;
       color: #64748B;
       line-height: 1.45;
-      margin-bottom: 14px;
+      margin: 0 0 16px;
+      max-width: 440px;
+
+      strong {
+        color: #1E293B;
+      }
     }
 
-    .status-pill {
+    /* ORDER META PILL BAR */
+    .order-meta-pill-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .order-id-chip {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+
+      &:hover {
+        background: #E2E8F0;
+        border-color: #CBD5E1;
+      }
+
+      .chip-label {
+        font-size: 10px;
+        font-weight: 700;
+        color: #64748B;
+        letter-spacing: 0.5px;
+      }
+
+      .chip-id {
+        font-size: 11.5px;
+        font-weight: 800;
+        color: #0F172A;
+        font-family: monospace;
+      }
+
+      .copy-btn {
+        background: none;
+        border: none;
+        color: #64748B;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .copied-indicator {
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #059669;
+      }
+    }
+
+    .status-indicator-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background: #ECFDF5;
       color: #065F46;
       border: 1px solid #A7F3D0;
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 12.5px;
-      font-weight: 600;
-      margin-bottom: 20px;
+      border-radius: 8px;
+      padding: 5px 11px;
+      font-size: 11.5px;
+      font-weight: 700;
     }
 
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: #10B981;
+    .status-pulse-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      animation: dotPulse 1.5s infinite;
-    }
-    @keyframes dotPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
+      background: #10B981;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+      animation: dotPulse 1.8s infinite;
     }
 
-    /* SUMMARY BOX */
-    .order-summary-box {
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.5; }
+    }
+
+    /* KEY METRICS GRID */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .metric-card {
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
-      border-radius: 16px;
-      padding: 14px 16px;
-      text-align: left;
-      margin-bottom: 16px;
-    }
-    .summary-row {
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      margin-bottom: 6px;
-    }
-    .s-label { color: #64748B; }
-    .s-val { color: #1E293B; font-weight: 600; }
-    .s-val.highlight { color: #059669; }
-    .s-val.bold { font-size: 15px; font-weight: 800; color: #0F172A; }
+      flex-direction: column;
+      gap: 3px;
 
-    .summary-divider {
-      height: 1px;
-      background: #E2E8F0;
-      margin: 10px 0;
-    }
+      .metric-label {
+        font-size: 10.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        color: #64748B;
+      }
 
-    .address-preview {
-      font-size: 12.5px;
-    }
-    .addr-title {
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 2px;
-      font-size: 11.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .addr-name {
-      font-weight: 600;
-      color: #0F172A;
-    }
-    .addr-text {
-      color: #64748B;
-      line-height: 1.4;
-      margin-top: 2px;
+      .metric-val {
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #0F172A;
+      }
+
+      .payment-val {
+        color: #047857;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        .verified-dot {
+          font-weight: 900;
+        }
+      }
+
+      .price-val {
+        font-size: 13.5px;
+        font-weight: 800;
+        color: #0F172A;
+      }
     }
 
-    /* ITEMS LIST */
-    .items-list {
+    /* DELIVERY ADDRESS CARD */
+    .delivery-address-card {
       background: #FFFFFF;
-      border: 1px solid #F1F5F9;
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 20px;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 12px 14px;
       text-align: left;
-      max-height: 180px;
-      overflow-y: auto;
     }
-    .items-heading {
-      font-size: 11.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #94A3B8;
-      margin-bottom: 8px;
+
+    .dac-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+
+      .dac-icon {
+        color: #EA580C;
+        display: flex;
+        align-items: center;
+      }
+
+      .dac-title {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #64748B;
+      }
     }
+
+    .dac-recipient {
+      font-size: 13px;
+      color: #0F172A;
+      margin-bottom: 2px;
+
+      strong {
+        font-weight: 700;
+      }
+
+      .dac-phone {
+        color: #64748B;
+        font-weight: 500;
+        margin-left: 4px;
+      }
+    }
+
+    .dac-address {
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* ITEMS ORDERED CARD */
+    .items-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .items-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+
+      .ich-title {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #475569;
+      }
+
+      .ich-count {
+        background: #E2E8F0;
+        color: #334155;
+        font-size: 10.5px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 999px;
+      }
+    }
+
+    .items-list {
+      padding: 6px 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
     .item-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 6px 0;
-      border-bottom: 1px solid #F8FAFC;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #F1F5F9;
+
+      &:last-child {
+        border-bottom: none;
+      }
     }
-    .item-row:last-child {
-      border-bottom: none;
-    }
-    .item-img {
-      width: 40px;
-      height: 40px;
+
+    .item-img-wrap {
+      width: 44px;
+      height: 44px;
       border-radius: 8px;
-      object-fit: cover;
+      overflow: hidden;
       background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      flex-shrink: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
-    .item-details {
+
+    .item-info {
       flex: 1;
       min-width: 0;
     }
+
     .item-name {
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #1E293B;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0F172A;
+      margin: 0 0 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .item-qty {
+
+    .item-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       font-size: 11px;
       color: #64748B;
     }
-    .item-total {
-      font-size: 13px;
+
+    .item-qty-badge {
+      background: #F1F5F9;
+      color: #475569;
       font-weight: 700;
-      color: #0F172A;
+      padding: 1px 5px;
+      border-radius: 4px;
     }
 
-    /* ACTIONS */
-    .success-actions {
+    .item-subtotal {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0F172A;
+      flex-shrink: 0;
+    }
+
+    /* BILL BREAKDOWN */
+    .bill-summary-wrap {
+      background: #F8FAFC;
+      border-top: 1px solid #E2E8F0;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #64748B;
+
+      &.discount-row {
+        color: #059669;
+        font-weight: 600;
+      }
+
+      .free-text {
+        color: #059669;
+        font-weight: 700;
+      }
+    }
+
+    .bill-divider {
+      height: 1px;
+      background: #E2E8F0;
+      margin: 3px 0;
+    }
+
+    .grand-total-row {
+      margin-top: 2px;
+
+      .grand-label {
+        font-size: 13px;
+        font-weight: 800;
+        color: #0F172A;
+      }
+
+      .grand-total-val {
+        font-size: 15px;
+        font-weight: 900;
+        color: #0F172A;
+      }
+    }
+
+    /* ACTIONS SECTION */
+    .actions-section {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-    .btn-profile, .btn-home {
-      display: block;
+
+    .action-btn-primary, .action-btn-secondary {
       width: 100%;
+      height: 44px;
       border-radius: 10px;
-      padding: 12px;
       font-size: 13.5px;
       font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       cursor: pointer;
-      border: none;
+      text-decoration: none;
       box-sizing: border-box;
-      font-family: 'Outfit', sans-serif;
-    }
-    .btn-profile {
-      background: #0F172A;
-      color: #FFFFFF;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.22);
-    }
-    .btn-profile:hover {
-      background: #1E293B;
-      transform: translateY(-1px);
-    }
-    .btn-home {
-      background: transparent;
-      color: #64748B;
-      border: 1.5px solid #E2E8F0;
-    }
-    .btn-home:hover {
-      background: #F1F5F9;
-      color: #0F172A;
+      font-family: inherit;
+      transition: all 0.15s ease;
     }
 
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.92); }
-      to { opacity: 1; transform: scale(1); }
+    .action-btn-primary {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      color: #FFFFFF;
+      border: none;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+
+      &:hover {
+        background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
     }
-    .animate-scaleIn {
-      animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+
+    .action-btn-secondary {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      color: #334155;
+
+      &:hover {
+        background: #F8FAFC;
+        border-color: #94A3B8;
+        color: #0F172A;
+      }
+    }
+
+    /* REASSURANCE NOTE */
+    .reassurance-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #94A3B8;
+      text-align: center;
+      line-height: 1.35;
+      padding: 0 8px;
+
+      svg {
+        flex-shrink: 0;
+        color: #64748B;
+      }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-up {
+      animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   `]
 })
@@ -375,9 +858,10 @@ export class OrderSuccessComponent implements OnInit {
   dataService = inject(DataService);
   cartService = inject(CartService);
   orderId = signal('');
+  copied = signal(false);
 
   order = computed(() => this.dataService.orders().find(o => o.id === this.orderId()));
-  confettiStyles: string[] = [];
+  giftParticles: GiftParticle[] = [];
 
   ngOnInit(): void {
     const id = this.route.snapshot.queryParamMap.get('orderId');
@@ -385,14 +869,59 @@ export class OrderSuccessComponent implements OnInit {
       this.orderId.set(id);
     }
 
-    const colors = ['#E11D48', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6'];
-    this.confettiStyles = Array.from({ length: 24 }, (_, i) => {
-      const color = colors[i % colors.length];
-      const left = ((i * 17 + 7) % 96);
-      const delay = (i * 0.2) % 3;
-      const duration = 2.2 + ((i * 3) % 3);
-      return `left:${left}%;background:${color};animation-delay:${delay}s;animation-duration:${duration}s;top:-20px;`;
+    const types: ('gift' | 'ribbon' | 'sparkle' | 'star' | 'coin')[] = [
+      'gift', 'sparkle', 'gift', 'ribbon', 'sparkle', 'star', 'gift', 'coin', 'ribbon', 'sparkle'
+    ];
+
+    this.giftParticles = Array.from({ length: 28 }, (_, i) => {
+      const type = types[i % types.length];
+      const left = ((i * 13 + 5) % 94);
+      const delay = (i * 0.28) % 4.5;
+      const duration = 5.5 + ((i * 2.1) % 4);
+      const size = type === 'gift' ? 22 + (i % 6) : type === 'ribbon' ? 20 + (i % 4) : 16 + (i % 6);
+      const opacity = 0.7 + ((i % 4) * 0.07);
+
+      return {
+        type,
+        style: `left:${left}%;font-size:${size}px;animation-delay:${delay.toFixed(2)}s;animation-duration:${duration.toFixed(2)}s;opacity:${opacity};`
+      };
     });
+  }
+
+  copyOrderId(): void {
+    const id = this.orderId();
+    if (id) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(id);
+      }
+      this.copied.set(true);
+      setTimeout(() => this.copied.set(false), 2000);
+    }
+  }
+
+  formatDate(dateStr?: string): string {
+    if (!dateStr) {
+      return new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+    try {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+    } catch {
+      return dateStr;
+    }
+  }
+
+  getItemImage(item: any): string {
+    if (item.productImage && typeof item.productImage === 'string' && item.productImage.trim()) {
+      return item.productImage;
+    }
+    const p = this.dataService.products().find((prod: any) => prod.id === item.productId);
+    if (p) {
+      const match = p as any;
+      if (match.image && typeof match.image === 'string') return match.image;
+      if (Array.isArray(match.images) && match.images.length > 0) return match.images[0];
+    }
+    return 'assets/images/gift-box.png';
   }
 
   openProfileOrders(): void {
