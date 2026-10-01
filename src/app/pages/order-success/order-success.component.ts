@@ -133,7 +133,7 @@ export interface GiftParticle {
             }
 
             <!-- ITEMS ORDERED -->
-            @if (ord.items?.length) {
+            @if (ord.items.length) {
               <div class="items-card">
                 <div class="items-card-head">
                   <span class="ich-title">Items Ordered</span>
