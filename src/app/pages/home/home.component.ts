@@ -81,44 +81,89 @@ interface ReelItem {
       </section>
 
       <!-- 2. INSIDE GIFTAURA (Behind-the-scenes Reels & Factory) -->
-      <section class="gl-section inside-gl-section">
+      <section class="gl-section inside-gl-section" id="workshop">
+        <!-- Section Background Decoration -->
+        <div class="reels-bg-decoration">
+          <div class="bg-orb bg-orb-1"></div>
+          <div class="bg-orb bg-orb-2"></div>
+        </div>
+
         <div class="container">
-          <div class="gl-section-header">
-            <span class="gl-section-pill gl-badge-pill">✦ IN-HOUSE PRODUCTION</span>
-            <h2 class="gl-section-title">Inside the GiftAura Workshop</h2>
-            <p class="gl-section-subtitle">Real look into our German fiber laser engraving, HD apparel embroidery &amp; daily corporate order dispatches.</p>
+          <div class="gl-section-header reels-header">
+            <span class="reels-pill-badge">
+              <span class="pill-dot"></span>
+              IN-HOUSE PRODUCTION
+            </span>
+            <h2 class="reels-main-title">Inside the <span class="title-highlight">GiftAura</span> Workshop</h2>
+            <p class="reels-subtitle">Real look into our German fiber laser engraving, HD apparel embroidery &amp; daily corporate order dispatches.</p>
           </div>
 
-          <div class="reels-slider-wrap">
-            <div class="reels-grid">
-              @for (reel of reelsList; track reel.id) {
-                <div class="reel-card" (click)="openVideoModal(reel)">
-                  <div class="reel-thumb-frame">
-                    <video [src]="reel.videoUrl" class="reel-img" autoplay muted loop playsinline></video>
-                    
-                    <div class="reel-top-bar">
-                      <span class="reel-live-tag">
-                        <span class="live-dot"></span> LIVE FACTORY
-                      </span>
-                    </div>
+          <!-- Reels Scroll Container -->
+          <div class="reels-scroll-wrapper">
+            <!-- Left Nav Button -->
+            <button class="reel-scroll-btn reel-scroll-left" (click)="scrollReelsLeft()" aria-label="Scroll Left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
 
-                    <div class="reel-play-overlay">
-                      <div class="play-circle">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#111111">
+            <div class="reels-track" #reelsTrack>
+              @for (reel of reelsList; track reel.id; let i = $index) {
+                <div class="reel-card-v2" (click)="openVideoModal(reel)">
+                  <!-- Video Background -->
+                  <div class="reel-media-wrap">
+                    <video [src]="reel.videoUrl" class="reel-video-bg" autoplay muted loop playsinline></video>
+                    <!-- Gradient overlays -->
+                    <div class="reel-gradient-top"></div>
+                    <div class="reel-gradient-bottom"></div>
+                  </div>
+
+                  <!-- Top: Live Badge -->
+                  <div class="reel-header-bar">
+                    <div class="reel-live-indicator">
+                      <span class="live-pulse"></span>
+                      <span class="live-text">LIVE</span>
+                    </div>
+                    <div class="reel-index-num">{{ (i + 1).toString().padStart(2, '0') }}</div>
+                  </div>
+
+                  <!-- Center: Play Button -->
+                  <div class="reel-center-play">
+                    <div class="play-btn-ring">
+                      <div class="play-btn-inner">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                           <polygon points="6 4 20 12 6 20 6 4"></polygon>
                         </svg>
                       </div>
                     </div>
-
-                    <div class="reel-bottom-overlay">
-                      <div class="reel-tag-badge">{{ reel.name }}</div>
-                      <h4 class="reel-title">{{ reel.title }}</h4>
-                     
-                    </div>
                   </div>
+
+                  <!-- Bottom: Info Overlay -->
+                  <div class="reel-info-overlay">
+                    <div class="reel-category-tag">{{ reel.name }}</div>
+                    <h4 class="reel-card-title">{{ reel.title }}</h4>
+                    
+                  </div>
+
+                  <!-- Hover Shine Effect -->
+                  <div class="reel-shine"></div>
                 </div>
               }
             </div>
+
+            <!-- Right Nav Button -->
+            <button class="reel-scroll-btn reel-scroll-right" (click)="scrollReelsRight()" aria-label="Scroll Right">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Scroll Progress Dots -->
+          <div class="reels-progress-dots">
+            @for (reel of reelsList; track reel.id; let i = $index) {
+              <span class="reel-dot" [class.active]="activeReelDot() === i"></span>
+            }
           </div>
         </div>
       </section>
@@ -161,71 +206,48 @@ interface ReelItem {
           <div class="gl-products-grid">
             @for (product of filteredProducts(); track product.id) {
               <div class="gl-product-card">
-                <!-- BADGES -->
-                <div class="pcard-badge-row">
-                  @if (product.isBestseller) {
-                    <span class="badge-bestseller">
-                      <span class="badge-icon">★</span> BESTSELLER
-                    </span>
-                  }
-                  @if (product.originalPrice && product.originalPrice > product.price) {
-                    <span class="badge-discount">
-                      {{ getDiscountPercent(product.price, product.originalPrice) }}% OFF
-                    </span>
-                  }
-                </div>
 
-                <!-- MEDIA BOX (Image + Overlay Actions) -->
-                <div class="pcard-media-box">
-                  <!-- IMAGE CONTAINER WITH DUAL-IMAGE HOVER -->
-                  <a [routerLink]="['/product', product.id]" class="pcard-img-link">
-                    <div class="pcard-img-wrap">
-                      <img [src]="product.image" [alt]="product.name" class="pcard-img main-img" loading="lazy">
-                      @if (product.secondaryImage && product.secondaryImage !== product.image) {
-                        <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img" loading="lazy">
-                      }
-                    </div>
-                  </a>
-
-                  <!-- QUICK ACTIONS -->
-                  <div class="pcard-quick-actions">
-                    <button class="quick-view-action-btn" (click)="openQuickView(product)" title="Quick View">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                      </svg>
-                      Quick View
-                    </button>
-                    <button class="quick-add-btn" (click)="addToCart(product)" title="Add to Cart">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                      </svg>
-                      Add to Cart
-                    </button>
+                <!-- IMAGE SECTION -->
+                <a [routerLink]="['/product', product.id]" class="pcard-img-link">
+                  <div class="pcard-img-wrap">
+                    <img [src]="product.image" [alt]="product.name" class="pcard-img main-img" loading="lazy">
+                    @if (product.secondaryImage && product.secondaryImage !== product.image) {
+                      <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img" loading="lazy">
+                    }
+                    <div class="img-hover-tint"></div>
                   </div>
-                </div>
 
-                <!-- CARD BODY -->
-                <div class="pcard-body">
+                  <!-- Badges on image -->
+                  <div class="pcard-badge-group">
+                    @if (product.isBestseller) {
+                      <span class="badge-bestseller">★ BESTSELLER</span>
+                    }
+                    @if (product.originalPrice && product.originalPrice > product.price) {
+                      <span class="badge-discount">{{ getDiscountPercent(product.price, product.originalPrice) }}% OFF</span>
+                    }
+                  </div>
+                </a>
+
+                <!-- INFO SECTION -->
+                <div class="pcard-info">
                   <div class="pcard-rating">
                     <span class="star">★</span>
                     <span class="rating-val">{{ product.rating }}</span>
                     <span class="rating-count">({{ product.ratingCount }})</span>
                   </div>
+
                   <a [routerLink]="['/product', product.id]" class="pcard-title-link">
                     <h3 class="pcard-title">{{ product.name }}</h3>
                   </a>
-                  <div class="pcard-footer-row">
-                    <div class="pcard-price-row">
+
+                  <div class="pcard-bottom-row">
+                    <div class="pcard-price-col">
                       <span class="price-current">₹{{ product.price }}</span>
                       @if (product.originalPrice && product.originalPrice > product.price) {
                         <span class="price-original">₹{{ product.originalPrice }}</span>
-                        <span class="price-save">Save ₹{{ product.originalPrice - product.price }}</span>
                       }
                     </div>
-                    <button class="pcard-mobile-cart-btn" (click)="addToCart(product)" aria-label="Add to Cart">
+                    <button class="pcard-add-btn" (click)="addToCart(product)" aria-label="Add to Cart">
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
                         <circle cx="9" cy="21" r="1"></circle>
                         <circle cx="20" cy="21" r="1"></circle>
@@ -235,6 +257,7 @@ interface ReelItem {
                     </button>
                   </div>
                 </div>
+
               </div>
             }
           </div>
@@ -356,18 +379,86 @@ interface ReelItem {
 
 
 
-      <!-- VIDEO MODAL -->
-      @if (activeVideoReel()) {
-        <div class="video-modal-backdrop" (click)="closeVideoModal()">
-          <div class="video-modal-content" (click)="$event.stopPropagation()">
-            <button class="vm-close-btn" (click)="closeVideoModal()">✕</button>
-            <div class="vm-video-wrap">
-              <video [src]="activeVideoReel()?.videoUrl" controls autoplay playsinline class="vm-video"></video>
+      <!-- INSTAGRAM-STYLE REEL VIEWER -->
+      @if (instaReelOpen()) {
+        <div class="insta-reel-backdrop" (click)="closeInstaReel()">
+          <div class="insta-reel-viewer" (click)="$event.stopPropagation()">
+
+            <!-- Close Button -->
+            <button class="ir-close-btn" (click)="closeInstaReel()" aria-label="Close">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
+            <!-- Reel Counter (e.g. 2 / 5) -->
+            <div class="ir-counter">{{ instaReelIndex() + 1 }} / {{ reelsList.length }}</div>
+
+            <!-- Progress Bar Strip -->
+            <div class="ir-progress-strip">
+              @for (reel of reelsList; track reel.id; let i = $index) {
+                <div class="ir-progress-seg" [class.active]="i === instaReelIndex()" [class.done]="i < instaReelIndex()"></div>
+              }
             </div>
-            <div class="vm-footer">
-              <h4>{{ activeVideoReel()?.title }}</h4>
-              <p>{{ activeVideoReel()?.name }}</p>
+
+            <!-- Video Area -->
+            <div class="ir-video-wrap">
+              <video
+                [src]="reelsList[instaReelIndex()].videoUrl"
+                autoplay
+                playsinline
+                [muted]="instaReelMuted()"
+                class="ir-video"
+                (ended)="nextInstaReel()"
+              ></video>
+
+              <!-- Gradient overlays -->
+              <div class="ir-overlay-top"></div>
+              <div class="ir-overlay-bottom"></div>
             </div>
+
+            <!-- Bottom Info Bar -->
+            <div class="ir-bottom-info">
+              <div class="ir-live-badge">
+                <span class="ir-live-dot"></span> LIVE FACTORY
+              </div>
+              <h3 class="ir-reel-title">{{ reelsList[instaReelIndex()].title }}</h3>
+              <p class="ir-reel-tag">{{ reelsList[instaReelIndex()].name }}</p>
+            </div>
+
+            <!-- Right Side Actions -->
+            <div class="ir-side-actions">
+              <!-- Mute Toggle -->
+              <button class="ir-action-btn" (click)="toggleInstaReelMute()" [attr.aria-label]="instaReelMuted() ? 'Unmute' : 'Mute'">
+                @if (instaReelMuted()) {
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                } @else {
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                }
+              </button>
+            </div>
+
+            <!-- Up / Down Navigation -->
+            <button class="ir-nav-btn ir-nav-up" (click)="prevInstaReel()" [disabled]="instaReelIndex() === 0" aria-label="Previous Reel">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </button>
+            <button class="ir-nav-btn ir-nav-down" (click)="nextInstaReel()" [disabled]="instaReelIndex() === reelsList.length - 1" aria-label="Next Reel">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
           </div>
         </div>
       }
@@ -667,181 +758,434 @@ interface ReelItem {
       padding: 50px 0;
     }
 
-    .reels-grid {
+    /* Background orbs */
+    .reels-bg-decoration {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Background orbs — hidden on light bg */
+    .bg-orb { display: none; }
+
+    /* Section Header */
+    .reels-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 44px;
+
+      @media (max-width: 768px) {
+        margin-bottom: 32px;
+      }
+    }
+
+    .reels-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: #d4af37;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+
+      .pill-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #d4af37;
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+        animation: pulse 1.8s infinite;
+      }
+    }
+
+    .reels-main-title {
+      font-size: clamp(26px, 3.5vw, 44px);
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+
+      .title-highlight {
+        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+
+    .reels-subtitle {
+      font-size: 15px;
+      color: #6b7280;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.65;
+
+      @media (max-width: 768px) {
+        font-size: 13.5px;
+      }
+    }
+
+    /* Scroll Wrapper */
+    .reels-scroll-wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      @media (max-width: 768px) {
+        gap: 0;
+      }
+    }
+
+    /* Scroll Nav Buttons */
+    .reel-scroll-btn {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(8px);
+      z-index: 5;
+
+      &:hover {
+        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+        border-color: #d4af37;
+        color: #111;
+        transform: scale(1.1);
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.45);
+      }
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+
+    /* Reels Horizontal Track */
+    .reels-track {
       display: flex;
       gap: 16px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      padding-bottom: 16px;
+      scroll-behavior: smooth;
+      padding: 12px 4px 20px;
       scrollbar-width: none;
+      flex: 1;
 
       &::-webkit-scrollbar {
         display: none;
       }
 
-      @media (min-width: 640px) {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        overflow-x: visible;
-        padding-bottom: 0;
+      @media (min-width: 1024px) {
+        gap: 20px;
+        padding: 16px 6px 24px;
+      }
+    }
+
+    /* Individual Reel Card V2 */
+    .reel-card-v2 {
+      flex: 0 0 calc(72% - 8px);
+      scroll-snap-align: start;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 9 / 15;
+      background: #0f1118;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+      @media (min-width: 480px) {
+        flex: 0 0 calc(50% - 8px);
+      }
+
+      @media (min-width: 768px) {
+        flex: 0 0 calc(33.333% - 14px);
       }
 
       @media (min-width: 1024px) {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 20px;
-      }
-    }
-
-    .reel-card {
-      flex: 0 0 72%;
-      scroll-snap-align: start;
-      background: #0f1118;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid #ebe6dc;
-      cursor: pointer;
-      position: relative;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-
-      @media (min-width: 640px) {
-        flex: auto;
+        flex: 0 0 calc(20% - 16px);
       }
 
       &:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 16px 36px rgba(245, 158, 11, 0.15);
-        border-color: #d4af37;
+        transform: translateY(-10px) scale(1.025);
+        border-color: rgba(212, 175, 55, 0.5);
+        box-shadow:
+          0 24px 60px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(212, 175, 55, 0.3),
+          0 0 40px rgba(212, 175, 55, 0.12);
 
-        .play-circle {
-          transform: scale(1.15);
-          background: #ffffff;
-          box-shadow: 0 0 24px rgba(245, 158, 11, 0.6);
+        .reel-video-bg {
+          transform: scale(1.08);
         }
 
-        .reel-img {
-          transform: scale(1.08);
+        .play-btn-ring {
+          transform: scale(1.12);
+          border-color: rgba(212, 175, 55, 0.9);
+          box-shadow: 0 0 0 8px rgba(212, 175, 55, 0.15);
+        }
+
+        .play-btn-inner {
+          background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+          color: #111;
+        }
+
+        .reel-watch-cta {
+          letter-spacing: 0.5px;
+        }
+
+        .reel-shine {
+          opacity: 1;
+        }
+
+        .reel-info-overlay {
+          padding-bottom: 20px;
         }
       }
     }
 
-    .reel-thumb-frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 9 / 14;
-      background: #11141c;
-      overflow: hidden;
+    /* Video Background */
+    .reel-media-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
 
-      .reel-img {
+      .reel-video-bg {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       }
     }
 
-    .reel-top-bar {
+    .reel-gradient-top {
       position: absolute;
-      top: 12px;
-      left: 12px;
-      z-index: 4;
-
-      .reel-live-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(15, 17, 24, 0.7);
-        backdrop-filter: blur(8px);
-        color: #ffffff;
-        font-size: 10.5px;
-        font-weight: 800;
-        letter-spacing: 0.5px;
-        padding: 4px 10px;
-        border-radius: var(--radius-full);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-
-        .live-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: #ef4444;
-          box-shadow: 0 0 8px #ef4444;
-          animation: pulse 1.8s infinite;
-        }
-      }
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      background: linear-gradient(180deg, rgba(5, 7, 12, 0.75) 0%, transparent 100%);
+      z-index: 2;
     }
 
-    .reel-play-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 3;
-    }
-
-    .play-circle {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      padding-left: 2px;
-    }
-
-    .reel-bottom-overlay {
+    .reel-gradient-bottom {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 24px 14px 14px;
-      background: linear-gradient(180deg, transparent 0%, rgba(10, 12, 18, 0.95) 100%);
+      height: 65%;
+      background: linear-gradient(0deg, rgba(5, 7, 12, 0.98) 0%, rgba(5, 7, 12, 0.6) 50%, transparent 100%);
+      z-index: 2;
+    }
+
+    /* Top Header Bar */
+    .reel-header-bar {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 5;
+    }
+
+    .reel-live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(10, 12, 18, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 100px;
+      padding: 4px 10px 4px 8px;
+
+      .live-pulse {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #ef4444;
+        box-shadow: 0 0 10px #ef4444;
+        animation: liveGlow 1.5s ease-in-out infinite alternate;
+      }
+
+      .live-text {
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        color: #ff6b6b;
+        text-transform: uppercase;
+      }
+    }
+
+    .reel-index-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.5px;
+    }
+
+    /* Center Play Button */
+    .reel-center-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 4;
+      pointer-events: none;
+    }
+
+    .play-btn-ring {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .play-btn-inner {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111111;
+      padding-left: 2px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Bottom Info Overlay */
+    .reel-info-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 14px 16px;
+      z-index: 5;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
+      transition: padding-bottom 0.3s ease;
+    }
 
-      .reel-tag-badge {
-        font-size: 11px;
-        font-weight: 700;
-        color: #fbbf24;
+    .reel-category-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #fbbf24;
+      letter-spacing: 0.3px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    }
+
+    .reel-card-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      line-height: 1.3;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .reel-cta-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 2px;
+      color: rgba(255, 255, 255, 0.65);
+
+      svg {
+        transition: transform 0.25s ease;
       }
 
-      .reel-title {
-        font-size: 14px;
-        font-weight: 700;
-        color: #ffffff;
-        margin: 0;
-        line-height: 1.3;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      .reel-watch-cta {
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: 0;
+        transition: letter-spacing 0.3s ease;
       }
+    }
 
-      .reel-action-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 12px;
-        font-weight: 700;
-        color: #f59e0b;
-        margin-top: 2px;
-        transition: transform 0.2s ease;
+    .reel-card-v2:hover .reel-cta-row svg {
+      transform: translateX(4px);
+    }
 
-        svg {
-          transition: transform 0.2s ease;
+    /* Shine Hover Effect */
+    .reel-shine {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(212, 175, 55, 0.06) 0%,
+        transparent 50%,
+        rgba(212, 175, 55, 0.03) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Progress Dots */
+    .reels-progress-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+      position: relative;
+      z-index: 1;
+
+      .reel-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+
+        &.active {
+          width: 24px;
+          border-radius: 3px;
+          background: linear-gradient(90deg, #d4af37, #f59e0b);
+          box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
         }
       }
     }
 
-    .reel-card:hover .reel-action-btn svg {
-      transform: translateX(4px);
+    /* Live glow animation */
+    @keyframes liveGlow {
+      from { opacity: 1; box-shadow: 0 0 6px #ef4444; }
+      to   { opacity: 0.5; box-shadow: 0 0 14px #ef4444; }
     }
 
     /* ── 3. TRENDING PRODUCTS ── */
@@ -916,314 +1260,220 @@ interface ReelItem {
       }
     }
 
+    /* ── PRODUCT CARD (Home) ── */
     .gl-product-card {
-      background: #ffffff;
-      border-radius: 16px;
-      border: 1px solid #ebe5d8;
-      position: relative;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transition: all 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+      height: 100%;
 
       &:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 36px rgba(27, 33, 59, 0.09);
-        border-color: #d8cebd;
+        transform: translateY(-7px) scale(1.012);
+        border-color: rgba(212, 175, 55, 0.5);
+        box-shadow:
+          0 20px 48px rgba(212, 175, 55, 0.13),
+          0 8px 20px rgba(0, 0, 0, 0.07),
+          inset 0 1px 0 #fff;
+        background: rgba(255, 255, 255, 0.96);
 
-        .pcard-img.hover-img {
-          opacity: 1;
-        }
-
-        .pcard-img.main-img {
-          transform: scale(1.06);
-        }
-
-        .pcard-quick-actions {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        .pcard-img.main-img  { transform: scale(1.07); }
+        .pcard-img.hover-img { opacity: 1; }
+        .img-hover-tint      { opacity: 1; }
       }
-    }
-
-    .pcard-badge-row {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 5;
-      pointer-events: none;
-
-      @media (max-width: 767px) {
-        top: 6px;
-        left: 6px;
-        right: 6px;
-      }
-    }
-
-    .badge-bestseller {
-      background: #11141c;
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.35);
-      font-size: 10px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-
-      @media (max-width: 767px) {
-        font-size: 8.5px;
-        padding: 2px 5px;
-        border-radius: 4px;
-        gap: 2px;
-        .badge-icon { font-size: 9px; }
-      }
-
-      .badge-icon {
-        color: #f59e0b;
-        font-size: 11px;
-      }
-    }
-
-    .badge-discount {
-      background: #fef3c7;
-      color: #b45309;
-      border: 1px solid #fde68a;
-      font-size: 10px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-      margin-left: auto;
-
-      @media (max-width: 767px) {
-        font-size: 8.5px;
-        padding: 2px 5px;
-        border-radius: 4px;
-      }
-    }
-
-    .pcard-media-box {
-      position: relative;
     }
 
     .pcard-img-link {
       display: block;
-      width: 100%;
+      position: relative;
+      text-decoration: none;
     }
 
     .pcard-img-wrap {
       position: relative;
       width: 100%;
       aspect-ratio: 1 / 1;
-      background: #fcfbf9;
+      background: linear-gradient(145deg, #fdfcf9 0%, #f5f0e8 100%);
       overflow: hidden;
 
       .pcard-img {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        position: absolute;
-        inset: 0;
-        transition: opacity 0.35s ease, transform 0.5s ease;
+        transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 
-        &.hover-img {
-          opacity: 0;
-        }
+        &.hover-img { opacity: 0; }
       }
     }
 
-    .pcard-quick-actions {
+    .img-hover-tint {
       position: absolute;
-      bottom: 10px;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.07) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    /* Badges */
+    .pcard-badge-group {
+      position: absolute;
+      top: 10px;
       left: 10px;
       right: 10px;
       display: flex;
-      gap: 6px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 6;
+      justify-content: space-between;
+      align-items: flex-start;
+      pointer-events: none;
+      z-index: 5;
 
-      @media (max-width: 768px) {
-        display: none; /* Hide hover actions on mobile so product photo is 100% visible */
+      @media (max-width: 480px) { top: 7px; left: 7px; right: 7px; }
+    }
+
+    .badge-bestseller {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(17, 20, 28, 0.88);
+      backdrop-filter: blur(8px);
+      color: #fbbf24;
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+
+      @media (max-width: 480px) { font-size: 8px; padding: 3px 6px; }
+    }
+
+    .badge-discount {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(220, 38, 38, 0.88);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin-left: auto;
+
+      @media (max-width: 480px) { font-size: 8px; padding: 3px 6px; }
+    }
+
+    /* Info */
+    .pcard-info {
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(235, 229, 216, 0.55);
+
+      @media (max-width: 480px) { padding: 10px 11px 12px; gap: 4px; }
+    }
+
+    .pcard-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+
+      .star         { color: #f59e0b; font-size: 13px; }
+      .rating-val   { font-weight: 700; color: #111; }
+      .rating-count { color: #9ca3af; font-size: 10.5px; }
+    }
+
+    .pcard-title-link { text-decoration: none; }
+
+    .pcard-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #1a1a2e;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 36px;
+      margin: 0;
+      transition: color 0.2s;
+
+      @media (max-width: 480px) { font-size: 12.5px; min-height: 33px; }
+
+      &:hover { color: #d4af37; }
+    }
+
+    .pcard-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 3px;
+    }
+
+    .pcard-price-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+
+      .price-current {
+        font-size: 16px;
+        font-weight: 900;
+        color: #11141c;
+        letter-spacing: -0.02em;
+        line-height: 1;
+
+        @media (max-width: 480px) { font-size: 14px; }
       }
 
-      .quick-view-action-btn {
-        flex: 1;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(8px);
-        color: #1a1a1a;
-        border: 1px solid #e5e0d4;
-        border-radius: var(--radius-full);
-        padding: 8px 10px;
-        font-size: 12px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        &:hover {
-          background: #11141c;
-          color: #ffffff;
-          border-color: #11141c;
-        }
-      }
-
-      .quick-add-btn {
-        flex: 1.3;
-        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
-        color: #111111;
-        border: none;
-        border-radius: var(--radius-full);
-        padding: 9px 12px;
-        font-size: 12px;
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-
-        &:hover {
-          background: linear-gradient(135deg, #e5b958 0%, #fbbf24 100%);
-          transform: translateY(-2px);
-          box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
-        }
+      .price-original {
+        font-size: 11px;
+        color: #a1a1aa;
+        text-decoration: line-through;
+        line-height: 1;
       }
     }
 
-    .pcard-body {
-      padding: 14px 16px 18px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
+    .pcard-add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+      color: #111111;
+      border: none;
+      border-radius: 100px;
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.32);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
 
-      @media (max-width: 767px) {
-        padding: 10px 10px 12px;
+      @media (max-width: 480px) { padding: 7px 10px; font-size: 11px; }
+
+      &:hover {
+        background: linear-gradient(135deg, #b8922d 0%, #e08e00 100%);
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+        transform: translateY(-1px);
       }
-
-      .pcard-rating {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 12px;
-        color: #6b7280;
-        margin-bottom: 6px;
-
-        @media (max-width: 767px) {
-          font-size: 11px;
-          margin-bottom: 4px;
-        }
-
-        .star { color: #f59e0b; font-size: 13px; }
-        .rating-val { font-weight: 700; color: #111; }
-        .rating-count { color: #9ca3af; font-size: 11.5px; }
-      }
-
-      .pcard-title {
-        font-size: 14.5px;
-        font-weight: 700;
-        color: #18191f;
-        line-height: 1.35;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        height: 38px; /* Fixed height so all cards align evenly */
-        margin-bottom: 8px;
-        transition: color 0.2s;
-
-        @media (max-width: 767px) {
-          font-size: 12.5px;
-          height: 34px;
-          margin-bottom: 6px;
-          line-height: 1.3;
-        }
-
-        &:hover { color: #d4af37; }
-      }
-
-      .pcard-footer-row {
-        margin-top: auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-        min-height: 38px; /* Consistent baseline */
-      }
-
-      .pcard-mobile-cart-btn {
-        display: none;
-
-        @media (max-width: 767px) {
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
-          color: #111111;
-          border: none;
-          border-radius: var(--radius-full);
-          padding: 6px 12px;
-          font-size: 11px;
-          font-weight: 700;
-          cursor: pointer;
-          box-shadow: 0 3px 8px rgba(245, 158, 11, 0.25);
-          flex-shrink: 0;
-
-          &:active {
-            transform: scale(0.93);
-          }
-        }
-      }
-
-      .pcard-price-row {
-        display: flex;
-        flex-direction: column; /* Current price on top, strikethrough price below: NEVER WRAPS */
-        justify-content: center;
-        line-height: 1.15;
-        min-width: 0;
-
-        .price-current {
-          font-size: 16px;
-          font-weight: 800;
-          color: #11141c;
-          letter-spacing: -0.02em;
-          white-space: nowrap;
-
-          @media (max-width: 767px) {
-            font-size: 14px;
-          }
-        }
-
-        .price-original {
-          font-size: 11.5px;
-          color: #9ca3af;
-          text-decoration: line-through;
-          white-space: nowrap;
-          margin-top: 1px;
-
-          @media (max-width: 767px) {
-            font-size: 10.5px;
-          }
-        }
-
-        .price-save {
-          display: none;
-        }
-      }
+      &:active { transform: scale(0.92); }
     }
 
     .view-all-row {
@@ -1876,66 +2126,279 @@ interface ReelItem {
       }
     }
 
-    /* ── VIDEO MODAL (SLIDE PANEL) ── */
-    .video-modal-backdrop {
+    /* ── INSTAGRAM-STYLE REEL VIEWER ── */
+    .insta-reel-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(16px);
       z-index: 99999;
       display: flex;
-      justify-content: flex-end; /* Align right */
+      align-items: center;
+      justify-content: center;
+      animation: irFadeIn 0.2s ease forwards;
+
+      @keyframes irFadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
     }
 
-    .video-modal-content {
+    .insta-reel-viewer {
       position: relative;
       width: 100%;
-      max-width: 420px;
-      height: 100%;
-      background: #111111;
-      overflow-y: auto;
-      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-      animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      max-width: 390px;
+      height: 100dvh;
+      max-height: 844px;
+      background: #000;
+      border-radius: 0;
+      overflow: hidden;
+      animation: irSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
-      @keyframes slideInRight {
-        from { transform: translateX(100%); }
-        to { transform: translateX(0); }
+      @media (min-width: 600px) {
+        border-radius: 20px;
+        height: 90dvh;
+        max-height: 820px;
+        box-shadow: 0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06);
       }
 
-      .vm-close-btn {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: rgba(0,0,0,0.6);
-        color: #ffffff;
-        font-size: 18px;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      @keyframes irSlideUp {
+        from { transform: translateY(40px) scale(0.97); opacity: 0; }
+        to   { transform: translateY(0) scale(1); opacity: 1; }
       }
+    }
 
-      .vm-video-wrap {
-        width: 100%;
-        aspect-ratio: 9 / 16;
-        background: #000;
+    /* Close button */
+    .ir-close-btn {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 20;
+      transition: background 0.2s, transform 0.2s;
 
-        .vm-video {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+      &:hover {
+        background: rgba(239, 68, 68, 0.75);
+        transform: scale(1.1);
+      }
+    }
+
+    /* Counter */
+    .ir-counter {
+      position: absolute;
+      top: 22px;
+      right: 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.5px;
+      z-index: 20;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(6px);
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Progress strip (like Instagram Stories) */
+    .ir-progress-strip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      gap: 4px;
+      padding: 10px 12px 0;
+      z-index: 20;
+
+      .ir-progress-seg {
+        flex: 1;
+        height: 2.5px;
+        border-radius: 2px;
+        background: rgba(255,255,255,0.3);
+        transition: background 0.3s ease;
+
+        &.done {
+          background: rgba(255,255,255,0.85);
+        }
+
+        &.active {
+          background: #ffffff;
+          box-shadow: 0 0 6px rgba(255,255,255,0.5);
         }
       }
+    }
 
-      .vm-footer {
-        padding: 16px;
-        color: #ffffff;
+    /* Video */
+    .ir-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
 
-        h4 { font-size: 15px; color: #fff; margin-bottom: 2px; }
-        p { font-size: 12px; color: #aaa; margin: 0; }
+      .ir-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    /* Gradient overlays */
+    .ir-overlay-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 35%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .ir-overlay-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(0deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Bottom Info */
+    .ir-bottom-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 70px;
+      padding: 0 18px 28px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .ir-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(10,12,18,0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(239,68,68,0.4);
+      border-radius: 100px;
+      padding: 3px 10px 3px 8px;
+      width: fit-content;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #ff6b6b;
+      margin-bottom: 4px;
+
+      .ir-live-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #ef4444;
+        box-shadow: 0 0 8px #ef4444;
+        animation: liveGlow 1.4s ease-in-out infinite alternate;
+      }
+    }
+
+    .ir-reel-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0;
+      line-height: 1.3;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
+
+    .ir-reel-tag {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fbbf24;
+      margin: 0;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    }
+
+    /* Side action buttons */
+    .ir-side-actions {
+      position: absolute;
+      bottom: 80px;
+      right: 14px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .ir-action-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: rgba(255,255,255,0.25);
+        transform: scale(1.1);
+      }
+    }
+
+    /* Up/Down Nav Buttons */
+    .ir-nav-btn {
+      position: absolute;
+      right: 14px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+      &:hover:not(:disabled) {
+        background: rgba(212, 175, 55, 0.4);
+        border-color: rgba(212, 175, 55, 0.6);
+        color: #fbbf24;
+        transform: scale(1.1);
+      }
+
+      &:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+      }
+
+      &.ir-nav-up {
+        bottom: 188px;
+      }
+
+      &.ir-nav-down {
+        bottom: 134px;
       }
     }
 
@@ -2083,6 +2546,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   readonly activeVideoReel = signal<ReelItem | null>(null);
   readonly quickViewProduct = signal<Product | null>(null);
   readonly inquirySubmitted = signal<boolean>(false);
+  readonly activeReelDot = signal<number>(0);
+  readonly instaReelOpen = signal<boolean>(false);
+  readonly instaReelIndex = signal<number>(0);
+  readonly instaReelMuted = signal<boolean>(false);
 
   inquiryForm = {
     name: '',
@@ -2337,11 +2804,61 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openVideoModal(reel: ReelItem) {
+    const index = this.reelsList.findIndex(r => r.id === reel.id);
+    this.instaReelIndex.set(index >= 0 ? index : 0);
+    this.instaReelMuted.set(false);
+    this.instaReelOpen.set(true);
+    // Keep old signal for backward compat
     this.activeVideoReel.set(reel);
   }
 
   closeVideoModal() {
     this.activeVideoReel.set(null);
+  }
+
+  closeInstaReel() {
+    this.instaReelOpen.set(false);
+    this.activeVideoReel.set(null);
+  }
+
+  nextInstaReel() {
+    const next = this.instaReelIndex() + 1;
+    if (next < this.reelsList.length) {
+      this.instaReelIndex.set(next);
+    } else {
+      this.closeInstaReel();
+    }
+  }
+
+  prevInstaReel() {
+    const prev = this.instaReelIndex() - 1;
+    if (prev >= 0) {
+      this.instaReelIndex.set(prev);
+    }
+  }
+
+  toggleInstaReelMute() {
+    this.instaReelMuted.set(!this.instaReelMuted());
+  }
+
+  scrollReelsLeft() {
+    const track = this.document.querySelector('.reels-track') as HTMLElement;
+    if (track) {
+      const cardWidth = (track.firstElementChild as HTMLElement)?.offsetWidth || 200;
+      track.scrollBy({ left: -(cardWidth + 20), behavior: 'smooth' });
+      const newIndex = Math.max(0, this.activeReelDot() - 1);
+      this.activeReelDot.set(newIndex);
+    }
+  }
+
+  scrollReelsRight() {
+    const track = this.document.querySelector('.reels-track') as HTMLElement;
+    if (track) {
+      const cardWidth = (track.firstElementChild as HTMLElement)?.offsetWidth || 200;
+      track.scrollBy({ left: cardWidth + 20, behavior: 'smooth' });
+      const newIndex = Math.min(this.reelsList.length - 1, this.activeReelDot() + 1);
+      this.activeReelDot.set(newIndex);
+    }
   }
 
   submitInquiry(e: Event) {
