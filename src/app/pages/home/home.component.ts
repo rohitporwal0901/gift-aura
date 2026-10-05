@@ -281,34 +281,53 @@ interface ReelItem {
           </div>
 
           <div class="why-slider-container">
-            <div class="why-track" #whyTrack (scroll)="onWhyScroll(whyTrack)">
+            <div class="why-track" id="why-track" #whyTrack (scroll)="onWhyScroll(whyTrack)">
               <div class="why-card" id="why-slide-0">
-                <div class="why-icon-box">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <div class="why-card-top">
+                  <div class="why-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <span class="why-step-num">01</span>
                 </div>
                 <h3 class="why-card-title">Executive Grade Quality</h3>
                 <p class="why-card-desc">High-density 240+ GSM cotton fabrics, stainless steel flasks &amp; precision German laser branding.</p>
+                <div class="why-pill">✓ 240+ GSM Fabrics</div>
               </div>
+
               <div class="why-card" id="why-slide-1">
-                <div class="why-icon-box">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                <div class="why-card-top">
+                  <div class="why-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                  </div>
+                  <span class="why-step-num">02</span>
                 </div>
                 <h3 class="why-card-title">In-House Customization</h3>
                 <p class="why-card-desc">Laser engraving, multi-color UV printing, digital embroidery &amp; custom debossing directly at our facility.</p>
+                <div class="why-pill">✓ Fast 48h Mockup</div>
               </div>
+
               <div class="why-card" id="why-slide-2">
-                <div class="why-icon-box">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                <div class="why-card-top">
+                  <div class="why-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                  </div>
+                  <span class="why-step-num">03</span>
                 </div>
                 <h3 class="why-card-title">Direct Factory Pricing</h3>
                 <p class="why-card-desc">No middle-men markup. Get tiered corporate discounts, GST tax invoicing &amp; flexible payment terms.</p>
+                <div class="why-pill">✓ Save Up to 40%</div>
               </div>
+
               <div class="why-card" id="why-slide-3">
-                <div class="why-icon-box">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                <div class="why-card-top">
+                  <div class="why-icon-box">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  </div>
+                  <span class="why-step-num">04</span>
                 </div>
                 <h3 class="why-card-title">Pan-India Express Dispatch</h3>
                 <p class="why-card-desc">Reliable courier network delivering to 19,000+ pin codes with live consignment tracking.</p>
+                <div class="why-pill">✓ 19,000+ Pin Codes</div>
               </div>
             </div>
 
@@ -322,8 +341,12 @@ interface ReelItem {
         </div>
       </section>
 
-      <!-- 8. REVIEWS & TESTIMONIALS -->
-      <section class="gl-section reviews-section">
+      <!-- 8. REVIEWS & TESTIMONIALS (AUTO SLIDER) -->
+      <section class="gl-section reviews-section"
+               (mouseenter)="pauseReviewAutoplay()"
+               (mouseleave)="resumeReviewAutoplay()"
+               (touchstart)="pauseReviewAutoplay()"
+               (touchend)="resumeReviewAutoplay()">
         <div class="container">
           <div class="gl-section-header">
             <span class="gl-section-pill gl-badge-pill">✦ CORPORATE CLIENT REVIEWS</span>
@@ -332,21 +355,59 @@ interface ReelItem {
           </div>
 
           <div class="reviews-slider-container">
-            <div class="reviews-track" #reviewsTrack (scroll)="onReviewsScroll(reviewsTrack)">
+            <!-- Floating Side Navigation Arrows for Desktop/Tablet -->
+            <button class="rev-side-arrow prev" (click)="manualPrevReview()" aria-label="Previous Review">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button class="rev-side-arrow next" (click)="manualNextReview()" aria-label="Next Review">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="reviews-track" id="reviews-track" #reviewsTrack (scroll)="onReviewsScroll(reviewsTrack)">
               @for (rev of customerReviews; track rev.name; let i = $index) {
                 <div class="review-slide" [id]="'review-slide-' + i">
                   <div class="review-card">
+                    <!-- Top Rating & Verification Pill -->
                     <div class="rev-card-header">
-                      <div class="rev-stars">★★★★★</div>
-                      <span class="rev-verified-pill">✔ Verified Order</span>
+                      <div class="rev-rating-box">
+                        <span class="rev-stars">★★★★★</span>
+                        <span class="rev-score">5.0</span>
+                      </div>
+                      <span class="rev-verified-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Verified Order
+                      </span>
                     </div>
+
+                    <!-- Review Title -->
                     <h4 class="rev-card-title">{{ rev.title }}</h4>
+
+                    <!-- Compact Quote -->
                     <p class="rev-body">"{{ rev.comment }}"</p>
+
+                    <!-- Author Profile Row -->
                     <div class="rev-author-row">
-                      <div class="rev-avatar">{{ rev.name[0] }}</div>
+                      <div class="rev-avatar-box">
+                        @if (rev.avatar) {
+                          <img [src]="rev.avatar" [alt]="rev.name" class="rev-avatar-img" (error)="rev.avatar = ''" loading="lazy">
+                        } @else {
+                          <div class="rev-avatar-fallback">{{ rev.name[0] }}</div>
+                        }
+                        <span class="rev-online-dot"></span>
+                      </div>
                       <div class="rev-details">
                         <span class="rev-name">{{ rev.name }}</span>
-                        <span class="rev-company">{{ rev.company }}</span>
+                        <span class="rev-company">{{ rev.role }} • {{ rev.company }}</span>
+                      </div>
+                      <div class="rev-quote-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
                       </div>
                     </div>
                   </div>
@@ -354,20 +415,22 @@ interface ReelItem {
               }
             </div>
 
-            <!-- REVIEWS SLIDER INDICATORS & CONTROLS -->
-            <div class="reviews-controls">
-              <button class="rev-nav-btn prev" (click)="prevReviewSlide()" aria-label="Previous Review">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <!-- Bottom Pagination Dots & Mobile Nav -->
+            <div class="reviews-bottom-bar">
+              <button class="rev-nav-btn mobile-only prev" (click)="manualPrevReview()" aria-label="Previous Review">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
               </button>
+
               <div class="reviews-indicators">
                 @for (rev of customerReviews; track rev.name; let i = $index) {
-                  <button class="rev-dot" [class.active]="currentReviewIndex() === i" (click)="setReviewIndex(i)" [attr.aria-label]="'Go to review ' + (i + 1)"></button>
+                  <button class="rev-dot" [class.active]="currentReviewIndex() === i" (click)="manualSetReview(i)" [attr.aria-label]="'Go to review ' + (i + 1)"></button>
                 }
               </div>
-              <button class="rev-nav-btn next" (click)="nextReviewSlide()" aria-label="Next Review">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+
+              <button class="rev-nav-btn mobile-only next" (click)="manualNextReview()" aria-label="Next Review">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
               </button>
@@ -1608,33 +1671,33 @@ interface ReelItem {
       }
     }
 
-    /* ── 7. WHY CHOOSE US ── */
+    /* ── 7. WHY CHOOSE US (GIFTAURA ADVANTAGE) ── */
     .why-choose-section {
       background: #ffffff;
-      padding: 60px 0;
+      padding: 56px 0;
 
       @media (max-width: 767px) {
-        padding: 40px 0 32px;
+        padding: 36px 0 28px;
       }
     }
 
     .why-slider-container {
       position: relative;
-      margin-top: 32px;
+      margin-top: 28px;
 
       @media (max-width: 767px) {
-        margin-top: 24px;
+        margin-top: 20px;
       }
     }
 
     .why-track {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
+      gap: 20px;
 
       @media (max-width: 1023px) {
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        gap: 16px;
       }
 
       @media (max-width: 767px) {
@@ -1642,8 +1705,8 @@ interface ReelItem {
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
-        gap: 14px;
-        padding: 8px 16px 16px;
+        gap: 12px;
+        padding: 6px 16px 14px;
         margin: 0 -16px;
         scrollbar-width: none;
         &::-webkit-scrollbar { display: none; }
@@ -1651,23 +1714,23 @@ interface ReelItem {
     }
 
     .why-card {
-      text-align: center;
-      padding: 36px 24px;
-      position: relative;
       background: #ffffff;
       border: 1px solid #ebe5d8;
       border-radius: 18px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      padding: 22px 20px;
+      position: relative;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       overflow: hidden;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
       @media (max-width: 767px) {
         flex: 0 0 78%;
         min-width: 78%;
         scroll-snap-align: center;
-        padding: 28px 20px;
-        border-radius: 18px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+        padding: 18px 16px;
+        border-radius: 16px;
       }
 
       &::before {
@@ -1683,7 +1746,7 @@ interface ReelItem {
 
       &:hover {
         transform: translateY(-4px);
-        box-shadow: 0 16px 36px rgba(27, 33, 59, 0.09);
+        box-shadow: 0 12px 28px rgba(27, 33, 59, 0.08);
         border-color: #d4af37;
 
         &::before {
@@ -1691,63 +1754,87 @@ interface ReelItem {
         }
 
         .why-icon-box {
-          transform: scale(1.08);
+          transform: scale(1.06);
           background: #fde68a;
         }
       }
 
+      .why-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
       .why-icon-box {
-        width: 58px;
-        height: 58px;
-        border-radius: 16px;
-        background: #fef3c7;
-        border: 1px solid #fde68a;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 1px solid #fcd34d;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 18px;
+        box-shadow: 0 2px 8px rgba(217, 119, 6, 0.12);
         transition: all 0.3s ease;
 
         svg {
-          width: 26px;
-          height: 26px;
-        }
-
-        @media (max-width: 767px) {
-          width: 52px;
-          height: 52px;
-          border-radius: 14px;
-          margin-bottom: 16px;
-
-          svg {
-            width: 24px;
-            height: 24px;
-          }
+          width: 22px;
+          height: 22px;
         }
       }
 
-      .why-card-title {
-        font-size: 16px;
+      .why-step-num {
+        font-size: 11.5px;
         font-weight: 800;
+        font-family: monospace;
+        color: #b45309;
+        background: #fef3c7;
+        border: 1px solid #fde68a;
+        padding: 2px 7px;
+        border-radius: 999px;
+      }
+
+      .why-card-title {
+        font-size: 15.5px;
+        font-weight: 700;
         color: #11141c;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
         letter-spacing: -0.01em;
 
         @media (max-width: 767px) {
-          font-size: 15px;
-          margin-bottom: 8px;
+          font-size: 14.5px;
+          margin-bottom: 5px;
         }
       }
 
       .why-card-desc {
-        font-size: 13.5px;
+        font-size: 12.5px;
         color: #52525b;
-        line-height: 1.6;
+        line-height: 1.52;
+        margin-bottom: 14px;
+        flex: 1;
 
         @media (max-width: 767px) {
-          font-size: 12.5px;
-          line-height: 1.5;
+          font-size: 12px;
+          line-height: 1.48;
+          margin-bottom: 12px;
         }
+      }
+
+      .why-pill {
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #92400e;
+        background: #fefce8;
+        border: 1px solid #fef08a;
+        padding: 3px 9px;
+        border-radius: 6px;
+        line-height: 1.3;
       }
     }
 
@@ -1779,179 +1866,301 @@ interface ReelItem {
       }
     }
 
-    /* ── 8. REVIEWS SLIDER ── */
+    /* ── 8. REVIEWS SLIDER (COMPACT LUXURY AUTO-CAROUSEL) ── */
     .reviews-section {
-      background: #fbfaf8;
+      background: #faf8f5;
       border-top: 1px solid #eee8db;
-      padding: 60px 0;
+      padding: 56px 0;
 
       @media (max-width: 767px) {
-        padding: 40px 0 46px;
+        padding: 36px 0 40px;
+      }
+    }
+
+    .rev-side-arrow {
+      display: none;
+
+      @media (min-width: 768px) {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid #e5e0d4;
+        color: #11141c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+        &.prev {
+          left: -22px;
+        }
+
+        &.next {
+          right: -22px;
+        }
+
+        &:hover {
+          background: #11141c;
+          color: #fbbf24;
+          border-color: #11141c;
+          transform: translateY(-50%) scale(1.08);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+        }
+
+        &:active {
+          transform: translateY(-50%) scale(0.92);
+        }
+      }
+
+      @media (max-width: 1120px) and (min-width: 768px) {
+        &.prev { left: -10px; }
+        &.next { right: -10px; }
       }
     }
 
     .reviews-slider-container {
       position: relative;
-      margin-top: 28px;
-
-      @media (min-width: 768px) {
-        margin-top: 36px;
-      }
+      width: 100%;
     }
 
     .reviews-track {
       display: flex;
-      gap: 16px;
+      gap: 20px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
-      padding: 8px 4px 16px;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 6px 2px 14px;
+
       &::-webkit-scrollbar { display: none; }
 
-      @media (min-width: 1024px) {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        overflow-x: visible;
-        padding: 10px 0;
+      @media (max-width: 767px) {
+        gap: 14px;
+        padding: 4px 16px 12px;
+        margin: 0 -16px;
       }
     }
 
     .review-slide {
-      flex: 0 0 88%;
-      min-width: 88%;
-      scroll-snap-align: center;
+      flex: 0 0 calc(33.333% - 13.33px);
+      min-width: calc(33.333% - 13.33px);
+      max-width: calc(33.333% - 13.33px);
+      scroll-snap-align: start;
 
-      @media (min-width: 640px) {
-        flex: 0 0 70%;
-        min-width: 70%;
+      @media (max-width: 1023px) {
+        flex: 0 0 calc(50% - 10px);
+        min-width: calc(50% - 10px);
+        max-width: calc(50% - 10px);
       }
 
-      @media (min-width: 1024px) {
-        flex: auto;
-        min-width: 0;
+      @media (max-width: 767px) {
+        flex: 0 0 86%;
+        min-width: 86%;
+        max-width: 86%;
+        scroll-snap-align: center;
       }
     }
 
     .review-card {
       background: #ffffff;
       border: 1px solid #ebe5d8;
-      border-radius: 18px;
-      padding: 24px 20px;
+      border-radius: 16px;
+      padding: 18px 20px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.03);
       height: 100%;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      min-height: 205px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
 
-      @media (min-width: 768px) {
-        padding: 32px 28px;
+      @media (max-width: 767px) {
+        padding: 16px 16px;
+        min-height: 195px;
+        border-radius: 15px;
       }
 
       &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
-        border-color: #d4af37;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(212, 175, 55, 0.12);
+        border-color: rgba(212, 175, 55, 0.6);
       }
 
       .rev-card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
+      }
+
+      .rev-rating-box {
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
 
       .rev-stars {
         color: #f59e0b;
-        font-size: 15px;
-        letter-spacing: 2px;
+        font-size: 13.5px;
+        letter-spacing: 1.5px;
+        line-height: 1;
+      }
+
+      .rev-score {
+        font-size: 11px;
+        font-weight: 800;
+        color: #b45309;
+        background: #fef3c7;
+        border: 1px solid #fde68a;
+        padding: 1.5px 5px;
+        border-radius: 4px;
+        line-height: 1;
       }
 
       .rev-verified-pill {
         display: inline-flex;
         align-items: center;
+        gap: 4px;
         background: #ecfdf5;
         color: #15803d;
         border: 1px solid #a7f3d0;
-        font-size: 10.5px;
+        font-size: 10px;
         font-weight: 700;
-        padding: 3px 8px;
+        padding: 2.5px 7px;
         border-radius: var(--radius-full);
+        line-height: 1;
+
+        svg {
+          width: 11px;
+          height: 11px;
+        }
       }
 
       .rev-card-title {
-        font-size: 15px;
-        font-weight: 800;
+        font-size: 14px;
+        font-weight: 700;
         color: #11141c;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         line-height: 1.35;
       }
 
       .rev-body {
-        font-size: 13px;
+        font-size: 12.5px;
         color: #52525b;
-        line-height: 1.6;
-        margin-bottom: 20px;
+        line-height: 1.48;
+        margin-bottom: 12px;
         flex: 1;
       }
 
       .rev-author-row {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         margin-top: auto;
-        padding-top: 14px;
+        padding-top: 12px;
         border-top: 1px solid #f4f1ea;
+      }
 
-        .rev-avatar {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #11141c 0%, #2a2c36 100%);
-          color: #fbbf24;
-          font-weight: 800;
-          font-size: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      .rev-avatar-box {
+        position: relative;
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+      }
+
+      .rev-avatar-img {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ffffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        display: block;
+      }
+
+      .rev-avatar-fallback {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #11141c 0%, #2a2c36 100%);
+        color: #fbbf24;
+        font-weight: 800;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .rev-online-dot {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #22c55e;
+        border: 2px solid #ffffff;
+      }
+
+      .rev-details {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        flex: 1;
+
+        .rev-name {
+          font-size: 13px;
+          font-weight: 700;
+          color: #11141c;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
-        .rev-details {
-          display: flex;
-          flex-direction: column;
-
-          .rev-name {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: #11141c;
-          }
-
-          .rev-company {
-            font-size: 11.5px;
-            color: #71717a;
-            margin-top: 1px;
-          }
+        .rev-company {
+          font-size: 11px;
+          color: #71717a;
+          margin-top: 1px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
+      }
+
+      .rev-quote-icon {
+        color: #e5e0d4;
+        margin-left: auto;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s ease;
+      }
+
+      &:hover .rev-quote-icon {
+        color: #d4af37;
       }
     }
 
-    .reviews-controls {
+    .reviews-bottom-bar {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
+      gap: 14px;
       margin-top: 18px;
-
-      @media (min-width: 1024px) {
-        display: none;
-      }
     }
 
     .rev-nav-btn {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: #ffffff;
       border: 1px solid #e5e0d4;
@@ -1961,16 +2170,28 @@ interface ReelItem {
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
 
       &:hover {
         background: #11141c;
         color: #fbbf24;
         border-color: #11141c;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
       }
 
       &:active {
         transform: scale(0.92);
+      }
+
+      &.mobile-only {
+        display: none;
+        width: 32px;
+        height: 32px;
+
+        @media (max-width: 767px) {
+          display: flex;
+        }
       }
     }
 
@@ -1990,8 +2211,12 @@ interface ReelItem {
         transition: all 0.25s ease;
 
         &.active {
-          width: 24px;
+          width: 26px;
           background: #d4af37;
+        }
+
+        &:hover:not(.active) {
+          background: #9ca3af;
         }
       }
     }
@@ -2634,50 +2859,140 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   customerReviews = [
     {
       name: 'Vikas Sharma',
+      role: 'Procurement Head',
       company: 'Utkarsh Classes, Jodhpur',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
       title: 'Outstanding T-Shirts & Badge Quality!',
       comment: 'Ordered 1,200 polo t-shirts and magnetic badges for our coaching educators. The embroidery was crisp, fabric breathable, and delivery was 2 days ahead of schedule.'
     },
     {
       name: 'Neha Kapoor',
+      role: 'Head of People & HR',
       company: 'TalentHR Solutions, Gurgaon',
+      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80',
       title: 'Flawless Welcome Kits for our New Hires',
       comment: 'The 3-in-1 executive welcome gift boxes with our company logo looked extremely premium. The packaging and custom laser engraving on pens impressed our executives.'
     },
     {
       name: 'Manish Jain',
+      role: 'Operations Director',
       company: 'Apex Logistics, Jaipur',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80',
       title: 'Great pricing and prompt WhatsApp support',
       comment: 'Rohit from GiftAura handled our urgent requirement of 500 insulated bottles and diaries with utmost professionalism. GiftAura is now our permanent corporate vendor.'
+    },
+    {
+      name: 'Priya Sundaram',
+      role: 'Brand Experience Lead',
+      company: 'Zoho Partner Ecosystem, Bangalore',
+      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&auto=format&fit=crop&q=80',
+      title: 'Superb UV Printing & Fast Turnaround',
+      comment: 'We needed 350 customized tech hampers for our developer summit in just 4 days. The team delivered flawless UV print finishes right to our event venue on time.'
+    },
+    {
+      name: 'Rajesh Kulkarni',
+      role: 'Admin & Facilities Lead',
+      company: 'Tata Vendor Network, Pune',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&auto=format&fit=crop&q=80',
+      title: 'Unmatched Fabric Quality & Stitching',
+      comment: 'Received 800 custom safety jackets and cotton polos. Fabric GSM and stitching standards exceeded our expectations. Transparent GST billing process too.'
     }
   ];
 
   currentReviewIndex = signal(0);
+  private reviewsTimer: any = null;
+  isReviewPaused = signal(false);
+
+  private getMaxReviewIndex(): number {
+    if (typeof window === 'undefined') return this.customerReviews.length - 1;
+    const w = window.innerWidth;
+    if (w >= 1024) {
+      return Math.max(0, this.customerReviews.length - 3);
+    } else if (w >= 768) {
+      return Math.max(0, this.customerReviews.length - 2);
+    }
+    return this.customerReviews.length - 1;
+  }
 
   setReviewIndex(index: number) {
     this.currentReviewIndex.set(index);
-    const el = this.document.getElementById('review-slide-' + index);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    const track = this.document.getElementById('reviews-track');
+    const slide = this.document.getElementById('review-slide-' + index);
+    if (track && slide) {
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+      if (isMobile) {
+        const offset = slide.offsetLeft - track.offsetLeft - (track.clientWidth - slide.clientWidth) / 2;
+        track.scrollTo({ left: Math.max(0, offset), behavior: 'smooth' });
+      } else {
+        const offset = slide.offsetLeft - track.offsetLeft;
+        track.scrollTo({ left: Math.max(0, offset), behavior: 'smooth' });
+      }
     }
   }
 
   nextReviewSlide() {
-    const next = (this.currentReviewIndex() + 1) % this.customerReviews.length;
+    const max = this.getMaxReviewIndex();
+    const curr = this.currentReviewIndex();
+    const next = curr >= max ? 0 : curr + 1;
     this.setReviewIndex(next);
   }
 
   prevReviewSlide() {
-    const prev = (this.currentReviewIndex() - 1 + this.customerReviews.length) % this.customerReviews.length;
+    const max = this.getMaxReviewIndex();
+    const curr = this.currentReviewIndex();
+    const prev = curr <= 0 ? max : curr - 1;
     this.setReviewIndex(prev);
+  }
+
+  manualNextReview() {
+    this.nextReviewSlide();
+    this.pauseReviewAutoplay();
+    setTimeout(() => this.resumeReviewAutoplay(), 6000);
+  }
+
+  manualPrevReview() {
+    this.prevReviewSlide();
+    this.pauseReviewAutoplay();
+    setTimeout(() => this.resumeReviewAutoplay(), 6000);
+  }
+
+  manualSetReview(index: number) {
+    this.setReviewIndex(index);
+    this.pauseReviewAutoplay();
+    setTimeout(() => this.resumeReviewAutoplay(), 6000);
+  }
+
+  startReviewAutoplay() {
+    this.stopReviewAutoplay();
+    this.reviewsTimer = setInterval(() => {
+      if (!this.isReviewPaused()) {
+        this.nextReviewSlide();
+      }
+    }, 4000);
+  }
+
+  stopReviewAutoplay() {
+    if (this.reviewsTimer) {
+      clearInterval(this.reviewsTimer);
+      this.reviewsTimer = null;
+    }
+  }
+
+  pauseReviewAutoplay() {
+    this.isReviewPaused.set(true);
+  }
+
+  resumeReviewAutoplay() {
+    this.isReviewPaused.set(false);
   }
 
   onReviewsScroll(el: HTMLElement) {
     const scrollLeft = el.scrollLeft;
-    const width = el.clientWidth;
-    if (width > 0) {
-      const idx = Math.round(scrollLeft / (width * 0.85));
-      if (idx >= 0 && idx < this.customerReviews.length && idx !== this.currentReviewIndex()) {
+    const slide = el.querySelector('.review-slide') as HTMLElement;
+    if (slide && slide.clientWidth > 0) {
+      const slideWidth = slide.clientWidth + 20;
+      const idx = Math.min(this.getMaxReviewIndex(), Math.max(0, Math.round(scrollLeft / slideWidth)));
+      if (idx !== this.currentReviewIndex()) {
         this.currentReviewIndex.set(idx);
       }
     }
@@ -2687,9 +3002,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   setWhyIndex(index: number) {
     this.currentWhyIndex.set(index);
+    const track = this.document.getElementById('why-track');
     const el = this.document.getElementById('why-slide-' + index);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    if (track && el) {
+      const offset = el.offsetLeft - track.offsetLeft - (track.clientWidth - el.clientWidth) / 2;
+      track.scrollTo({ left: Math.max(0, offset), behavior: 'smooth' });
     }
   }
 
@@ -2731,6 +3048,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.startHeroAutoplay();
+    this.startReviewAutoplay();
   }
 
   ngAfterViewInit() {
@@ -2748,6 +3066,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.stopHeroAutoplay();
+    this.stopReviewAutoplay();
   }
 
   private startHeroAutoplay() {
