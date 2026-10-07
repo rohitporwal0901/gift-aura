@@ -6,6 +6,7 @@ import { ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Product } from '../../core/models/product.model';
+import { ProductCardComponent } from '../../shared/product-card/product-card.component';
 
 interface HeroSlide {
   id: number;
@@ -32,7 +33,7 @@ interface ReelItem {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, ProductCardComponent],
   template: `
     <div class="gl-home-page">
       <!-- 1. HERO SLIDESHOW -->
@@ -172,93 +173,97 @@ interface ReelItem {
       <section class="gl-section trending-section" id="products">
         <div class="container">
           <div class="gl-section-header">
-            <span class="gl-section-pill gl-badge-pill">✦ BESTSELLERS CATALOG</span>
             <h2 class="gl-section-title">Trending Corporate Gifts</h2>
             <p class="gl-section-subtitle">Laser engraved executive pens, customized keychains, mobile stands &amp; premium welcome gift sets.</p>
           </div>
 
-          <!-- CATEGORY PILL FILTER -->
+          <!-- CATEGORY CARDS FILTER -->
           <div class="gl-filter-tabs">
             <button class="filter-tab" [class.active]="selectedCategory() === 'all'" (click)="selectedCategory.set('all')">
-              <span>All Products</span>
+              <span class="cat-icon-wrap">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect x="2" y="7" width="20" height="5" rx="1"></rect>
+                  <line x1="12" y1="22" x2="12" y2="7"></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+              </span>
+              <span class="cat-label">All Products</span>
             </button>
+
             <button class="filter-tab" [class.active]="selectedCategory() === 'corporate-gifts'" (click)="selectedCategory.set('corporate-gifts')">
-              <span>Pens & Diaries</span>
+              <span class="cat-icon-wrap">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  <path d="M14 7l3-3 2 2-3 3"></path>
+                  <line x1="10" y1="11" x2="16" y2="11"></line>
+                  <line x1="10" y1="15" x2="14" y2="15"></line>
+                </svg>
+              </span>
+              <span class="cat-label">Pens & Diaries</span>
             </button>
+
             <button class="filter-tab" [class.active]="selectedCategory() === 'welcome-kits'" (click)="selectedCategory.set('welcome-kits')">
-              <span>Welcome Kits</span>
+              <span class="cat-icon-wrap">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              </span>
+              <span class="cat-label">Welcome Kits</span>
             </button>
+
             <button class="filter-tab" [class.active]="selectedCategory() === 't-shirts'" (click)="selectedCategory.set('t-shirts')">
-              <span>Customized T-Shirts</span>
+              <span class="cat-icon-wrap">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path>
+                </svg>
+              </span>
+              <span class="cat-label">Customized T-Shirts</span>
             </button>
+
             <button class="filter-tab" [class.active]="selectedCategory() === 'keychains-badges'" (click)="selectedCategory.set('keychains-badges')">
-              <span>Keychains & Badges</span>
+              <span class="cat-icon-wrap">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8.5" r="5.5"></circle>
+                  <path d="M9 13.5L7 22l5-2.5L17 22l-2-8.5"></path>
+                </svg>
+              </span>
+              <span class="cat-label">Keychains & Badges</span>
             </button>
+
             <button class="filter-tab" [class.active]="selectedCategory() === 'office-essentials'" (click)="selectedCategory.set('office-essentials')">
-              <span>Office Essentials</span>
+              <span class="cat-icon-wrap">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2"></rect>
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path>
+                  <line x1="12" y1="12" x2="12" y2="12.01"></line>
+                  <path d="M2 13h20"></path>
+                </svg>
+              </span>
+              <span class="cat-label">Office Essentials</span>
             </button>
+
             <button class="filter-tab" [class.active]="selectedCategory() === 'drinkware'" (click)="selectedCategory.set('drinkware')">
-              <span>Vacuum Flasks</span>
+              <span class="cat-icon-wrap">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 2h6v2H9z"></path>
+                  <path d="M8 4h8v3H8z"></path>
+                  <rect x="7" y="7" width="10" height="15" rx="3"></rect>
+                  <line x1="7" y1="12" x2="17" y2="12"></line>
+                </svg>
+              </span>
+              <span class="cat-label">Vacuum Flasks</span>
             </button>
           </div>
 
           <!-- PRODUCTS GRID -->
           <div class="gl-products-grid">
             @for (product of filteredProducts(); track product.id) {
-              <div class="gl-product-card">
-
-                <!-- IMAGE SECTION -->
-                <a [routerLink]="['/product', product.id]" class="pcard-img-link">
-                  <div class="pcard-img-wrap">
-                    <img [src]="product.image" [alt]="product.name" class="pcard-img main-img" loading="lazy">
-                    @if (product.secondaryImage && product.secondaryImage !== product.image) {
-                      <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img" loading="lazy">
-                    }
-                    <div class="img-hover-tint"></div>
-                  </div>
-
-                  <!-- Badges on image -->
-                  <div class="pcard-badge-group">
-                    @if (product.isBestseller) {
-                      <span class="badge-bestseller">★ BESTSELLER</span>
-                    }
-                    @if (product.originalPrice && product.originalPrice > product.price) {
-                      <span class="badge-discount">{{ getDiscountPercent(product.price, product.originalPrice) }}% OFF</span>
-                    }
-                  </div>
-                </a>
-
-                <!-- INFO SECTION -->
-                <div class="pcard-info">
-                  <div class="pcard-rating">
-                    <span class="star">★</span>
-                    <span class="rating-val">{{ product.rating }}</span>
-                    <span class="rating-count">({{ product.ratingCount }})</span>
-                  </div>
-
-                  <a [routerLink]="['/product', product.id]" class="pcard-title-link">
-                    <h3 class="pcard-title">{{ product.name }}</h3>
-                  </a>
-
-                  <div class="pcard-bottom-row">
-                    <div class="pcard-price-col">
-                      <span class="price-current">₹{{ product.price }}</span>
-                      @if (product.originalPrice && product.originalPrice > product.price) {
-                        <span class="price-original">₹{{ product.originalPrice }}</span>
-                      }
-                    </div>
-                    <button class="pcard-add-btn" (click)="addToCart(product)" aria-label="Add to Cart">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                      </svg>
-                      <span>Add</span>
-                    </button>
-                  </div>
-                </div>
-
-              </div>
+              <app-product-card [product]="product"></app-product-card>
             }
           </div>
 
@@ -271,71 +276,94 @@ interface ReelItem {
               </svg>
             </a>
           </div>
-            <!-- 7. WHY CHOOSE GIFTAURA -->
+        </div>
+      </section>
+
+      <!-- 7. WHY CHOOSE GIFTAURA -->
       <section class="gl-section why-choose-section" id="why-choose">
         <div class="container">
-          <div class="gl-section-header">
-            <span class="gl-section-pill gl-badge-pill">✦ THE GIFTAURA ADVANTAGE</span>
-            <h2 class="gl-section-title">Why Leading Brands Choose GiftAura</h2>
-            <p class="gl-section-subtitle">From startup welcome kits to 5,000+ corporate uniform orders, we deliver uncompromised quality.</p>
-          </div>
+          <div class="why-choose-card">
+            <!-- Decorative Leaf Accents (Desktop only) -->
+            <svg class="why-leaf-accent why-leaf-left" width="110" height="110" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+              <path d="M10 90 C 25 60, 50 40, 85 20" stroke="#d4c5a9" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M26 74 C 14 62, 18 46, 33 56 C 36 65, 26 74, 26 74 Z" fill="#d4c5a9" opacity="0.35"/>
+              <path d="M44 57 C 39 40, 55 42, 49 55 Z" fill="#d4c5a9" opacity="0.35"/>
+              <path d="M62 40 C 56 25, 72 26, 68 39 Z" fill="#d4c5a9" opacity="0.35"/>
+              <path d="M80 24 C 76 12, 90 10, 87 23 Z" fill="#d4c5a9" opacity="0.35"/>
+            </svg>
+            <svg class="why-leaf-accent why-leaf-right" width="110" height="110" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+              <path d="M90 90 C 75 60, 50 40, 15 20" stroke="#d4c5a9" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M74 74 C 86 62, 82 46, 67 56 C 64 65, 74 74, 74 74 Z" fill="#d4c5a9" opacity="0.35"/>
+              <path d="M56 57 C 61 40, 45 42, 51 55 Z" fill="#d4c5a9" opacity="0.35"/>
+              <path d="M38 40 C 44 25, 28 26, 32 39 Z" fill="#d4c5a9" opacity="0.35"/>
+              <path d="M20 24 C 24 12, 10 10, 13 23 Z" fill="#d4c5a9" opacity="0.35"/>
+            </svg>
 
-          <div class="why-slider-container">
-            <div class="why-track" id="why-track" #whyTrack (scroll)="onWhyScroll(whyTrack)">
-              <div class="why-card" id="why-slide-0">
-                <div class="why-card-top">
-                  <div class="why-icon-box">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                  </div>
-                  <span class="why-step-num">01</span>
+            <!-- Header -->
+            <div class="why-choose-header">
+              <span class="why-eyebrow">WHY CHOOSE GIFTAURA</span>
+              <h2 class="why-title">Your Trusted Corporate Gifting Partner</h2>
+            </div>
+
+            <!-- 4 Features Strip (Grid on Desktop, Swipe Slider on Mobile) -->
+            <div class="why-features-grid" #whySlider (scroll)="onWhyScroll(whySlider)">
+              <!-- Feature 1 -->
+              <div class="why-feature-col">
+                <div class="why-icon-circle">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <polyline points="9 12 11 14 15 10"/>
+                  </svg>
                 </div>
-                <h3 class="why-card-title">Executive Grade Quality</h3>
-                <p class="why-card-desc">High-density 240+ GSM cotton fabrics, stainless steel flasks &amp; precision German laser branding.</p>
-                <div class="why-pill">✓ 240+ GSM Fabrics</div>
+                <h3 class="why-feature-title">Premium Quality</h3>
+                <p class="why-feature-desc">Carefully curated products for lasting value</p>
               </div>
 
-              <div class="why-card" id="why-slide-1">
-                <div class="why-card-top">
-                  <div class="why-icon-box">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-                  </div>
-                  <span class="why-step-num">02</span>
+              <!-- Feature 2 -->
+              <div class="why-feature-col">
+                <div class="why-icon-circle">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                    <path d="M2 2l7.586 7.586"/>
+                  </svg>
                 </div>
-                <h3 class="why-card-title">In-House Customization</h3>
-                <p class="why-card-desc">Laser engraving, multi-color UV printing, digital embroidery &amp; custom debossing directly at our facility.</p>
-                <div class="why-pill">✓ Fast 48h Mockup</div>
+                <h3 class="why-feature-title">Custom Branding</h3>
+                <p class="why-feature-desc">Make your brand truly memorable</p>
               </div>
 
-              <div class="why-card" id="why-slide-2">
-                <div class="why-card-top">
-                  <div class="why-icon-box">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                  </div>
-                  <span class="why-step-num">03</span>
+              <!-- Feature 3 -->
+              <div class="why-feature-col">
+                <div class="why-icon-circle">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="3" width="15" height="13"/>
+                    <polygon points="16 8 20 8 23 11 23 16 16 8"/>
+                    <circle cx="5.5" cy="18.5" r="2.5"/>
+                    <circle cx="18.5" cy="18.5" r="2.5"/>
+                  </svg>
                 </div>
-                <h3 class="why-card-title">Direct Factory Pricing</h3>
-                <p class="why-card-desc">No middle-men markup. Get tiered corporate discounts, GST tax invoicing &amp; flexible payment terms.</p>
-                <div class="why-pill">✓ Save Up to 40%</div>
+                <h3 class="why-feature-title">Pan India Delivery</h3>
+                <p class="why-feature-desc">On-time &amp; secure delivery across India</p>
               </div>
 
-              <div class="why-card" id="why-slide-3">
-                <div class="why-card-top">
-                  <div class="why-icon-box">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                  </div>
-                  <span class="why-step-num">04</span>
+              <!-- Feature 4 -->
+              <div class="why-feature-col">
+                <div class="why-icon-circle">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
                 </div>
-                <h3 class="why-card-title">Pan-India Express Dispatch</h3>
-                <p class="why-card-desc">Reliable courier network delivering to 19,000+ pin codes with live consignment tracking.</p>
-                <div class="why-pill">✓ 19,000+ Pin Codes</div>
+                <h3 class="why-feature-title">Dedicated Support</h3>
+                <p class="why-feature-desc">Our team is always here to help</p>
               </div>
             </div>
 
-            <!-- WHY CHOOSE SLIDER INDICATORS -->
-            <div class="why-indicators">
-              @for (item of [0, 1, 2, 3]; track item) {
-                <button class="why-dot" [class.active]="currentWhyIndex() === item" (click)="setWhyIndex(item)" [attr.aria-label]="'Go to advantage ' + (item + 1)"></button>
-              }
+            <!-- Mobile Dots Pagination -->
+            <div class="why-mobile-dots">
+              <button type="button" class="why-dot" [class.active]="activeWhySlide() === 0" (click)="scrollToWhySlide(0, whySlider)" aria-label="Feature 1"></button>
+              <button type="button" class="why-dot" [class.active]="activeWhySlide() === 1" (click)="scrollToWhySlide(1, whySlider)" aria-label="Feature 2"></button>
+              <button type="button" class="why-dot" [class.active]="activeWhySlide() === 2" (click)="scrollToWhySlide(2, whySlider)" aria-label="Feature 3"></button>
+              <button type="button" class="why-dot" [class.active]="activeWhySlide() === 3" (click)="scrollToWhySlide(3, whySlider)" aria-label="Feature 4"></button>
             </div>
           </div>
         </div>
@@ -348,10 +376,14 @@ interface ReelItem {
                (touchstart)="pauseReviewAutoplay()"
                (touchend)="resumeReviewAutoplay()">
         <div class="container">
-          <div class="gl-section-header">
-            <span class="gl-section-pill gl-badge-pill">✦ CORPORATE CLIENT REVIEWS</span>
-            <h2 class="gl-section-title">What Our Clients Say</h2>
-            <p class="gl-section-subtitle">Trusted by 500+ Indian enterprises, coaching hubs &amp; high-growth startups</p>
+          <div class="rev-header">
+            <div class="rev-eyebrow-wrap">
+              <span class="rev-eyebrow-line"></span>
+              <span class="rev-eyebrow">WHAT OUR CLIENTS SAY</span>
+              <span class="rev-eyebrow-line"></span>
+            </div>
+            <h2 class="rev-title">Trusted by Leading Brands</h2>
+            <p class="rev-subtitle">Real stories. Lasting partnerships.</p>
           </div>
 
           <div class="reviews-slider-container">
@@ -366,48 +398,36 @@ interface ReelItem {
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </button>
+
             <div class="reviews-track" id="reviews-track" #reviewsTrack (scroll)="onReviewsScroll(reviewsTrack)">
               @for (rev of customerReviews; track rev.name; let i = $index) {
                 <div class="review-slide" [id]="'review-slide-' + i">
                   <div class="review-card">
-                    <!-- Top Rating & Verification Pill -->
-                    <div class="rev-card-header">
-                      <div class="rev-rating-box">
-                        <span class="rev-stars">★★★★★</span>
-                        <span class="rev-score">5.0</span>
-                      </div>
-                      <span class="rev-verified-pill">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                          <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Verified Order
-                      </span>
+                    <!-- Top Gold Quote Icon -->
+                    <div class="rev-quote-badge">
+                      <svg width="22" height="18" viewBox="0 0 24 20" fill="currentColor">
+                        <path d="M0 11.5C0 5.1 4.2 1 9.2 0l1.3 2.5C6.9 3.6 5.4 5.9 5 8.3h4.9V20H0V11.5zm12.5 0c0-6.4 4.2-10.5 9.2-11.5l1.3 2.5c-3.6 1.1-5.1 3.4-5.5 5.8h4.9V20h-9.9V11.5z"/>
+                      </svg>
                     </div>
 
-                    <!-- Review Title -->
-                    <h4 class="rev-card-title">{{ rev.title }}</h4>
+                    <!-- Review Text / Italic Quote -->
+                    <p class="rev-comment">"{{ rev.comment }}"</p>
 
-                    <!-- Compact Quote -->
-                    <p class="rev-body">"{{ rev.comment }}"</p>
-
-                    <!-- Author Profile Row -->
-                    <div class="rev-author-row">
+                    <!-- Author Details Row -->
+                    <div class="rev-author-footer">
                       <div class="rev-avatar-box">
                         @if (rev.avatar) {
                           <img [src]="rev.avatar" [alt]="rev.name" class="rev-avatar-img" (error)="rev.avatar = ''" loading="lazy">
                         } @else {
                           <div class="rev-avatar-fallback">{{ rev.name[0] }}</div>
                         }
-                        <span class="rev-online-dot"></span>
                       </div>
-                      <div class="rev-details">
-                        <span class="rev-name">{{ rev.name }}</span>
-                        <span class="rev-company">{{ rev.role }} • {{ rev.company }}</span>
-                      </div>
-                      <div class="rev-quote-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                        </svg>
+                      <div class="rev-author-details">
+                        <div class="rev-author-name">{{ rev.name }}</div>
+                        <div class="rev-author-role">{{ rev.role }}, {{ rev.company }}</div>
+                        <div class="rev-stars">
+                          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1259,41 +1279,91 @@ interface ReelItem {
 
     .gl-filter-tabs {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 36px;
+      align-items: stretch;
+      margin: 0 auto 36px;
+      max-width: 1200px;
+      padding: 4px 8px;
 
-      @media (max-width: 768px) {
-        flex-wrap: nowrap;
+      @media (max-width: 1024px) {
         justify-content: flex-start;
         overflow-x: auto;
-        padding: 0 16px 8px;
+        padding: 4px 16px 14px;
         margin: 0 -16px 28px;
+        scroll-snap-type: x mandatory;
         scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
         &::-webkit-scrollbar {
           display: none;
         }
       }
 
       .filter-tab {
-        flex-shrink: 0;
-        white-space: nowrap;
+        flex: 1 1 auto;
+        min-width: max-content;
+        min-height: 94px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 18px 12px;
         background: #ffffff;
         color: #4b5563;
         border: 1px solid #e5e0d4;
-        border-radius: var(--radius-full);
-        padding: 10px 22px;
-        font-size: 13.5px;
-        font-weight: 600;
+        border-radius: 16px;
         cursor: pointer;
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        text-align: center;
+        white-space: nowrap;
+
+        @media (max-width: 1024px) {
+          flex: 0 0 auto;
+          scroll-snap-align: start;
+          padding: 12px 16px 10px;
+          min-height: 90px;
+        }
+
+        .cat-icon-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+          color: currentColor;
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+          .cat-icon {
+            width: 24px;
+            height: 24px;
+            display: block;
+          }
+        }
+
+        .cat-label {
+          font-size: 13.5px;
+          font-weight: 600;
+          line-height: 1.2;
+          color: inherit;
+          white-space: nowrap;
+
+          @media (max-width: 1024px) {
+            font-size: 12.5px;
+          }
+        }
 
         &:hover {
+          background: #ffffff;
           border-color: #d4af37;
           color: #111111;
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+
+          .cat-icon-wrap {
+            transform: scale(1.08);
+            color: #d4af37;
+          }
         }
 
         &.active {
@@ -1301,8 +1371,21 @@ interface ReelItem {
           color: #fbbf24;
           border-color: #11141c;
           font-weight: 700;
-          box-shadow: 0 6px 18px rgba(17, 20, 28, 0.2);
           transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(17, 20, 28, 0.2);
+
+          .cat-label {
+            color: #fbbf24;
+          }
+
+          .cat-icon-wrap {
+            color: #fbbf24;
+          }
+
+          &:hover {
+            background: #1a1e29;
+            transform: translateY(-2px);
+          }
         }
       }
     }
@@ -1323,225 +1406,14 @@ interface ReelItem {
       }
     }
 
-    /* ── PRODUCT CARD (Home) ── */
-    .gl-product-card {
-      display: flex;
-      flex-direction: column;
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-      background: rgba(255, 255, 255, 0.82);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      transition: all 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-      height: 100%;
-
-      &:hover {
-        transform: translateY(-7px) scale(1.012);
-        border-color: rgba(212, 175, 55, 0.5);
-        box-shadow:
-          0 20px 48px rgba(212, 175, 55, 0.13),
-          0 8px 20px rgba(0, 0, 0, 0.07),
-          inset 0 1px 0 #fff;
-        background: rgba(255, 255, 255, 0.96);
-
-        .pcard-img.main-img  { transform: scale(1.07); }
-        .pcard-img.hover-img { opacity: 1; }
-        .img-hover-tint      { opacity: 1; }
-      }
-    }
-
-    .pcard-img-link {
-      display: block;
-      position: relative;
-      text-decoration: none;
-    }
-
-    .pcard-img-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: linear-gradient(145deg, #fdfcf9 0%, #f5f0e8 100%);
-      overflow: hidden;
-
-      .pcard-img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-
-        &.hover-img { opacity: 0; }
-      }
-    }
-
-    .img-hover-tint {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.07) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-
-    /* Badges */
-    .pcard-badge-group {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      pointer-events: none;
-      z-index: 5;
-
-      @media (max-width: 480px) { top: 7px; left: 7px; right: 7px; }
-    }
-
-    .badge-bestseller {
-      display: inline-flex;
-      align-items: center;
-      background: rgba(17, 20, 28, 0.88);
-      backdrop-filter: blur(8px);
-      color: #fbbf24;
-      font-size: 9.5px;
-      font-weight: 900;
-      letter-spacing: 0.4px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      border: 1px solid rgba(251, 191, 36, 0.3);
-
-      @media (max-width: 480px) { font-size: 8px; padding: 3px 6px; }
-    }
-
-    .badge-discount {
-      display: inline-flex;
-      align-items: center;
-      background: rgba(220, 38, 38, 0.88);
-      backdrop-filter: blur(6px);
-      color: #fff;
-      font-size: 9.5px;
-      font-weight: 900;
-      letter-spacing: 0.3px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      margin-left: auto;
-
-      @media (max-width: 480px) { font-size: 8px; padding: 3px 6px; }
-    }
-
-    /* Info */
-    .pcard-info {
-      padding: 12px 14px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      flex: 1;
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(235, 229, 216, 0.55);
-
-      @media (max-width: 480px) { padding: 10px 11px 12px; gap: 4px; }
-    }
-
-    .pcard-rating {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11.5px;
-
-      .star         { color: #f59e0b; font-size: 13px; }
-      .rating-val   { font-weight: 700; color: #111; }
-      .rating-count { color: #9ca3af; font-size: 10.5px; }
-    }
-
-    .pcard-title-link { text-decoration: none; }
-
-    .pcard-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: #1a1a2e;
-      line-height: 1.35;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      min-height: 36px;
-      margin: 0;
-      transition: color 0.2s;
-
-      @media (max-width: 480px) { font-size: 12.5px; min-height: 33px; }
-
-      &:hover { color: #d4af37; }
-    }
-
-    .pcard-bottom-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 3px;
-    }
-
-    .pcard-price-col {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-
-      .price-current {
-        font-size: 16px;
-        font-weight: 900;
-        color: #11141c;
-        letter-spacing: -0.02em;
-        line-height: 1;
-
-        @media (max-width: 480px) { font-size: 14px; }
-      }
-
-      .price-original {
-        font-size: 11px;
-        color: #a1a1aa;
-        text-decoration: line-through;
-        line-height: 1;
-      }
-    }
-
-    .pcard-add-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
-      color: #111111;
-      border: none;
-      border-radius: 100px;
-      padding: 8px 13px;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-      flex-shrink: 0;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.32);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      white-space: nowrap;
-
-      @media (max-width: 480px) { padding: 7px 10px; font-size: 11px; }
-
-      &:hover {
-        background: linear-gradient(135deg, #b8922d 0%, #e08e00 100%);
-        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
-        transform: translateY(-1px);
-      }
-      &:active { transform: scale(0.92); }
-    }
-
     .view-all-row {
       text-align: center;
-      margin-top: 48px;
+      margin-top: 24px;
+      margin-bottom: 4px;
+
+      @media (max-width: 767px) {
+        margin-top: 16px;
+      }
 
       .view-all-btn {
         background: linear-gradient(135deg, #11141c 0%, #1e2230 100%);
@@ -1671,210 +1543,266 @@ interface ReelItem {
       }
     }
 
-    /* ── 7. WHY CHOOSE US (GIFTAURA ADVANTAGE) ── */
+    /* ── 7. WHY CHOOSE GIFTAURA (ELEGANT BANNER & MOBILE SLIDER) ── */
     .why-choose-section {
-      background: #ffffff;
-      padding: 56px 0;
+      background: transparent;
+      padding: 8px 0 20px;
 
       @media (max-width: 767px) {
-        padding: 36px 0 28px;
+        padding: 6px 0 16px;
       }
     }
 
-    .why-slider-container {
+    .why-choose-card {
       position: relative;
-      margin-top: 28px;
+      background: #fdfbf7;
+      border: 1px solid #ebdcc5;
+      border-radius: 16px;
+      padding: 28px 24px 22px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+
+      @media (max-width: 991px) {
+        padding: 24px 18px 20px;
+      }
 
       @media (max-width: 767px) {
-        margin-top: 20px;
+        padding: 18px 12px 14px;
+        border-radius: 14px;
       }
     }
 
-    .why-track {
+    /* Botanical Leaf Accents */
+    .why-leaf-accent {
+      position: absolute;
+      top: 0;
+      pointer-events: none;
+      z-index: 1;
+
+      &.why-leaf-left {
+        left: 0;
+      }
+
+      &.why-leaf-right {
+        right: 0;
+      }
+
+      @media (max-width: 767px) {
+        display: none !important;
+      }
+    }
+
+    /* Header */
+    .why-choose-header {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-bottom: 20px;
+
+      @media (max-width: 767px) {
+        margin-bottom: 14px;
+      }
+
+      .why-eyebrow {
+        display: block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #b45309;
+        margin-bottom: 5px;
+      }
+
+      .why-title {
+        font-size: clamp(20px, 2.6vw, 26px);
+        font-weight: 800;
+        color: #111827;
+        margin: 0;
+        letter-spacing: -0.015em;
+        line-height: 1.25;
+      }
+    }
+
+    /* Features Grid (Desktop 4-col, Mobile Swipe Slider) */
+    .why-features-grid {
+      position: relative;
+      z-index: 2;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-
-      @media (max-width: 1023px) {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
+      align-items: stretch;
 
       @media (max-width: 767px) {
         display: flex;
+        flex-direction: row;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        gap: 12px;
-        padding: 6px 16px 14px;
-        margin: 0 -16px;
+        gap: 10px;
+        padding: 4px 4px 8px;
+        margin: 0;
         scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
         &::-webkit-scrollbar { display: none; }
       }
     }
 
-    .why-card {
-      background: #ffffff;
-      border: 1px solid #ebe5d8;
-      border-radius: 18px;
-      padding: 22px 20px;
-      position: relative;
-      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.03);
+    .why-feature-col {
       display: flex;
       flex-direction: column;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      overflow: hidden;
+      align-items: center;
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+
+      @media (min-width: 768px) {
+        &:not(:last-child) {
+          border-right: 1px solid #ebdcc5;
+        }
+      }
 
       @media (max-width: 767px) {
-        flex: 0 0 78%;
-        min-width: 78%;
+        flex: 0 0 76%;
+        max-width: 270px;
         scroll-snap-align: center;
-        padding: 18px 16px;
-        border-radius: 16px;
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: transparent;
-        transition: background 0.3s ease;
-      }
-
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 28px rgba(27, 33, 59, 0.08);
-        border-color: #d4af37;
-
-        &::before {
-          background: linear-gradient(90deg, #d4af37, #f59e0b);
-        }
-
-        .why-icon-box {
-          transform: scale(1.06);
-          background: #fde68a;
-        }
-      }
-
-      .why-card-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 14px;
-      }
-
-      .why-icon-box {
-        width: 44px;
-        height: 44px;
+        background: #ffffff;
+        border: 1px solid #ebdcc5;
         border-radius: 12px;
-        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-        border: 1px solid #fcd34d;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 2px 8px rgba(217, 119, 6, 0.12);
-        transition: all 0.3s ease;
-
-        svg {
-          width: 22px;
-          height: 22px;
-        }
-      }
-
-      .why-step-num {
-        font-size: 11.5px;
-        font-weight: 800;
-        font-family: monospace;
-        color: #b45309;
-        background: #fef3c7;
-        border: 1px solid #fde68a;
-        padding: 2px 7px;
-        border-radius: 999px;
-      }
-
-      .why-card-title {
-        font-size: 15.5px;
-        font-weight: 700;
-        color: #11141c;
-        margin-bottom: 6px;
-        letter-spacing: -0.01em;
-
-        @media (max-width: 767px) {
-          font-size: 14.5px;
-          margin-bottom: 5px;
-        }
-      }
-
-      .why-card-desc {
-        font-size: 12.5px;
-        color: #52525b;
-        line-height: 1.52;
-        margin-bottom: 14px;
-        flex: 1;
-
-        @media (max-width: 767px) {
-          font-size: 12px;
-          line-height: 1.48;
-          margin-bottom: 12px;
-        }
-      }
-
-      .why-pill {
-        align-self: flex-start;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 11px;
-        font-weight: 600;
-        color: #92400e;
-        background: #fefce8;
-        border: 1px solid #fef08a;
-        padding: 3px 9px;
-        border-radius: 6px;
-        line-height: 1.3;
+        padding: 16px 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       }
     }
 
-    .why-indicators {
+    .why-icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid #d97706;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b45309;
+      background: #fff8ed;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.08);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+      svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 1.8;
+      }
+
+      &:hover {
+        transform: translateY(-2px) scale(1.05);
+        border-color: #b45309;
+        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+      }
+    }
+
+    .why-feature-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 4px;
+      line-height: 1.3;
+    }
+
+    .why-feature-desc {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.45;
+      margin: 0;
+      max-width: 220px;
+    }
+
+    /* Mobile Slider Dots */
+    .why-mobile-dots {
       display: none;
 
       @media (max-width: 767px) {
         display: flex;
-        align-items: center;
         justify-content: center;
-        gap: 8px;
-        margin-top: 14px;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+      }
 
-        .why-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: var(--radius-full);
-          background: #d1d5db;
-          border: none;
-          cursor: pointer;
-          padding: 0;
-          transition: all 0.25s ease;
+      .why-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #d4c8b5;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: all 0.25s ease;
 
-          &.active {
-            width: 22px;
-            background: #d4af37;
-          }
+        &.active {
+          width: 18px;
+          border-radius: 10px;
+          background: #1b213b;
         }
       }
     }
 
-    /* ── 8. REVIEWS SLIDER (COMPACT LUXURY AUTO-CAROUSEL) ── */
+    /* ── 8. REVIEWS SLIDER (ELEGANT LUXURY MINIMAL CAROUSEL) ── */
     .reviews-section {
       background: #faf8f5;
-      border-top: 1px solid #eee8db;
-      padding: 56px 0;
+      padding: 36px 0 42px;
 
       @media (max-width: 767px) {
-        padding: 36px 0 40px;
+        padding: 24px 0 32px;
       }
+    }
+
+    .rev-header {
+      text-align: center;
+      margin-bottom: 30px;
+
+      @media (max-width: 767px) {
+        margin-bottom: 20px;
+      }
+
+      .rev-eyebrow-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .rev-eyebrow-line {
+        display: inline-block;
+        width: 32px;
+        height: 1px;
+        background: #d4a359;
+      }
+
+      .rev-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #b45309;
+      }
+
+      .rev-title {
+        font-size: clamp(24px, 3.2vw, 32px);
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+      }
+
+      .rev-subtitle {
+        font-size: 14px;
+        color: #6b7280;
+        margin: 6px 0 0;
+      }
+    }
+
+    .reviews-slider-container {
+      position: relative;
+      width: 100%;
     }
 
     .rev-side-arrow {
@@ -1885,25 +1813,25 @@ interface ReelItem {
         top: 50%;
         transform: translateY(-50%);
         z-index: 10;
-        width: 44px;
-        height: 44px;
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
-        background: #ffffff;
-        border: 1px solid #e5e0d4;
-        color: #11141c;
+        background: #fbf9f5;
+        border: 1px solid #ebdcc5;
+        color: #555555;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
         &.prev {
-          left: -22px;
+          left: -21px;
         }
 
         &.next {
-          right: -22px;
+          right: -21px;
         }
 
         &:hover {
@@ -1911,7 +1839,7 @@ interface ReelItem {
           color: #fbbf24;
           border-color: #11141c;
           transform: translateY(-50%) scale(1.08);
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         &:active {
@@ -1925,11 +1853,6 @@ interface ReelItem {
       }
     }
 
-    .reviews-slider-container {
-      position: relative;
-      width: 100%;
-    }
-
     .reviews-track {
       display: flex;
       gap: 20px;
@@ -1938,13 +1861,13 @@ interface ReelItem {
       scroll-behavior: smooth;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
-      padding: 6px 2px 14px;
+      padding: 4px 2px 10px;
 
       &::-webkit-scrollbar { display: none; }
 
       @media (max-width: 767px) {
-        gap: 14px;
-        padding: 4px 16px 12px;
+        gap: 12px;
+        padding: 4px 16px 8px;
         margin: 0 -16px;
       }
     }
@@ -1962,191 +1885,125 @@ interface ReelItem {
       }
 
       @media (max-width: 767px) {
-        flex: 0 0 86%;
-        min-width: 86%;
-        max-width: 86%;
+        flex: 0 0 84%;
+        min-width: 84%;
+        max-width: 84%;
         scroll-snap-align: center;
       }
     }
 
     .review-card {
       background: #ffffff;
-      border: 1px solid #ebe5d8;
+      border: 1px solid #ebdcc5;
       border-radius: 16px;
-      padding: 18px 20px;
+      padding: 26px 22px 22px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
       height: 100%;
-      min-height: 205px;
+      min-height: 220px;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
 
       @media (max-width: 767px) {
-        padding: 16px 16px;
-        min-height: 195px;
-        border-radius: 15px;
+        padding: 20px 18px 18px;
+        border-radius: 14px;
+        min-height: 200px;
       }
 
       &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 28px rgba(212, 175, 55, 0.12);
-        border-color: rgba(212, 175, 55, 0.6);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(184, 138, 68, 0.12);
+        border-color: #d4a359;
       }
 
-      .rev-card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-      }
-
-      .rev-rating-box {
+      .rev-quote-badge {
+        color: #c29b53;
+        margin-bottom: 14px;
         display: flex;
         align-items: center;
-        gap: 6px;
-      }
-
-      .rev-stars {
-        color: #f59e0b;
-        font-size: 13.5px;
-        letter-spacing: 1.5px;
-        line-height: 1;
-      }
-
-      .rev-score {
-        font-size: 11px;
-        font-weight: 800;
-        color: #b45309;
-        background: #fef3c7;
-        border: 1px solid #fde68a;
-        padding: 1.5px 5px;
-        border-radius: 4px;
-        line-height: 1;
-      }
-
-      .rev-verified-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        background: #ecfdf5;
-        color: #15803d;
-        border: 1px solid #a7f3d0;
-        font-size: 10px;
-        font-weight: 700;
-        padding: 2.5px 7px;
-        border-radius: var(--radius-full);
-        line-height: 1;
 
         svg {
-          width: 11px;
-          height: 11px;
+          width: 22px;
+          height: 18px;
         }
       }
 
-      .rev-card-title {
-        font-size: 14px;
-        font-weight: 700;
-        color: #11141c;
-        margin-bottom: 6px;
-        line-height: 1.35;
-      }
-
-      .rev-body {
-        font-size: 12.5px;
-        color: #52525b;
-        line-height: 1.48;
-        margin-bottom: 12px;
+      .rev-comment {
+        font-style: italic;
+        font-size: 13.5px;
+        color: #4b5563;
+        line-height: 1.6;
+        margin: 0 0 22px;
         flex: 1;
       }
 
-      .rev-author-row {
+      .rev-author-footer {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         margin-top: auto;
-        padding-top: 12px;
-        border-top: 1px solid #f4f1ea;
       }
 
       .rev-avatar-box {
-        position: relative;
-        width: 38px;
-        height: 38px;
+        width: 44px;
+        height: 44px;
         flex-shrink: 0;
       }
 
       .rev-avatar-img {
-        width: 38px;
-        height: 38px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid #ffffff;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        border: 1.5px solid #ebdcc5;
         display: block;
       }
 
       .rev-avatar-fallback {
-        width: 38px;
-        height: 38px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #11141c 0%, #2a2c36 100%);
+        background: #11141c;
         color: #fbbf24;
-        font-weight: 800;
-        font-size: 14px;
+        font-weight: 700;
+        font-size: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       }
 
-      .rev-online-dot {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #22c55e;
-        border: 2px solid #ffffff;
-      }
-
-      .rev-details {
+      .rev-author-details {
         display: flex;
         flex-direction: column;
         min-width: 0;
-        flex: 1;
 
-        .rev-name {
-          font-size: 13px;
+        .rev-author-name {
+          font-size: 13.5px;
           font-weight: 700;
-          color: #11141c;
+          color: #111827;
+          line-height: 1.25;
+          margin-bottom: 2px;
+        }
+
+        .rev-author-role {
+          font-size: 11.5px;
+          color: #6b7280;
+          line-height: 1.25;
+          margin-bottom: 4px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
 
-        .rev-company {
-          font-size: 11px;
-          color: #71717a;
-          margin-top: 1px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+        .rev-stars {
+          display: flex;
+          align-items: center;
+          gap: 2px;
+          color: #d97706;
+          font-size: 13px;
+          line-height: 1;
         }
-      }
-
-      .rev-quote-icon {
-        color: #e5e0d4;
-        margin-left: auto;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        transition: color 0.3s ease;
-      }
-
-      &:hover .rev-quote-icon {
-        color: #d4af37;
       }
     }
 
@@ -2154,41 +2011,32 @@ interface ReelItem {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
+      gap: 12px;
       margin-top: 18px;
     }
 
     .rev-nav-btn {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: #ffffff;
-      border: 1px solid #e5e0d4;
+      border: 1px solid #ebdcc5;
       color: #11141c;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
       transition: all 0.25s ease;
 
       &:hover {
         background: #11141c;
         color: #fbbf24;
         border-color: #11141c;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-      }
-
-      &:active {
-        transform: scale(0.92);
       }
 
       &.mobile-only {
         display: none;
-        width: 32px;
-        height: 32px;
-
         @media (max-width: 767px) {
           display: flex;
         }
@@ -2198,25 +2046,26 @@ interface ReelItem {
     .reviews-indicators {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
 
       .rev-dot {
         width: 8px;
         height: 8px;
-        border-radius: var(--radius-full);
-        background: #d1d5db;
+        border-radius: 50%;
+        background: #ded5c6;
         border: none;
         cursor: pointer;
         padding: 0;
         transition: all 0.25s ease;
 
         &.active {
-          width: 26px;
-          background: #d4af37;
+          background: #b45309;
+          width: 20px;
+          border-radius: 10px;
         }
 
         &:hover:not(.active) {
-          background: #9ca3af;
+          background: #b8aa95;
         }
       }
     }
@@ -2858,44 +2707,39 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   customerReviews = [
     {
-      name: 'Vikas Sharma',
-      role: 'Procurement Head',
-      company: 'Utkarsh Classes, Jodhpur',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
-      title: 'Outstanding T-Shirts & Badge Quality!',
-      comment: 'Ordered 1,200 polo t-shirts and magnetic badges for our coaching educators. The embroidery was crisp, fabric breathable, and delivery was 2 days ahead of schedule.'
+      name: 'Priya Sharma',
+      role: 'Marketing Head',
+      company: 'Infosys',
+      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80',
+      comment: 'GiftAura helped us create the perfect gifting solution for our clients. The quality and packaging were absolutely outstanding!'
     },
     {
-      name: 'Neha Kapoor',
-      role: 'Head of People & HR',
-      company: 'TalentHR Solutions, Gurgaon',
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80',
-      title: 'Flawless Welcome Kits for our New Hires',
-      comment: 'The 3-in-1 executive welcome gift boxes with our company logo looked extremely premium. The packaging and custom laser engraving on pens impressed our executives.'
+      name: 'Rohit Mehta',
+      role: 'HR Manager',
+      company: 'TCS',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
+      comment: 'Professional, reliable and super easy to work with. Our employees loved the gifts. Highly recommended!'
+    },
+    {
+      name: 'Anjali Verma',
+      role: 'Business Development',
+      company: 'HDFC Bank',
+      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&auto=format&fit=crop&q=80',
+      comment: 'The team at GiftAura understood our needs perfectly. The custom branding and on-time delivery made all the difference.'
     },
     {
       name: 'Manish Jain',
       role: 'Operations Director',
-      company: 'Apex Logistics, Jaipur',
+      company: 'Apex Logistics',
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80',
-      title: 'Great pricing and prompt WhatsApp support',
-      comment: 'Rohit from GiftAura handled our urgent requirement of 500 insulated bottles and diaries with utmost professionalism. GiftAura is now our permanent corporate vendor.'
+      comment: 'Prompt WhatsApp support and quick turnaround. The customized tech hampers and insulated bottles were top notch.'
     },
     {
-      name: 'Priya Sundaram',
-      role: 'Brand Experience Lead',
-      company: 'Zoho Partner Ecosystem, Bangalore',
-      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&auto=format&fit=crop&q=80',
-      title: 'Superb UV Printing & Fast Turnaround',
-      comment: 'We needed 350 customized tech hampers for our developer summit in just 4 days. The team delivered flawless UV print finishes right to our event venue on time.'
-    },
-    {
-      name: 'Rajesh Kulkarni',
-      role: 'Admin & Facilities Lead',
-      company: 'Tata Vendor Network, Pune',
+      name: 'Vikas Sharma',
+      role: 'Procurement Head',
+      company: 'Utkarsh Classes',
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&auto=format&fit=crop&q=80',
-      title: 'Unmatched Fabric Quality & Stitching',
-      comment: 'Received 800 custom safety jackets and cotton polos. Fabric GSM and stitching standards exceeded our expectations. Transparent GST billing process too.'
+      comment: 'Ordered polo t-shirts and magnetic badges for our educators. The embroidery was crisp and delivery ahead of schedule.'
     }
   ];
 
@@ -2998,26 +2842,28 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  currentWhyIndex = signal(0);
+  readonly activeWhySlide = signal<number>(0);
 
-  setWhyIndex(index: number) {
-    this.currentWhyIndex.set(index);
-    const track = this.document.getElementById('why-track');
-    const el = this.document.getElementById('why-slide-' + index);
-    if (track && el) {
-      const offset = el.offsetLeft - track.offsetLeft - (track.clientWidth - el.clientWidth) / 2;
-      track.scrollTo({ left: Math.max(0, offset), behavior: 'smooth' });
+  onWhyScroll(el: HTMLElement) {
+    if (!el) return;
+    const scrollLeft = el.scrollLeft;
+    const card = el.querySelector('.why-feature-col') as HTMLElement;
+    const cardWidth = card ? card.offsetWidth + 10 : el.clientWidth * 0.76;
+    if (cardWidth > 0) {
+      const idx = Math.min(3, Math.max(0, Math.round(scrollLeft / cardWidth)));
+      if (idx !== this.activeWhySlide()) {
+        this.activeWhySlide.set(idx);
+      }
     }
   }
 
-  onWhyScroll(el: HTMLElement) {
-    const scrollLeft = el.scrollLeft;
-    const width = el.clientWidth;
-    if (width > 0) {
-      const idx = Math.round(scrollLeft / (width * 0.78));
-      if (idx >= 0 && idx < 4 && idx !== this.currentWhyIndex()) {
-        this.currentWhyIndex.set(idx);
-      }
+  scrollToWhySlide(index: number, container: HTMLElement) {
+    if (!container) return;
+    this.activeWhySlide.set(index);
+    const cols = container.querySelectorAll('.why-feature-col');
+    const target = cols[index] as HTMLElement;
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   }
 
