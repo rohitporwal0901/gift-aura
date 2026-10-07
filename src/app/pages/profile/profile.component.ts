@@ -1345,6 +1345,7 @@ export class ProfileComponent {
   }
 
   async handleLogout(): Promise<void> {
+    this.cartService.clearCart();
     await this.authService.logout();
     if (this.inlineMode) this.cartService.closeDrawer();
     else this.router.navigate(['/']);

@@ -374,6 +374,9 @@ export class AuthService {
       console.warn('Sign out error:', e);
     }
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem('cart_items_v2');
+    localStorage.removeItem('cart_coupon_v2');
+    localStorage.removeItem('cart_loc_v2');
     this._currentUser.set(null);
     this._activeAddress.set(DEFAULT_ADDRESS);
   }

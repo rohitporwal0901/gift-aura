@@ -46,33 +46,26 @@ import { Product } from '../../core/models/product.model';
             }
           </div>
 
-          <!-- SEARCH & SORT -->
+          <!-- SORT & RESULTS ROW -->
           <div class="filter-actions-row">
-            <div class="search-input-box">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input type="text" placeholder="Search in collection..." [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)">
-              @if (searchQuery()) {
-                <button class="clear-search-btn" (click)="searchQuery.set('')">✕</button>
-              }
+            <div class="col-results-count">
+              Showing <strong>{{ processedProducts().length }}</strong> products
             </div>
 
             <div class="sort-box">
               <label for="sortSelect">Sort:</label>
-              <select id="sortSelect" [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)">
-                <option value="featured">Featured</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-              </select>
+              <div class="select-wrapper">
+                <select id="sortSelect" [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)">
+                  <option value="featured">Featured</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                </select>
+                <svg class="select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- PRODUCTS COUNT -->
-        <div class="col-results-count">
-          Showing <strong>{{ processedProducts().length }}</strong> products
         </div>
 
         <!-- PRODUCTS GRID -->
@@ -99,14 +92,18 @@ import { Product } from '../../core/models/product.model';
     .collections-page {
       background: var(--color-bg-canvas);
       min-height: 100vh;
-      padding-bottom: 80px;
+      padding-bottom: 96px;
     }
 
     .collections-hero {
       background: #faf8f5;
       border-bottom: 1px solid var(--color-border);
-      padding: 36px 0 32px;
+      padding: 32px 0 28px;
       text-align: center;
+
+      @media (max-width: 767px) {
+        padding: 20px 0 16px;
+      }
     }
 
     .breadcrumbs {
@@ -116,7 +113,13 @@ import { Product } from '../../core/models/product.model';
       gap: 8px;
       font-size: 12.5px;
       color: #777777;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+
+      @media (max-width: 767px) {
+        font-size: 11.5px;
+        margin-bottom: 6px;
+        gap: 6px;
+      }
 
       a {
         color: #555555;
@@ -128,139 +131,205 @@ import { Product } from '../../core/models/product.model';
     }
 
     .col-title {
-      font-size: clamp(24px, 3.5vw, 38px);
+      font-size: clamp(22px, 3.5vw, 36px);
       font-weight: 900;
       color: #111111;
       letter-spacing: -0.03em;
       margin-bottom: 8px;
+
+      @media (max-width: 767px) {
+        font-size: 22px;
+        margin-bottom: 4px;
+      }
     }
 
     .col-desc {
-      font-size: 14px;
+      font-size: 13.5px;
       color: #666666;
-      max-width: 600px;
+      max-width: 580px;
       margin: 0 auto;
-      line-height: 1.55;
+      line-height: 1.5;
+
+      @media (max-width: 767px) {
+        font-size: 12px;
+        line-height: 1.45;
+        padding: 0 10px;
+      }
     }
 
     .col-container {
-      margin-top: 32px;
+      margin-top: 18px;
+
+      @media (max-width: 767px) {
+        margin-top: 12px;
+      }
     }
 
     .col-filter-bar {
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      margin-bottom: 24px;
-      background: #ffffff;
-      padding: 16px 20px;
-      border-radius: 12px;
-      border: 1px solid var(--color-border);
+      gap: 12px;
+      margin-bottom: 16px;
+      background: transparent;
+      padding: 0;
+      border: none;
+
+      @media (max-width: 767px) {
+        margin-bottom: 12px;
+        gap: 10px;
+      }
     }
 
     .categories-scroll-row {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding: 2px 2px 6px;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
       &::-webkit-scrollbar { display: none; }
+
+      @media (max-width: 767px) {
+        margin: 0 -20px;
+        padding: 2px 20px 6px;
+      }
 
       .cat-pill-btn {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        background: #f7f5f2;
-        color: #333333;
-        border: 1px solid #e2ddd5;
-        padding: 8px 16px;
+        background: #ffffff;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+        padding: 7px 15px;
         border-radius: 999px;
         font-size: 13px;
         font-weight: 600;
         white-space: nowrap;
-        transition: all 0.2s;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        transition: all 0.18s ease;
+        flex-shrink: 0;
+
+        @media (max-width: 767px) {
+          padding: 6px 13px;
+          font-size: 12px;
+          gap: 5px;
+        }
 
         &:hover {
-          background: #eae5dc;
-          border-color: #111;
+          background: #f9fafb;
+          border-color: #d1d5db;
+          color: #111827;
         }
 
         &.active {
-          background: #111111;
+          background: #111827;
           color: #ffffff;
-          border-color: #111111;
+          border-color: #111827;
+          box-shadow: 0 2px 6px rgba(17, 24, 39, 0.16);
         }
       }
     }
 
     .filter-actions-row {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      border-top: 1px solid #f4f0eb;
-      padding-top: 14px;
+      gap: 12px;
+      padding: 4px 0 2px;
     }
 
-    .search-input-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #faf8f5;
-      border: 1px solid #dcd7cf;
-      border-radius: 6px;
-      padding: 7px 12px;
-      flex: 1;
-      max-width: 380px;
+    .col-results-count {
+      font-size: 13px;
+      color: #666666;
+      margin: 0;
 
-      input {
-        border: none;
-        outline: none;
-        background: transparent;
-        font-family: inherit;
-        font-size: 13.5px;
-        color: #111;
-        width: 100%;
+      @media (max-width: 767px) {
+        font-size: 12px;
       }
 
-      .clear-search-btn {
-        color: #888;
-        font-size: 12px;
-        &:hover { color: #111; }
+      strong {
+        color: #111111;
+        font-weight: 700;
       }
     }
 
     .sort-box {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-size: 13px;
       color: #666;
 
-      select {
-        border: 1px solid #dcd7cf;
-        border-radius: 6px;
-        padding: 7px 12px;
-        font-family: inherit;
-        font-size: 13px;
-        color: #111;
-        background: #faf8f5;
-        outline: none;
-        cursor: pointer;
+      @media (max-width: 767px) {
+        font-size: 12px;
+        gap: 5px;
       }
-    }
 
-    .col-results-count {
-      font-size: 13px;
-      color: #777777;
-      margin-bottom: 20px;
+      label {
+        font-size: 12.5px;
+        color: #6b7280;
+
+        @media (max-width: 767px) {
+          font-size: 11.5px;
+        }
+      }
+
+      .select-wrapper {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+
+        select {
+          appearance: none;
+          -webkit-appearance: none;
+          background: #ffffff;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          padding: 6px 28px 6px 11px;
+          font-family: inherit;
+          font-size: 12.5px;
+          font-weight: 500;
+          color: #1f2937;
+          cursor: pointer;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+          transition: border-color 0.2s;
+
+          &:focus {
+            border-color: #111827;
+            outline: none;
+          }
+
+          @media (max-width: 767px) {
+            padding: 5px 24px 5px 9px;
+            font-size: 11.5px;
+            border-radius: 6px;
+          }
+        }
+
+        .select-chevron {
+          position: absolute;
+          right: 9px;
+          pointer-events: none;
+          color: #6b7280;
+
+          @media (max-width: 767px) {
+            right: 7px;
+            width: 10px;
+            height: 10px;
+          }
+        }
+      }
     }
 
     .col-products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
+
+      @media (max-width: 480px) {
+        gap: 10px;
+      }
 
       @media (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Product } from '../../core/models/product.model';
 import { CartService } from '../../core/services/cart.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-product-card',
@@ -15,8 +16,8 @@ import { CartService } from '../../core/services/cart.service';
       <a [routerLink]="['/product', product.id]" class="pcard-img-link">
         <div class="pcard-img-wrap">
           <img [src]="product.image" [alt]="product.name" class="pcard-img primary-img" loading="lazy">
-          @if (product.secondaryImage && product.secondaryImage !== product.image) {
-            <img [src]="product.secondaryImage" [alt]="product.name" class="pcard-img hover-img" loading="lazy">
+          @if (hoverImage) {
+            <img [src]="hoverImage" [alt]="product.name" class="pcard-img hover-img">
           }
 
           <!-- Badges on image (Only bestseller and discount, no wishlist) -->
@@ -103,13 +104,14 @@ import { CartService } from '../../core/services/cart.service';
         border-radius: 14px;
       }
 
-      &:hover {
+      &:hover,
+      .pcard-img-wrap:hover {
         transform: translateY(-4px);
         border-color: #dcd4c6;
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 
-        .primary-img { transform: scale(1.04); }
-        .hover-img   { opacity: 1; }
+        .primary-img { transform: scale(1.05); }
+        .hover-img   { opacity: 1 !important; transform: scale(1.05); }
       }
     }
 
@@ -134,9 +136,17 @@ import { CartService } from '../../core/services/cart.service';
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 
-        &.hover-img { opacity: 0; }
+        &.primary-img {
+          z-index: 1;
+        }
+
+        &.hover-img {
+          z-index: 2;
+          opacity: 0;
+          pointer-events: none;
+        }
       }
     }
 
@@ -347,6 +357,18 @@ export class ProductCardComponent {
   @Input() mode: 'grid' | 'list' | 'popular' = 'grid';
 
   private cartService = inject(CartService);
+  private authService = inject(AuthService);
+
+  get hoverImage(): string | null {
+    if (this.product?.secondaryImage && this.product.secondaryImage !== this.product.image) {
+      return this.product.secondaryImage;
+    }
+    if (this.product?.images && this.product.images.length > 1) {
+      const second = this.product.images.find(img => img && img !== this.product.image);
+      if (second) return second;
+    }
+    return null;
+  }
 
   get cartQty(): number {
     return this.cartService.getQty(this.product?.id ?? '');
@@ -360,6 +382,10 @@ export class ProductCardComponent {
   onAddToCart(event: Event) {
     event.stopPropagation();
     event.preventDefault();
+    if (!this.authService.isLoggedIn()) {
+      this.cartService.openDrawer();
+      return;
+    }
     this.cartService.addToCart(this.product, 1);
     this.cartService.openDrawer();
   }

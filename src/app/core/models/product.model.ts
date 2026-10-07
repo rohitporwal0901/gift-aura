@@ -210,9 +210,10 @@ export const PRODUCTS: Product[] = [
     price: 699,
     originalPrice: 805,
     image: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-card-holder-black-leather_webp.webp?v=1779792013",
-    secondaryImage: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-card-holder-black-leather_webp.webp?v=1779792013",
+    secondaryImage: "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-premium-card-holder_webp_70cfd0c0-fc5b-47b3-b99c-967e7f9dcf6d.webp?v=1779793337",
     images: [
-      "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-card-holder-black-leather_webp.webp?v=1779792013"
+      "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-custom-card-holder-black-leather_webp.webp?v=1779792013",
+      "https://cdn.shopify.com/s/files/1/0681/7257/8864/files/graphicline-premium-card-holder_webp_70cfd0c0-fc5b-47b3-b99c-967e7f9dcf6d.webp?v=1779793337"
     ],
     category: "office-essentials",
     rating: 4.9,

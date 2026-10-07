@@ -266,16 +266,6 @@ interface ReelItem {
               <app-product-card [product]="product"></app-product-card>
             }
           </div>
-
-          <div class="view-all-row">
-            <a routerLink="/menu" class="gl-btn-primary view-all-btn">
-              <span>View All {{ allProducts().length }} Products</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-          </div>
         </div>
       </section>
 

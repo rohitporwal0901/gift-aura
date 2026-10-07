@@ -1,5 +1,6 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
+import { Injectable, signal, computed, effect, inject } from '@angular/core';
 import { CartItem, Product } from '../models/product.model';
+import { AuthService } from './auth.service';
 
 export interface AppliedCoupon {
   code: string;
@@ -9,6 +10,7 @@ export interface AppliedCoupon {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
+  private authService = inject(AuthService);
   private readonly STORAGE_ITEMS_KEY = 'cart_items_v2';
   private readonly STORAGE_COUPON_KEY = 'cart_coupon_v2';
   private readonly STORAGE_LOCATION_KEY = 'cart_loc_v2';
@@ -131,10 +133,25 @@ export class CartService {
         localStorage.setItem(this.STORAGE_LOCATION_KEY, JSON.stringify(loc));
       } catch {}
     });
+
+    // Auto-clear cart when user is logged out
+    effect(() => {
+      const loggedIn = this.authService.isLoggedIn();
+      const loading = this.authService.authLoading();
+      if (!loading && !loggedIn) {
+        if (this._items().length > 0) {
+          this.clearCart();
+        }
+      }
+    }, { allowSignalWrites: true });
   }
 
   private loadStoredItems(): CartItem[] {
     try {
+      const userRaw = localStorage.getItem('user');
+      if (!userRaw) {
+        return [];
+      }
       const data = localStorage.getItem(this.STORAGE_ITEMS_KEY);
       if (data) {
         const parsed = JSON.parse(data);
@@ -173,7 +190,12 @@ export class CartService {
     this.appliedCoupon.set(null);
   }
 
-  addToCart(product: Product, quantity: number = 1, customizations: string[] = []): void {
+  addToCart(product: Product, quantity: number = 1, customizations: string[] = []): boolean {
+    if (!this.authService.isLoggedIn()) {
+      this.openDrawer();
+      return false;
+    }
+
     const current = this._items();
     const existing = current.find(i => i.product.id === product.id);
 
@@ -191,6 +213,7 @@ export class CartService {
         totalPrice: quantity * product.price
       }]);
     }
+    return true;
   }
 
   updateQty(productId: string, quantity: number): void {
