@@ -97,10 +97,10 @@ import { AuthService } from '../../core/services/auth.service';
       box-shadow: 0 2px 8px rgba(196, 120, 106, 0.05);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       height: 100%;
-      padding: 10px;
+      padding: 8px;
 
       @media (max-width: 480px) {
-        padding: 8px;
+        padding: 6px;
         border-radius: 14px;
       }
 
@@ -201,13 +201,13 @@ import { AuthService } from '../../core/services/auth.service';
 
     /* ── Info Section ── */
     .pcard-info {
-      padding: 12px 4px 4px;
+      padding: 10px 4px 2px;
       display: flex;
       flex-direction: column;
       flex: 1;
 
       @media (max-width: 480px) {
-        padding: 10px 2px 2px;
+        padding: 8px 2px 2px;
       }
     }
 
@@ -320,7 +320,7 @@ import { AuthService } from '../../core/services/auth.service';
     /* Add to Cart Button — Metallic Rose Gold */
     .pcard-add-btn {
       width: 100%;
-      height: 38px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -328,8 +328,8 @@ import { AuthService } from '../../core/services/auth.service';
       background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
       color: #2C1A1A;
       border: none;
-      border-radius: 8px;
-      font-size: 13px;
+      border-radius: 6px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.22s ease;
@@ -354,8 +354,8 @@ import { AuthService } from '../../core/services/auth.service';
       }
 
       @media (max-width: 480px) {
-        height: 35px;
-        font-size: 12px;
+        height: 30px;
+        font-size: 11.5px;
         gap: 5px;
       }
 

@@ -1147,23 +1147,23 @@ interface ReelItem {
         }
 
         &.active {
-          background: #3D2B2B;
-          color: #F5DDD5;
-          border-color: #3D2B2B;
+          background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
+          color: #2C1A1A;
+          border-color: transparent;
           font-weight: 700;
           transform: translateY(-2px);
-          box-shadow: 0 6px 18px rgba(17, 20, 28, 0.2);
+          box-shadow: 0 6px 18px rgba(196, 120, 106, 0.3);
 
           .cat-label {
-            color: #F5DDD5;
+            color: #2C1A1A;
           }
 
           .cat-icon-wrap {
-            color: #F5DDD5;
+            color: #2C1A1A;
           }
 
           &:hover {
-            background: #5C3A36;
+            background: linear-gradient(135deg, #D4A898 0%, #A85D50 50%, #8C4A3E 100%);
             transform: translateY(-2px);
           }
         }
