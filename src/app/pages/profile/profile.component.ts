@@ -396,7 +396,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid #D4A017;
+      border: 2px solid #C4786A;
       box-shadow: 0 4px 14px rgba(212, 160, 23, 0.3);
       cursor: pointer;
       overflow: hidden;

@@ -114,40 +114,16 @@ interface ReelItem {
                   <!-- Video Background -->
                   <div class="reel-media-wrap">
                     <video [src]="reel.videoUrl" class="reel-video-bg" autoplay muted loop playsinline></video>
-                    <!-- Gradient overlays -->
-                    <div class="reel-gradient-top"></div>
-                    <div class="reel-gradient-bottom"></div>
                   </div>
 
-                  <!-- Top: Live Badge -->
-                  <div class="reel-header-bar">
-                    <div class="reel-live-indicator">
-                      <span class="live-pulse"></span>
-                      <span class="live-text">LIVE</span>
-                    </div>
-                    <div class="reel-index-num">{{ (i + 1).toString().padStart(2, '0') }}</div>
-                  </div>
-
-                  <!-- Center: Play Button -->
+                  <!-- Center: Simple Play Button -->
                   <div class="reel-center-play">
-                    <div class="play-btn-ring">
-                      <div class="play-btn-inner">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                          <polygon points="6 4 20 12 6 20 6 4"></polygon>
-                        </svg>
-                      </div>
+                    <div class="simple-play-btn">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="6 4 20 12 6 20 6 4"></polygon>
+                      </svg>
                     </div>
                   </div>
-
-                  <!-- Bottom: Info Overlay -->
-                  <div class="reel-info-overlay">
-                    <div class="reel-category-tag">{{ reel.name }}</div>
-                    <h4 class="reel-card-title">{{ reel.title }}</h4>
-                    
-                  </div>
-
-                  <!-- Hover Shine Effect -->
-                  <div class="reel-shine"></div>
                 </div>
               }
             </div>
@@ -598,7 +574,7 @@ interface ReelItem {
       overflow: hidden;
       width: 100%;
       height: clamp(500px, 80vh, 720px);
-      background: #0f1015;
+      background: #2C1A1A;
       max-width: var(--container-max);
       margin: 20px auto 16px;
       border-radius: var(--radius-xl);
@@ -712,23 +688,14 @@ interface ReelItem {
       gap: 14px;
 
       .hero-btn-main {
-        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
-        color: #111111;
         font-weight: 700;
         font-size: 15px;
-        border: none;
         padding: 13px 28px;
-        border-radius: var(--radius-full);
-        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
-        display: inline-flex;
-        align-items: center;
         gap: 10px;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 10px 28px rgba(245, 158, 11, 0.5);
-          background: linear-gradient(135deg, #f0c75e 0%, #fbbf24 100%);
+          box-shadow: 0 10px 28px rgba(168, 93, 80, 0.5);
         }
       }
 
@@ -738,7 +705,7 @@ interface ReelItem {
           font-size: 12.5px;
           font-weight: 700;
           gap: 6px;
-          box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+          box-shadow: 0 4px 12px rgba(168, 93, 80, 0.3);
         }
       }
     }
@@ -766,11 +733,11 @@ interface ReelItem {
       &.next { right: 24px; }
 
       &:hover {
-        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+        background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
         color: #111111;
-        border-color: #d4af37;
+        border-color: #C4786A;
         transform: translateY(-50%) scale(1.1);
-        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+        box-shadow: 0 4px 16px rgba(168, 93, 80, 0.4);
       }
 
       @media (max-width: 768px) {
@@ -812,9 +779,9 @@ interface ReelItem {
         }
 
         &.active {
-          background: #f59e0b;
+          background: #A85D50;
           width: 52px;
-          box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+          box-shadow: 0 0 10px rgba(168, 93, 80, 0.6);
 
           @media (max-width: 768px) {
             width: 32px;
@@ -857,9 +824,9 @@ interface ReelItem {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(212, 175, 55, 0.12);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      color: #d4af37;
+      background: rgba(196, 120, 106, 0.12);
+      border: 1px solid rgba(196, 120, 106, 0.35);
+      color: #C4786A;
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 1.5px;
@@ -872,8 +839,8 @@ interface ReelItem {
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: #d4af37;
-        box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+        background: #C4786A;
+        box-shadow: 0 0 8px rgba(196, 120, 106, 0.8);
         animation: pulse 1.8s infinite;
       }
     }
@@ -887,7 +854,7 @@ interface ReelItem {
       margin-bottom: 14px;
 
       .title-highlight {
-        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+        background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -937,11 +904,11 @@ interface ReelItem {
       z-index: 5;
 
       &:hover {
-        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
-        border-color: #d4af37;
+        background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
+        border-color: #C4786A;
         color: #111;
         transform: scale(1.1);
-        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.45);
+        box-shadow: 0 4px 20px rgba(196, 120, 106, 0.45);
       }
 
       @media (max-width: 768px) {
@@ -979,12 +946,10 @@ interface ReelItem {
       overflow: hidden;
       cursor: pointer;
       aspect-ratio: 9 / 15;
-      background: #0f1118;
+      background: #2C1A1A;
       border: 1px solid rgba(255, 255, 255, 0.08);
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      box-shadow: none;
 
       @media (min-width: 480px) {
         flex: 0 0 calc(50% - 8px);
@@ -1000,37 +965,16 @@ interface ReelItem {
 
       &:hover {
         transform: translateY(-10px) scale(1.025);
-        border-color: rgba(212, 175, 55, 0.5);
-        box-shadow:
-          0 24px 60px rgba(0, 0, 0, 0.5),
-          0 0 0 1px rgba(212, 175, 55, 0.3),
-          0 0 40px rgba(212, 175, 55, 0.12);
+        border-color: rgba(196, 120, 106, 0.5);
+        box-shadow: none;
 
         .reel-video-bg {
-          transform: scale(1.08);
+          transform: scale(1.05);
         }
 
-        .play-btn-ring {
-          transform: scale(1.12);
-          border-color: rgba(212, 175, 55, 0.9);
-          box-shadow: 0 0 0 8px rgba(212, 175, 55, 0.15);
-        }
-
-        .play-btn-inner {
-          background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
-          color: #111;
-        }
-
-        .reel-watch-cta {
-          letter-spacing: 0.5px;
-        }
-
-        .reel-shine {
-          opacity: 1;
-        }
-
-        .reel-info-overlay {
-          padding-bottom: 20px;
+        .simple-play-btn {
+          background: rgba(255, 255, 255, 0.4);
+          transform: scale(1.1);
         }
       }
     }
@@ -1049,73 +993,6 @@ interface ReelItem {
       }
     }
 
-    .reel-gradient-top {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 45%;
-      background: linear-gradient(180deg, rgba(5, 7, 12, 0.75) 0%, transparent 100%);
-      z-index: 2;
-    }
-
-    .reel-gradient-bottom {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65%;
-      background: linear-gradient(0deg, rgba(5, 7, 12, 0.98) 0%, rgba(5, 7, 12, 0.6) 50%, transparent 100%);
-      z-index: 2;
-    }
-
-    /* Top Header Bar */
-    .reel-header-bar {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      right: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 5;
-    }
-
-    .reel-live-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(10, 12, 18, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      border-radius: 100px;
-      padding: 4px 10px 4px 8px;
-
-      .live-pulse {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: #ef4444;
-        box-shadow: 0 0 10px #ef4444;
-        animation: liveGlow 1.5s ease-in-out infinite alternate;
-      }
-
-      .live-text {
-        font-size: 10px;
-        font-weight: 900;
-        letter-spacing: 1px;
-        color: #ff6b6b;
-        text-transform: uppercase;
-      }
-    }
-
-    .reel-index-num {
-      font-size: 11px;
-      font-weight: 800;
-      color: rgba(255, 255, 255, 0.4);
-      letter-spacing: 0.5px;
-    }
-
     /* Center Play Button */
     .reel-center-play {
       position: absolute;
@@ -1127,106 +1004,19 @@ interface ReelItem {
       pointer-events: none;
     }
 
-    .play-btn-ring {
-      width: 54px;
-      height: 54px;
+    .simple-play-btn {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(4px);
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .play-btn-inner {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #111111;
-      padding-left: 2px;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-    }
-
-    /* Bottom Info Overlay */
-    .reel-info-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 0 14px 16px;
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      transition: padding-bottom 0.3s ease;
-    }
-
-    .reel-category-tag {
-      font-size: 10.5px;
-      font-weight: 700;
-      color: #fbbf24;
-      letter-spacing: 0.3px;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
-    }
-
-    .reel-card-title {
-      font-size: 13.5px;
-      font-weight: 700;
       color: #ffffff;
-      margin: 0;
-      line-height: 1.3;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .reel-cta-row {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 2px;
-      color: rgba(255, 255, 255, 0.65);
-
-      svg {
-        transition: transform 0.25s ease;
-      }
-
-      .reel-watch-cta {
-        font-size: 11.5px;
-        font-weight: 600;
-        letter-spacing: 0;
-        transition: letter-spacing 0.3s ease;
-      }
-    }
-
-    .reel-card-v2:hover .reel-cta-row svg {
-      transform: translateX(4px);
-    }
-
-    /* Shine Hover Effect */
-    .reel-shine {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(212, 175, 55, 0.06) 0%,
-        transparent 50%,
-        rgba(212, 175, 55, 0.03) 100%
-      );
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 3;
-      pointer-events: none;
+      padding-left: 2px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     /* Progress Dots */
@@ -1249,8 +1039,8 @@ interface ReelItem {
         &.active {
           width: 24px;
           border-radius: 3px;
-          background: linear-gradient(90deg, #d4af37, #f59e0b);
-          box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+          background: linear-gradient(90deg, #C4786A, #A85D50);
+          box-shadow: 0 0 8px rgba(196, 120, 106, 0.6);
         }
       }
     }
@@ -1345,35 +1135,35 @@ interface ReelItem {
 
         &:hover {
           background: #ffffff;
-          border-color: #d4af37;
+          border-color: #C4786A;
           color: #111111;
           transform: translateY(-2px);
           box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
 
           .cat-icon-wrap {
             transform: scale(1.08);
-            color: #d4af37;
+            color: #C4786A;
           }
         }
 
         &.active {
-          background: #11141c;
-          color: #fbbf24;
-          border-color: #11141c;
+          background: #3D2B2B;
+          color: #F5DDD5;
+          border-color: #3D2B2B;
           font-weight: 700;
           transform: translateY(-2px);
           box-shadow: 0 6px 18px rgba(17, 20, 28, 0.2);
 
           .cat-label {
-            color: #fbbf24;
+            color: #F5DDD5;
           }
 
           .cat-icon-wrap {
-            color: #fbbf24;
+            color: #F5DDD5;
           }
 
           &:hover {
-            background: #1a1e29;
+            background: #5C3A36;
             transform: translateY(-2px);
           }
         }
@@ -1406,9 +1196,9 @@ interface ReelItem {
       }
 
       .view-all-btn {
-        background: linear-gradient(135deg, #11141c 0%, #1e2230 100%);
+        background: linear-gradient(135deg, #3D2B2B 0%, #5C3A36 100%);
         color: #ffffff;
-        border: 1px solid rgba(245, 158, 11, 0.3);
+        border: 1px solid rgba(168, 93, 80, 0.3);
         padding: 15px 36px;
         border-radius: var(--radius-full);
         font-size: 15px;
@@ -1420,11 +1210,11 @@ interface ReelItem {
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 
         &:hover {
-          background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
+          background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
           color: #111111;
-          border-color: #d4af37;
+          border-color: #C4786A;
           transform: translateY(-2px);
-          box-shadow: 0 10px 28px rgba(245, 158, 11, 0.35);
+          box-shadow: 0 10px 28px rgba(168, 93, 80, 0.35);
         }
       }
     }
@@ -1729,7 +1519,7 @@ interface ReelItem {
         &.active {
           width: 18px;
           border-radius: 10px;
-          background: #1b213b;
+          background: #C4786A;
         }
       }
     }
@@ -1763,7 +1553,7 @@ interface ReelItem {
         display: inline-block;
         width: 32px;
         height: 1px;
-        background: #d4a359;
+        background: #D96B5A;
       }
 
       .rev-eyebrow {
@@ -1825,9 +1615,9 @@ interface ReelItem {
         }
 
         &:hover {
-          background: #11141c;
-          color: #fbbf24;
-          border-color: #11141c;
+          background: #3D2B2B;
+          color: #F5DDD5;
+          border-color: #3D2B2B;
           transform: translateY(-50%) scale(1.08);
           box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
@@ -1904,7 +1694,7 @@ interface ReelItem {
       &:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 24px rgba(184, 138, 68, 0.12);
-        border-color: #d4a359;
+        border-color: #D96B5A;
       }
 
       .rev-quote-badge {
@@ -1954,8 +1744,8 @@ interface ReelItem {
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        background: #11141c;
-        color: #fbbf24;
+        background: #3D2B2B;
+        color: #F5DDD5;
         font-weight: 700;
         font-size: 15px;
         display: flex;
@@ -2011,7 +1801,7 @@ interface ReelItem {
       border-radius: 50%;
       background: #ffffff;
       border: 1px solid #ebdcc5;
-      color: #11141c;
+      color: #3D2B2B;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2020,9 +1810,9 @@ interface ReelItem {
       transition: all 0.25s ease;
 
       &:hover {
-        background: #11141c;
-        color: #fbbf24;
-        border-color: #11141c;
+        background: #3D2B2B;
+        color: #F5DDD5;
+        border-color: #3D2B2B;
       }
 
       &.mobile-only {
@@ -2390,7 +2180,7 @@ interface ReelItem {
     .ir-reel-tag {
       font-size: 13px;
       font-weight: 600;
-      color: #fbbf24;
+      color: #F5DDD5;
       margin: 0;
       text-shadow: 0 1px 6px rgba(0,0,0,0.6);
     }
@@ -2446,9 +2236,9 @@ interface ReelItem {
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
       &:hover:not(:disabled) {
-        background: rgba(212, 175, 55, 0.4);
-        border-color: rgba(212, 175, 55, 0.6);
-        color: #fbbf24;
+        background: rgba(196, 120, 106, 0.4);
+        border-color: rgba(196, 120, 106, 0.6);
+        color: #F5DDD5;
         transform: scale(1.1);
       }
 
@@ -2547,7 +2337,7 @@ interface ReelItem {
         font-size: 13px;
         color: #444;
         margin-bottom: 12px;
-        .star { color: #f59e0b; }
+        .star { color: #A85D50; }
         .revs { color: #888; margin-left: 4px; }
       }
 

@@ -223,7 +223,7 @@ import { Product } from '../../core/models/product.model';
         position: absolute;
         top: 14px;
         left: 14px;
-        background: #111111;
+        background: #3D2B2B;
         color: #ffffff;
         font-size: 11px;
         font-weight: 800;
@@ -256,7 +256,7 @@ import { Product } from '../../core/models/product.model';
         }
 
         &.active {
-          border-color: #111111;
+          border-color: #C4786A;
         }
       }
     }
@@ -284,7 +284,7 @@ import { Product } from '../../core/models/product.model';
     .prod-title {
       font-size: clamp(22px, 3vw, 32px);
       font-weight: 900;
-      color: #111111;
+      color: #2C1A1A;
       letter-spacing: -0.02em;
       line-height: 1.25;
       margin-bottom: 12px;
@@ -321,7 +321,7 @@ import { Product } from '../../core/models/product.model';
       .price-val {
         font-size: 28px;
         font-weight: 900;
-        color: #111111;
+        color: #2C1A1A;
       }
 
       .orig-val {
@@ -331,7 +331,7 @@ import { Product } from '../../core/models/product.model';
       }
 
       .save-chip {
-        background: #e84e4e;
+        background: #D96B5A;
         color: #ffffff;
         font-size: 11px;
         font-weight: 800;

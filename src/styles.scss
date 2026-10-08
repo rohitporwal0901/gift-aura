@@ -1,37 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
-/* =================== GRAPHIC LINE DESIGN TOKENS =================== */
+/* =================== BLUSH ROSE GOLD DESIGN TOKENS =================== */
 :root {
   --font-family: 'Geist', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-heading: 'Geist', 'Outfit', sans-serif;
 
-  --color-bg-canvas: #fafafa;
-  --color-bg-surface: #ffffff;
-  --color-bg-card: #ffffff;
-  --color-bg-secondary: #f4f6f8;
-  --color-bg-muted: #e9ecef;
-  
-  --color-footer-bg: #1c1e26; /* Dark Navy / Black from image */
-  --color-footer-text: #f0f0f0;
+  --color-bg-canvas: #FDF6F0;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-bg-secondary: #FBF0EC;
+  --color-bg-muted: #F5E6E0;
 
-  --color-text-main: #333333;
-  --color-text-heading: #111111;
-  --color-text-muted: #666666;
-  --color-text-subtle: #999999;
+  --color-footer-bg: #3D2B2B; /* Deep rose-brown footer */
+  --color-footer-text: #f0e8e5;
 
-  --color-primary: #1b213b; /* Dark Navy Blue used in banners and headers */
-  --color-primary-hover: #121629;
-  --color-accent: #ffc107; /* Bright Yellow/Gold used for main buttons */
-  --color-accent-hover: #ffb300;
-  --color-accent-light: #ffe082;
-  
-  --color-sale: #e84e4e;
+  --color-text-main: #3D2B2B;
+  --color-text-heading: #2C1A1A;
+  --color-text-muted: #7A5C58;
+  --color-text-subtle: #A8847E;
+
+  --color-primary: #C4786A; /* Rose Gold — main CTA */
+  --color-primary-hover: #A85D50;
+  --color-accent: #E8A898; /* Soft Blush accent */
+  --color-accent-hover: #D4876F;
+  --color-accent-light: #FAD5CA;
+
+  --color-sale: #D96B5A; /* Muted rose-red */
   --color-success: #28a745;
   --color-whatsapp: #25D366;
 
-  --color-border: #e2e8f0;
-  --color-border-light: #f1f5f9;
-  --color-border-dark: #334155;
+  --color-border: #EDD5CA;
+  --color-border-light: #FAF0EC;
+  --color-border-dark: #7A5C58;
 
   --radius-xs: 4px;
   --radius-sm: 8px;
@@ -40,10 +40,10 @@
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.08);
-  --shadow-float: 0 20px 40px rgba(27, 33, 59, 0.12);
+  --shadow-sm: 0 2px 8px rgba(196, 120, 106, 0.06);
+  --shadow-md: 0 4px 12px rgba(196, 120, 106, 0.08);
+  --shadow-lg: 0 12px 24px rgba(196, 120, 106, 0.12);
+  --shadow-float: 0 20px 40px rgba(196, 120, 106, 0.16);
 
   --container-max: 1280px;
   --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -120,23 +120,43 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--color-primary);
-  color: #ffffff;
+  background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
+  color: #2C1A1A;
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
   padding: 12px 28px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--color-primary);
+  border: none;
   cursor: pointer;
   transition: var(--transition-fast);
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(196, 120, 106, 0.25);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-20deg);
+    animation: gl-shimmer 2.5s infinite;
+  }
 
   &:hover {
-    background: var(--color-primary-hover);
+    background: linear-gradient(135deg, #D4A898 0%, #A85D50 50%, #8C4A3E 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(27, 33, 59, 0.2);
+    box-shadow: 0 6px 16px rgba(196, 120, 106, 0.4);
   }
 
   &:active {
@@ -149,10 +169,10 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--color-accent);
-  color: #111111;
+  background: linear-gradient(135deg, #F5DDD5 0%, #D4A898 50%, #C4786A 100%);
+  color: #2C1A1A;
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
   padding: 12px 28px;
@@ -161,16 +181,42 @@ button {
   cursor: pointer;
   transition: var(--transition-fast);
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(196, 120, 106, 0.2);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-20deg);
+    animation: gl-shimmer 2.5s infinite;
+  }
 
   &:hover {
-    background: var(--color-accent-hover);
+    background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(255, 193, 7, 0.3);
+    box-shadow: 0 6px 16px rgba(196, 120, 106, 0.35);
   }
 
   &:active {
     transform: translateY(0);
   }
+}
+
+@keyframes gl-shimmer {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
 }
 
 .gl-btn-outline {
@@ -215,7 +261,7 @@ button {
 }
 
 .gl-badge-hot {
-  background: #111111;
+  background: #3D2B2B;
   color: #ffffff;
 }
 
@@ -225,7 +271,7 @@ button {
 }
 
 .gl-badge-pill {
-  background: rgba(27, 33, 59, 0.08);
+  background: rgba(196, 120, 106, 0.1);
   color: var(--color-primary);
   font-size: 11px;
   font-weight: 700;
@@ -293,11 +339,11 @@ button {
   background: var(--color-bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #D4A898;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #C4786A;
 }
 
 /* =================== KEYFRAME ANIMATIONS =================== */

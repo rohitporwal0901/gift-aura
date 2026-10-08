@@ -477,7 +477,7 @@ import { environment } from '../../../environments/environment';
     }
 
     .step.active .step-dot {
-      background: #0F172A;
+      background: #C4786A;
       color: #FFFFFF;
     }
 
@@ -542,7 +542,7 @@ import { environment } from '../../../environments/environment';
     .step-icon-box {
       width: 26px;
       height: 26px;
-      background: #0F172A;
+      background: #C4786A;
       border-radius: 7px;
       display: flex;
       align-items: center;
@@ -600,7 +600,7 @@ import { environment } from '../../../environments/environment';
       box-sizing: border-box;
 
       &:focus {
-        border-color: #0F172A;
+        border-color: #C4786A;
         background: #FFFFFF;
         box-shadow: 0 0 0 2.5px rgba(15,23,42,0.08);
       }
@@ -685,7 +685,7 @@ import { environment } from '../../../environments/environment';
       position: relative;
 
       &.selected {
-        border-color: #0F172A;
+        border-color: #C4786A;
         background: #F8FAFC;
       }
 
@@ -706,7 +706,7 @@ import { environment } from '../../../environments/environment';
       transition: all 0.15s;
 
       &.active {
-        border: 6px solid #0F172A;
+        border: 6px solid #C4786A;
       }
     }
 
@@ -747,7 +747,7 @@ import { environment } from '../../../environments/environment';
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: #0F172A;
+      background: #C4786A;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -840,7 +840,7 @@ import { environment } from '../../../environments/environment';
     }
 
     .btn-browse {
-      background: #0F172A;
+      background: #C4786A;
       color: #fff;
       border: none;
       border-radius: 10px;
@@ -876,13 +876,13 @@ import { environment } from '../../../environments/environment';
     }
 
     .btn-continue {
-      background: #0F172A;
+      background: #C4786A;
       color: #FFFFFF;
       &:hover { background: #1E293B; }
     }
 
     .btn-place {
-      background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%);
+      background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
       color: #FFFFFF;
       box-shadow: 0 4px 16px rgba(15,23,42,0.25);
       &:disabled { opacity: 0.65; cursor: not-allowed; }
@@ -1084,7 +1084,7 @@ export class CheckoutComponent {
             contact: orderPayload.customerPhone,
             email: orderPayload.customerEmail || 'customer@giftaura.com'
           },
-          theme: { color: '#0F172A' },
+          theme: { color: '#C4786A' },
           handler: async (response: any) => {
             await finalizeOrder(response.razorpay_payment_id || ('RZP_' + Date.now()));
           },

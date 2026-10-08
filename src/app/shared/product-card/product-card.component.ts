@@ -93,8 +93,8 @@ import { AuthService } from '../../core/services/auth.service';
       overflow: hidden;
       position: relative;
       background: #ffffff;
-      border: 1px solid #ebe5dc;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      border: 1px solid #EDD5CA;
+      box-shadow: 0 2px 8px rgba(196, 120, 106, 0.05);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       height: 100%;
       padding: 10px;
@@ -107,8 +107,8 @@ import { AuthService } from '../../core/services/auth.service';
       &:hover,
       .pcard-img-wrap:hover {
         transform: translateY(-4px);
-        border-color: #dcd4c6;
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+        border-color: #C4A09A;
+        box-shadow: 0 12px 28px rgba(196, 120, 106, 0.12);
 
         .primary-img { transform: scale(1.05); }
         .hover-img   { opacity: 1 !important; transform: scale(1.05); }
@@ -127,7 +127,7 @@ import { AuthService } from '../../core/services/auth.service';
       width: 100%;
       aspect-ratio: 1 / 1;
       border-radius: 12px;
-      background: #fbf9f5;
+      background: #FBF0EC;
       overflow: hidden;
 
       .pcard-img {
@@ -167,8 +167,8 @@ import { AuthService } from '../../core/services/auth.service';
     .badge-best {
       display: inline-flex;
       align-items: center;
-      background: #11141c;
-      color: #fbbf24;
+      background: #3D2B2B;
+      color: #E8A898;
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.3px;
@@ -184,7 +184,7 @@ import { AuthService } from '../../core/services/auth.service';
     .badge-off {
       display: inline-flex;
       align-items: center;
-      background: #11141c;
+      background: #C4786A;
       color: #ffffff;
       font-size: 10px;
       font-weight: 700;
@@ -261,7 +261,7 @@ import { AuthService } from '../../core/services/auth.service';
       }
 
       &:hover {
-        color: #b88a44;
+        color: #C4786A;
       }
     }
 
@@ -298,7 +298,7 @@ import { AuthService } from '../../core/services/auth.service';
       .price-now {
         font-size: 16.5px;
         font-weight: 700;
-        color: #b88a44;
+        color: #C4786A;
         letter-spacing: -0.01em;
 
         @media (max-width: 480px) {
@@ -317,7 +317,7 @@ import { AuthService } from '../../core/services/auth.service';
       }
     }
 
-    /* Add to Cart Button (Full-width, elegant camel/bronze) */
+    /* Add to Cart Button — Metallic Rose Gold */
     .pcard-add-btn {
       width: 100%;
       height: 38px;
@@ -325,14 +325,33 @@ import { AuthService } from '../../core/services/auth.service';
       align-items: center;
       justify-content: center;
       gap: 7px;
-      background: #bfa054;
-      color: #ffffff;
+      background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
+      color: #2C1A1A;
       border: none;
       border-radius: 8px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.22s ease;
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.4) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        transform: skewX(-20deg);
+        animation: gl-shimmer 2.5s infinite;
+      }
 
       @media (max-width: 480px) {
         height: 35px;
@@ -341,9 +360,9 @@ import { AuthService } from '../../core/services/auth.service';
       }
 
       &:hover {
-        background: #ab8a3e;
+        background: linear-gradient(135deg, #D4A898 0%, #A85D50 50%, #8C4A3E 100%);
         transform: translateY(-1px);
-        box-shadow: 0 4px 14px rgba(184, 138, 68, 0.35);
+        box-shadow: 0 4px 14px rgba(196, 120, 106, 0.35);
       }
 
       &:active {

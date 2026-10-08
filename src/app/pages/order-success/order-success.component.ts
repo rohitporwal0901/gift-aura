@@ -383,8 +383,8 @@ export interface GiftParticle {
       }
 
       &:hover {
-        background: #0F172A;
-        border-color: #0F172A;
+        background: #C4786A;
+        border-color: #C4786A;
         color: #FFFFFF;
         box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
 
@@ -853,7 +853,7 @@ export interface GiftParticle {
     }
 
     .action-btn-primary {
-      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
       color: #FFFFFF;
       border: none;
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);

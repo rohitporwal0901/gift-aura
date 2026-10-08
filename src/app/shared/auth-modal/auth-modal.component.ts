@@ -51,19 +51,19 @@ type AuthStep = 'phone' | 'pin' | 'register';
             <div class="brand-logo-frame">
               <svg viewBox="0 0 170 48" fill="none" xmlns="http://www.w3.org/2000/svg" height="42" width="auto">
                 <g transform="translate(0, 3)">
-                  <path d="M16 7 Q20 3 24 7" stroke="#D4A017" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                  <path d="M24 7 Q28 3 32 7" stroke="#D4A017" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                  <circle cx="24" cy="7" r="2" fill="#D4A017"/>
-                  <rect x="11" y="8" width="26" height="6" rx="1.5" fill="#D4A017"/>
-                  <rect x="23" y="8" width="2.8" height="6" fill="#B8860B"/>
-                  <rect x="12" y="15" width="24" height="17" rx="2" fill="#111111"/>
-                  <rect x="23" y="15" width="2.8" height="17" fill="#D4A017"/>
-                  <circle cx="8" cy="6" r="1.2" fill="#D4A017" opacity="0.8"/>
-                  <circle cx="40" cy="4" r="1.1" fill="#D4A017" opacity="0.7"/>
+                  <path d="M16 7 Q20 3 24 7" stroke="#C4786A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                  <path d="M24 7 Q28 3 32 7" stroke="#C4786A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                  <circle cx="24" cy="7" r="2" fill="#C4786A"/>
+                  <rect x="11" y="8" width="26" height="6" rx="1.5" fill="#C4786A"/>
+                  <rect x="23" y="8" width="2.8" height="6" fill="#A85D50"/>
+                  <rect x="12" y="15" width="24" height="17" rx="2" fill="#3D2B2B"/>
+                  <rect x="23" y="15" width="2.8" height="17" fill="#C4786A"/>
+                  <circle cx="8" cy="6" r="1.2" fill="#C4786A" opacity="0.8"/>
+                  <circle cx="40" cy="4" r="1.1" fill="#C4786A" opacity="0.7"/>
                 </g>
-                <text x="44" y="29" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="22" fill="#111111" letter-spacing="-0.5">GIFT</text>
-                <text x="94" y="29" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="22" fill="#D4A017" letter-spacing="-0.5">AURA</text>
-                <text x="44" y="41" font-family="'Outfit', Arial, sans-serif" font-weight="700" font-size="6.8" fill="#888888" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
+                <text x="44" y="29" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="22" fill="#2C1A1A" letter-spacing="-0.5">GIFT</text>
+                <text x="94" y="29" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="22" fill="#C4786A" letter-spacing="-0.5">AURA</text>
+                <text x="44" y="41" font-family="'Outfit', Arial, sans-serif" font-weight="700" font-size="6.8" fill="#A8847E" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
               </svg>
             </div>
           </div>
@@ -639,13 +639,13 @@ type AuthStep = 'phone' | 'pin' | 'register';
       box-sizing: border-box;
 
       &.has-focus {
-        border-color: #D4A017;
+        border-color: #C4786A;
         background: #FFFFFF;
         box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.16);
       }
 
       &.is-valid {
-        border-color: #D4A017;
+        border-color: #C4786A;
       }
     }
 
@@ -890,14 +890,14 @@ type AuthStep = 'phone' | 'pin' | 'register';
       font-family: inherit;
 
       &:focus {
-        border-color: #D4A017;
+        border-color: #C4786A;
         background: #FFFFFF;
         box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.18);
         transform: scale(1.05);
       }
 
       &.filled {
-        border-color: #D4A017;
+        border-color: #C4786A;
         background: #FFFDF5;
       }
     }
@@ -976,7 +976,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
       transition: all 0.2s ease;
 
       &:focus-within {
-        border-color: #D4A017;
+        border-color: #C4786A;
         background: #FFFFFF;
         box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
       }

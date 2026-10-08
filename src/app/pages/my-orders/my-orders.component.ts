@@ -247,9 +247,9 @@ import { AdminOrder } from '../../core/models/admin.model';
       font-family: inherit;
     }
     .of-pill.active {
-      background: #0F172A;
+      background: #C4786A;
       color: #fff;
-      border-color: #0F172A;
+      border-color: #C4786A;
       box-shadow: 0 2px 8px rgba(15,23,42,0.25);
     }
 
@@ -387,7 +387,7 @@ import { AdminOrder } from '../../core/models/admin.model';
     .veg-symbol {
       width: 13px;
       height: 13px;
-      border: 1.5px solid #0F172A;
+      border: 1.5px solid #C4786A;
       border-radius: 3px;
       display: flex;
       align-items: center;
@@ -398,7 +398,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       width: 5.5px;
       height: 5.5px;
       border-radius: 50%;
-      background: #0F172A;
+      background: #C4786A;
     }
     .soc-item-name {
       font-size: 12.5px;
@@ -465,7 +465,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       gap: 8px;
     }
     .soc-track-btn {
-      background: linear-gradient(135deg, #0F172A, #1E293B);
+      background: linear-gradient(135deg, #C4786A, #A85D50);
       color: #fff;
       font-size: 12px;
       font-weight: 700;
@@ -529,7 +529,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       p { font-size: 13px; color: #666; margin-bottom: 18px; }
       .browse-menu-btn {
         display: inline-block;
-        background: #0F172A;
+        background: #C4786A;
         color: #fff;
         padding: 10px 22px;
         border-radius: 10px;

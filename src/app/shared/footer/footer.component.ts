@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
           <div class="footer-col brand-col">
             <div class="footer-logo">
               <span class="logo-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fbbc04" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C4786A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
               </span>
               <strong>GIFT AURA</strong>
             </div>
@@ -103,8 +103,8 @@ import { FormsModule } from '@angular/forms';
   `,
   styles: [`
     .gl-footer {
-      background-color: #171d2c;
-      color: #b5c0d0;
+      background-color: #3D2B2B;
+      color: #C9A8A0;
       padding: 60px 0 30px;
       font-size: 13.5px;
 
@@ -137,7 +137,7 @@ import { FormsModule } from '@angular/forms';
     .footer-title {
       font-size: 14.5px;
       font-weight: 700;
-      color: #ffffff;
+      color: #F5DDD5;
       margin-bottom: 20px;
     }
 
@@ -155,18 +155,18 @@ import { FormsModule } from '@angular/forms';
 
       strong {
         font-size: 20px;
-        color: #ffffff;
+        color: #F5DDD5;
       }
       span {
         font-size: 11px;
-        color: #b5c0d0;
+        color: #C9A8A0;
         max-width: 80px;
         line-height: 1.2;
       }
     }
 
     .brand-desc {
-      color: #b5c0d0;
+      color: #C9A8A0;
       line-height: 1.6;
       margin-bottom: 20px;
     }
@@ -179,8 +179,8 @@ import { FormsModule } from '@angular/forms';
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background: #2b3548;
-        color: #b5c0d0;
+        background: #5C3A36;
+        color: #C9A8A0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -190,7 +190,7 @@ import { FormsModule } from '@angular/forms';
 
         &:hover {
           background: var(--color-accent);
-          color: #111111;
+          color: #3D2B2B;
         }
       }
     }
@@ -202,20 +202,20 @@ import { FormsModule } from '@angular/forms';
       gap: 10px;
 
       li a {
-        color: #cccccc;
+        color: #C9A8A0;
         font-size: 14px;
         transition: all 0.2s;
         display: inline-block;
 
         &:hover {
-          color: #ffffff;
+          color: #F5DDD5;
           transform: translateX(4px);
         }
       }
     }
 
     .newsletter-desc {
-      color: #b5b5b5;
+      color: #C9A8A0;
       font-size: 13.5px;
       line-height: 1.5;
       margin-bottom: 16px;
@@ -246,8 +246,8 @@ import { FormsModule } from '@angular/forms';
       }
 
       .nl-btn {
-        background: #fbbc04;
-        color: #111111;
+        background: #C4786A;
+        color: #ffffff;
         font-weight: 800;
         padding: 0 16px;
         display: flex;
@@ -258,7 +258,7 @@ import { FormsModule } from '@angular/forms';
         cursor: pointer;
 
         &:hover {
-          background: #e6ab03;
+          background: #A85D50;
         }
       }
     }
@@ -306,7 +306,7 @@ import { FormsModule } from '@angular/forms';
 
     .footer-divider {
       height: 1px;
-      background: #404040;
+      background: #5C3A36;
       margin: 40px 0 24px;
     }
 
@@ -324,7 +324,7 @@ import { FormsModule } from '@angular/forms';
       }
 
       strong {
-        color: #ffffff;
+        color: #F5DDD5;
       }
     }
 
@@ -334,14 +334,14 @@ import { FormsModule } from '@angular/forms';
       gap: 8px;
 
       .pay-badge {
-        background: #383838;
-        color: #e0e0e0;
+        background: #5C3A36;
+        color: #E8C8C0;
         font-size: 10px;
         font-weight: 700;
         letter-spacing: 0.5px;
         padding: 4px 8px;
         border-radius: 4px;
-        border: 1px solid #4a4a4a;
+        border: 1px solid #7A4C44;
       }
     }
   `]
