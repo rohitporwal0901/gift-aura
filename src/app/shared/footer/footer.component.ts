@@ -249,19 +249,19 @@ import { FormsModule } from '@angular/forms';
       }
 
       .nl-btn {
-        background: var(--brass);
+        background: linear-gradient(135deg, #0266A8 0%, #024A7B 100%);
         color: #ffffff;
         font-weight: 800;
         padding: 0 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.2s;
+        transition: all 0.2s;
         border: none;
         cursor: pointer;
 
         &:hover {
-          background: var(--color-accent-hover);
+          background: linear-gradient(135deg, #025B96 0%, #0B2A44 100%);
         }
       }
     }

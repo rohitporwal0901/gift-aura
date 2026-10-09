@@ -251,7 +251,7 @@ import { ConfettiService } from '../../core/services/confetti.service';
       .empty-icon { font-size: 72px; }
       h3 { font-size: 20px; font-weight: 700; color: var(--navy-deep); }
       p { color: var(--muted); font-size: 14px; }
-      .btn-primary { margin-top: 8px; padding: 14px 36px; background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%); color: #fff; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-block; box-shadow: 0 4px 14px rgba(169, 124, 67, 0.3); }
+      .btn-primary { margin-top: 8px; padding: 14px 36px; background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%); color: #fff; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-block; box-shadow: 0 4px 14px rgba(2, 74, 123, 0.32); }
     }
 
     /* CART ITEMS */
@@ -594,7 +594,7 @@ import { ConfettiService } from '../../core/services/confetti.service';
       max-width: 480px;
       margin: 0 auto;
       display: block;
-      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
       color: #fff;
       border: none;
       border-radius: 14px;
@@ -604,8 +604,8 @@ import { ConfettiService } from '../../core/services/confetti.service';
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
-      box-shadow: 0 6px 20px rgba(169, 124, 67, 0.35);
-      &:hover { background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%); transform: translateY(-2px); }
+      box-shadow: 0 6px 20px rgba(2, 74, 123, 0.35);
+      &:hover { background: linear-gradient(135deg, #025B96 0%, #0B2A44 100%); transform: translateY(-2px); }
     }
 
     @keyframes fadeInUp {

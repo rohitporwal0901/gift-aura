@@ -250,12 +250,12 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+  background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 20px rgba(169, 124, 67, 0.3);
+  box-shadow: 0 10px 20px rgba(2, 74, 123, 0.32);
   cursor: pointer;
   
   &:active {
@@ -494,14 +494,14 @@
 .primary-btn {
   width: 100%;
   height: 56px;
-  background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+  background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
   color: #fff;
   border: none;
   border-radius: 16px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 10px 20px rgba(169, 124, 67, 0.28);
+  box-shadow: 0 10px 20px rgba(2, 74, 123, 0.32);
   transition: 0.2s;
   display: flex;
   align-items: center;

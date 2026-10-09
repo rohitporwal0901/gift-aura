@@ -849,7 +849,7 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
       }
 
       .promo-apply-action-btn {
-        background: var(--brass);
+        background: var(--navy);
         color: #FFFFFF;
         border: none;
         border-radius: 6px;
@@ -860,7 +860,7 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
         transition: all 0.15s;
 
         &:hover:not([disabled]) {
-          background: var(--color-accent-hover);
+          background: var(--navy-deep);
         }
 
         &[disabled] {
@@ -965,7 +965,7 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
     /* CHECKOUT SUBMIT BUTTON */
     .checkout-submit-btn {
       width: 100%;
-      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
       color: #FFFFFF;
       border: none;
       border-radius: 10px;
@@ -977,7 +977,7 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
       justify-content: center;
       gap: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(169, 124, 67, 0.28);
+      box-shadow: 0 4px 14px rgba(2, 74, 123, 0.32);
       transition: all 0.2s ease;
 
       svg {
@@ -985,9 +985,9 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
       }
 
       &:hover {
-        background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%);
+        background: linear-gradient(135deg, #025B96 0%, #0B2A44 100%);
         transform: translateY(-1px);
-        box-shadow: 0 6px 18px rgba(169, 124, 67, 0.38);
+        box-shadow: 0 6px 18px rgba(2, 74, 123, 0.45);
 
         svg {
           transform: translateX(3px);

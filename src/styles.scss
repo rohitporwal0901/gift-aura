@@ -9,8 +9,8 @@
   --ink: #0F1E2C;
   --ink-2: #34414E;
   --muted: #6A7480;
-  --line: rgba(15, 30, 44, 0.12);
-  --line-2: rgba(15, 30, 44, 0.2);
+  --line: rgba(15, 30, 44, 0.08);
+  --line-2: rgba(15, 30, 44, 0.16);
 
   --navy: #024A7B;
   --navy-deep: #0B2A44;
@@ -96,7 +96,9 @@
 }
 
 /* =================== GLOBAL RESET =================== */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -122,7 +124,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   color: var(--color-text-heading);
@@ -165,7 +172,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+  background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
   color: #FFFFFF;
   font-family: var(--font-heading);
   font-weight: 700;
@@ -179,7 +186,7 @@ button {
   white-space: nowrap;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 14px rgba(169, 124, 67, 0.28);
+  box-shadow: 0 4px 14px rgba(2, 74, 123, 0.32);
 
   &::after {
     content: '';
@@ -188,20 +195,18 @@ button {
     left: -100%;
     width: 50%;
     height: 100%;
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%);
     transform: skewX(-20deg);
     animation: gl-shimmer 2.5s infinite;
   }
 
   &:hover {
-    background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%);
+    background: linear-gradient(135deg, #025B96 0%, #0B2A44 50%, #081F33 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(169, 124, 67, 0.38);
+    box-shadow: 0 6px 18px rgba(2, 74, 123, 0.45);
   }
 
   &:active {
@@ -237,12 +242,10 @@ button {
     left: -100%;
     width: 50%;
     height: 100%;
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%);
     transform: skewX(-20deg);
     animation: gl-shimmer 2.5s infinite;
   }
@@ -259,9 +262,17 @@ button {
 }
 
 @keyframes gl-shimmer {
-  0% { left: -100%; }
-  20% { left: 200%; }
-  100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+
+  20% {
+    left: 200%;
+  }
+
+  100% {
+    left: 200%;
+  }
 }
 
 .gl-btn-outline {
@@ -270,19 +281,19 @@ button {
   justify-content: center;
   gap: 8px;
   background: transparent;
-  color: var(--brass);
+  color: var(--navy);
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 14px;
   padding: 12px 28px;
   border-radius: var(--radius-full);
-  border: 1.5px solid var(--brass);
+  border: 1.5px solid var(--navy);
   cursor: pointer;
   transition: var(--transition-fast);
   white-space: nowrap;
 
   &:hover {
-    background: var(--brass);
+    background: var(--navy);
     color: #ffffff;
     transform: translateY(-2px);
   }
@@ -380,36 +391,63 @@ button {
   width: 7px;
   height: 7px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--color-bg-canvas);
 }
+
 ::-webkit-scrollbar-thumb {
   background: #D2AE72;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #A97C43;
 }
 
 /* =================== KEYFRAME ANIMATIONS =================== */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideLeft {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-  50% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+  }
 }
 
 .animate-fade-in {
@@ -449,4 +487,3 @@ body.drawer-open {
   touch-action: pan-y !important;
   -webkit-overflow-scrolling: touch;
 }
-

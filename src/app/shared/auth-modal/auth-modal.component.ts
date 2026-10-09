@@ -750,7 +750,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
     .primary-submit-btn {
       width: 100%;
       height: 50px;
-      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
       color: #FFFFFF;
       border: none;
       border-radius: 14px;
@@ -762,7 +762,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 6px 18px rgba(169, 124, 67, 0.32);
+      box-shadow: 0 6px 18px rgba(2, 74, 123, 0.32);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
       .btn-arrow {
@@ -770,8 +770,8 @@ type AuthStep = 'phone' | 'pin' | 'register';
       }
 
       &:hover:not(:disabled) {
-        background: linear-gradient(135deg, #0B2A44 0%, #024A7B 100%);
-        box-shadow: 0 8px 24px rgba(2, 74, 123, 0.35);
+        background: linear-gradient(135deg, #025B96 0%, #0B2A44 100%);
+        box-shadow: 0 8px 24px rgba(2, 74, 123, 0.45);
         transform: translateY(-1.5px);
 
         .btn-arrow {

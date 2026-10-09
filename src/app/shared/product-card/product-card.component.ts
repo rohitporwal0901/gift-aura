@@ -317,7 +317,7 @@ import { AuthService } from '../../core/services/auth.service';
       }
     }
 
-    /* Add to Cart Button — Luxury Warm Brass */
+    /* Add to Cart Button — Royal Luxury Blue */
     .pcard-add-btn {
       width: 100%;
       height: 32px;
@@ -325,7 +325,7 @@ import { AuthService } from '../../core/services/auth.service';
       align-items: center;
       justify-content: center;
       gap: 7px;
-      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
       color: #FFFFFF;
       border: none;
       border-radius: 6px;
@@ -335,6 +335,7 @@ import { AuthService } from '../../core/services/auth.service';
       transition: all 0.22s ease;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 3px 10px rgba(2, 74, 123, 0.25);
 
       &::after {
         content: '';
@@ -360,9 +361,9 @@ import { AuthService } from '../../core/services/auth.service';
       }
 
       &:hover {
-        background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%);
+        background: linear-gradient(135deg, #025B96 0%, #0B2A44 50%, #081F33 100%);
         transform: translateY(-1px);
-        box-shadow: 0 4px 14px rgba(169, 124, 67, 0.35);
+        box-shadow: 0 4px 14px rgba(2, 74, 123, 0.4);
       }
 
       &:active {

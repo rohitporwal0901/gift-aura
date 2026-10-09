@@ -1187,7 +1187,7 @@ import { AdminOrder } from '../../core/models/admin.model';
 
     .guest-btn {
       width: 100%;
-      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
       color: #FFFFFF;
       border: none;
       border-radius: 12px;
@@ -1196,12 +1196,12 @@ import { AdminOrder } from '../../core/models/admin.model';
       font-weight: 800;
       cursor: pointer;
       font-family: inherit;
-      box-shadow: 0 4px 14px rgba(169, 124, 67, 0.3);
+      box-shadow: 0 4px 14px rgba(2, 74, 123, 0.32);
       transition: all 0.2s ease;
 
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(169, 124, 67, 0.4);
+        box-shadow: 0 6px 20px rgba(2, 74, 123, 0.45);
       }
       &:active {
         transform: scale(0.98);

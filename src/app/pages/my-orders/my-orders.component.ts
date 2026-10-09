@@ -247,10 +247,10 @@ import { AdminOrder } from '../../core/models/admin.model';
       font-family: inherit;
     }
     .of-pill.active {
-      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      background: linear-gradient(135deg, #0266A8 0%, #024A7B 100%);
       color: #fff;
       border-color: transparent;
-      box-shadow: 0 2px 10px rgba(169, 124, 67, 0.3);
+      box-shadow: 0 2px 10px rgba(2, 74, 123, 0.3);
     }
 
     .orders-list {
@@ -465,7 +465,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       gap: 8px;
     }
     .soc-track-btn {
-      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
       color: #fff;
       font-size: 12px;
       font-weight: 700;
@@ -475,12 +475,12 @@ import { AdminOrder } from '../../core/models/admin.model';
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 3px 10px rgba(169, 124, 67, 0.3);
+      box-shadow: 0 3px 10px rgba(2, 74, 123, 0.3);
       transition: all 0.2s ease;
       &:hover {
-        background: linear-gradient(135deg, #0B2A44 0%, #024A7B 100%);
+        background: linear-gradient(135deg, #025B96 0%, #0B2A44 100%);
         transform: translateY(-1px);
-        box-shadow: 0 5px 14px rgba(2, 74, 123, 0.35);
+        box-shadow: 0 5px 14px rgba(2, 74, 123, 0.45);
       }
     }
     .track-scooter-icon { font-size: 14px; }
@@ -530,7 +530,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       p { font-size: 13px; color: #666; margin-bottom: 18px; }
       .browse-menu-btn {
         display: inline-block;
-        background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+        background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
         color: #fff;
         padding: 10px 22px;
         border-radius: 10px;
@@ -540,9 +540,9 @@ import { AdminOrder } from '../../core/models/admin.model';
         border: none;
         cursor: pointer;
         font-family: inherit;
-        box-shadow: 0 3px 10px rgba(169, 124, 67, 0.25);
+        box-shadow: 0 3px 10px rgba(2, 74, 123, 0.25);
         transition: all 0.2s;
-        &:hover { background: linear-gradient(135deg, #0B2A44 0%, #024A7B 100%); }
+        &:hover { background: linear-gradient(135deg, #025B96 0%, #0B2A44 100%); }
       }
     }
 

@@ -884,11 +884,11 @@ import { environment } from '../../../environments/environment';
     }
 
     .btn-place {
-      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      background: linear-gradient(135deg, #0266A8 0%, #024A7B 50%, #0B2A44 100%);
       color: #FFFFFF;
-      box-shadow: 0 4px 16px rgba(169, 124, 67, 0.28);
+      box-shadow: 0 4px 16px rgba(2, 74, 123, 0.35);
       &:disabled { opacity: 0.65; cursor: not-allowed; }
-      &:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(169, 124, 67, 0.38); background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%); }
+      &:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(2, 74, 123, 0.45); background: linear-gradient(135deg, #025B96 0%, #0B2A44 100%); }
     }
 
     .btn-spinner {
