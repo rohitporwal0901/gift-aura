@@ -338,12 +338,12 @@ import { AdminOrder } from '../../core/models/admin.model';
       -webkit-overflow-scrolling: touch;
     }
 
-    /* HEADER: LUXURY OBSIDIAN & GOLD */
+    /* HEADER: LUXURY NAVY & BRASS */
     .profile-header {
-      background: linear-gradient(145deg, #090D16 0%, #111827 55%, #1E293B 100%);
+      background: linear-gradient(145deg, #081F33 0%, #0B2A44 55%, #024A7B 100%);
       padding: max(16px, env(safe-area-inset-top)) 18px 18px;
       position: relative;
-      border-bottom: 1px solid rgba(212, 160, 23, 0.2);
+      border-bottom: 1px solid rgba(169, 124, 67, 0.25);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
@@ -381,7 +381,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       margin-top: 4px;
     }
 
-    /* AVATAR WITH GOLD ACCENT */
+    /* AVATAR WITH BRASS ACCENT */
     .avatar-wrap {
       position: relative;
       flex-shrink: 0;
@@ -391,13 +391,13 @@ import { AdminOrder } from '../../core/models/admin.model';
       width: 58px;
       height: 58px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-      color: #FBBF24;
+      background: linear-gradient(135deg, #0B2A44 0%, #081F33 100%);
+      color: var(--brass-soft);
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid #C4786A;
-      box-shadow: 0 4px 14px rgba(212, 160, 23, 0.3);
+      border: 2px solid var(--brass);
+      box-shadow: 0 4px 14px rgba(169, 124, 67, 0.35);
       cursor: pointer;
       overflow: hidden;
       transition: transform 0.2s ease;
@@ -501,17 +501,18 @@ import { AdminOrder } from '../../core/models/admin.model';
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(245, 158, 11, 0.35);
+      background: rgba(169, 124, 67, 0.2);
+      border: 1px solid rgba(169, 124, 67, 0.45);
       border-radius: 9999px;
       padding: 3px 10px;
       font-size: 11px;
       font-weight: 700;
-      color: #FCD34D;
+      color: var(--brass-soft, #F0E5D4);
       letter-spacing: 0.2px;
 
       .crown-icon {
         font-size: 11px;
+        color: var(--brass);
       }
     }
 
@@ -1186,8 +1187,8 @@ import { AdminOrder } from '../../core/models/admin.model';
 
     .guest-btn {
       width: 100%;
-      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-      color: #0F172A;
+      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      color: #FFFFFF;
       border: none;
       border-radius: 12px;
       padding: 13px;
@@ -1195,12 +1196,12 @@ import { AdminOrder } from '../../core/models/admin.model';
       font-weight: 800;
       cursor: pointer;
       font-family: inherit;
-      box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
+      box-shadow: 0 4px 14px rgba(169, 124, 67, 0.3);
       transition: all 0.2s ease;
 
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+        box-shadow: 0 6px 20px rgba(169, 124, 67, 0.4);
       }
       &:active {
         transform: scale(0.98);

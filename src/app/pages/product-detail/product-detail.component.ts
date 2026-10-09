@@ -256,7 +256,7 @@ import { Product } from '../../core/models/product.model';
         }
 
         &.active {
-          border-color: #C4786A;
+          border-color: var(--brass, #A97C43);
         }
       }
     }
@@ -270,8 +270,8 @@ import { Product } from '../../core/models/product.model';
     .cat-pill {
       display: inline-block;
       align-self: flex-start;
-      background: rgba(166, 137, 59, 0.12);
-      color: var(--color-accent);
+      background: var(--brass-soft, #F0E5D4);
+      color: var(--brass, #A97C43);
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 1px;
@@ -284,7 +284,7 @@ import { Product } from '../../core/models/product.model';
     .prod-title {
       font-size: clamp(22px, 3vw, 32px);
       font-weight: 900;
-      color: #2C1A1A;
+      color: var(--ink, #0F1E2C);
       letter-spacing: -0.02em;
       line-height: 1.25;
       margin-bottom: 12px;
@@ -321,7 +321,7 @@ import { Product } from '../../core/models/product.model';
       .price-val {
         font-size: 28px;
         font-weight: 900;
-        color: #2C1A1A;
+        color: var(--navy, #024A7B);
       }
 
       .orig-val {
@@ -331,7 +331,7 @@ import { Product } from '../../core/models/product.model';
       }
 
       .save-chip {
-        background: #D96B5A;
+        background: var(--c-bad, #B45C47);
         color: #ffffff;
         font-size: 11px;
         font-weight: 800;

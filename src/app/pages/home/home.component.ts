@@ -574,18 +574,18 @@ interface ReelItem {
       overflow: hidden;
       width: 100%;
       height: clamp(500px, 80vh, 720px);
-      background: #2C1A1A;
+      background: var(--navy-ink);
       max-width: var(--container-max);
       margin: 20px auto 16px;
       border-radius: var(--radius-xl);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 20px 50px rgba(8, 31, 51, 0.25);
 
       @media (max-width: 768px) {
         margin: 8px 10px 18px;
         border-radius: var(--radius-lg);
         height: 380px;
         width: calc(100% - 20px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 8px 24px rgba(8, 31, 51, 0.25);
       }
     }
 
@@ -626,19 +626,19 @@ interface ReelItem {
       inset: 0;
       background: linear-gradient(
         0deg,
-        rgba(10, 12, 18, 0.94) 0%,
-        rgba(10, 12, 18, 0.72) 28%,
-        rgba(10, 12, 18, 0.25) 55%,
-        rgba(10, 12, 18, 0.0) 80%
+        rgba(8, 31, 51, 0.94) 0%,
+        rgba(8, 31, 51, 0.72) 28%,
+        rgba(8, 31, 51, 0.25) 55%,
+        rgba(8, 31, 51, 0.0) 80%
       );
 
       @media (max-width: 768px) {
         background: linear-gradient(
           0deg,
-          rgba(10, 12, 18, 0.95) 0%,
-          rgba(10, 12, 18, 0.75) 45%,
-          rgba(10, 12, 18, 0.15) 75%,
-          rgba(10, 12, 18, 0.0) 100%
+          rgba(8, 31, 51, 0.95) 0%,
+          rgba(8, 31, 51, 0.75) 45%,
+          rgba(8, 31, 51, 0.15) 75%,
+          rgba(8, 31, 51, 0.0) 100%
         );
       }
     }
@@ -695,7 +695,7 @@ interface ReelItem {
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 10px 28px rgba(168, 93, 80, 0.5);
+          box-shadow: 0 10px 28px rgba(169, 124, 67, 0.5);
         }
       }
 
@@ -705,7 +705,7 @@ interface ReelItem {
           font-size: 12.5px;
           font-weight: 700;
           gap: 6px;
-          box-shadow: 0 4px 12px rgba(168, 93, 80, 0.3);
+          box-shadow: 0 4px 12px rgba(169, 124, 67, 0.3);
         }
       }
     }
@@ -717,7 +717,7 @@ interface ReelItem {
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      background: rgba(17, 19, 28, 0.65);
+      background: rgba(8, 31, 51, 0.65);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #ffffff;
@@ -733,11 +733,11 @@ interface ReelItem {
       &.next { right: 24px; }
 
       &:hover {
-        background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
-        color: #111111;
-        border-color: #C4786A;
+        background: linear-gradient(135deg, #C59A60 0%, #A97C43 100%);
+        color: #ffffff;
+        border-color: var(--brass);
         transform: translateY(-50%) scale(1.1);
-        box-shadow: 0 4px 16px rgba(168, 93, 80, 0.4);
+        box-shadow: 0 4px 16px rgba(169, 124, 67, 0.4);
       }
 
       @media (max-width: 768px) {
@@ -779,9 +779,9 @@ interface ReelItem {
         }
 
         &.active {
-          background: #A85D50;
+          background: var(--brass);
           width: 52px;
-          box-shadow: 0 0 10px rgba(168, 93, 80, 0.6);
+          box-shadow: 0 0 10px rgba(169, 124, 67, 0.6);
 
           @media (max-width: 768px) {
             width: 32px;
@@ -824,9 +824,9 @@ interface ReelItem {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(196, 120, 106, 0.12);
-      border: 1px solid rgba(196, 120, 106, 0.35);
-      color: #C4786A;
+      background: rgba(169, 124, 67, 0.12);
+      border: 1px solid rgba(169, 124, 67, 0.35);
+      color: var(--brass);
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 1.5px;
@@ -839,8 +839,8 @@ interface ReelItem {
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: #C4786A;
-        box-shadow: 0 0 8px rgba(196, 120, 106, 0.8);
+        background: var(--brass);
+        box-shadow: 0 0 8px rgba(169, 124, 67, 0.8);
         animation: pulse 1.8s infinite;
       }
     }
@@ -848,13 +848,13 @@ interface ReelItem {
     .reels-main-title {
       font-size: clamp(26px, 3.5vw, 44px);
       font-weight: 800;
-      color: #111111;
+      color: var(--navy-deep);
       letter-spacing: -0.03em;
       line-height: 1.15;
       margin-bottom: 14px;
 
       .title-highlight {
-        background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
+        background: linear-gradient(135deg, #024A7B 0%, #A97C43 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -863,7 +863,7 @@ interface ReelItem {
 
     .reels-subtitle {
       font-size: 15px;
-      color: #6b7280;
+      color: var(--muted);
       max-width: 520px;
       margin: 0 auto;
       line-height: 1.65;
@@ -904,11 +904,11 @@ interface ReelItem {
       z-index: 5;
 
       &:hover {
-        background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
-        border-color: #C4786A;
-        color: #111;
+        background: linear-gradient(135deg, #C59A60 0%, #A97C43 100%);
+        border-color: var(--brass);
+        color: #ffffff;
         transform: scale(1.1);
-        box-shadow: 0 4px 20px rgba(196, 120, 106, 0.45);
+        box-shadow: 0 4px 20px rgba(169, 124, 67, 0.45);
       }
 
       @media (max-width: 768px) {
@@ -946,7 +946,7 @@ interface ReelItem {
       overflow: hidden;
       cursor: pointer;
       aspect-ratio: 9 / 15;
-      background: #2C1A1A;
+      background: var(--navy-ink);
       border: 1px solid rgba(255, 255, 255, 0.08);
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: none;
@@ -965,7 +965,7 @@ interface ReelItem {
 
       &:hover {
         transform: translateY(-10px) scale(1.025);
-        border-color: rgba(196, 120, 106, 0.5);
+        border-color: rgba(169, 124, 67, 0.5);
         box-shadow: none;
 
         .reel-video-bg {
@@ -1039,8 +1039,8 @@ interface ReelItem {
         &.active {
           width: 24px;
           border-radius: 3px;
-          background: linear-gradient(90deg, #C4786A, #A85D50);
-          box-shadow: 0 0 8px rgba(196, 120, 106, 0.6);
+          background: linear-gradient(90deg, #C59A60, #A97C43);
+          box-shadow: 0 0 8px rgba(169, 124, 67, 0.6);
         }
       }
     }
@@ -1090,8 +1090,8 @@ interface ReelItem {
         gap: 8px;
         padding: 14px 18px 12px;
         background: #ffffff;
-        color: #4b5563;
-        border: 1px solid #e5e0d4;
+        color: var(--ink-2);
+        border: 1px solid var(--line);
         border-radius: 16px;
         cursor: pointer;
         transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1135,35 +1135,35 @@ interface ReelItem {
 
         &:hover {
           background: #ffffff;
-          border-color: #C4786A;
-          color: #111111;
+          border-color: var(--brass);
+          color: var(--navy);
           transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 6px 16px rgba(15, 30, 44, 0.06);
 
           .cat-icon-wrap {
             transform: scale(1.08);
-            color: #C4786A;
+            color: var(--brass);
           }
         }
 
         &.active {
-          background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
-          color: #2C1A1A;
+          background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+          color: #FFFFFF;
           border-color: transparent;
           font-weight: 700;
           transform: translateY(-2px);
-          box-shadow: 0 6px 18px rgba(196, 120, 106, 0.3);
+          box-shadow: 0 6px 18px rgba(169, 124, 67, 0.3);
 
           .cat-label {
-            color: #2C1A1A;
+            color: #FFFFFF;
           }
 
           .cat-icon-wrap {
-            color: #2C1A1A;
+            color: #FFFFFF;
           }
 
           &:hover {
-            background: linear-gradient(135deg, #D4A898 0%, #A85D50 50%, #8C4A3E 100%);
+            background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%);
             transform: translateY(-2px);
           }
         }
@@ -1196,9 +1196,9 @@ interface ReelItem {
       }
 
       .view-all-btn {
-        background: linear-gradient(135deg, #3D2B2B 0%, #5C3A36 100%);
+        background: linear-gradient(135deg, #024A7B 0%, #0B2A44 100%);
         color: #ffffff;
-        border: 1px solid rgba(168, 93, 80, 0.3);
+        border: 1px solid rgba(169, 124, 67, 0.35);
         padding: 15px 36px;
         border-radius: var(--radius-full);
         font-size: 15px;
@@ -1207,14 +1207,14 @@ interface ReelItem {
         align-items: center;
         gap: 10px;
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 6px 20px rgba(2, 74, 123, 0.18);
 
         &:hover {
-          background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
-          color: #111111;
-          border-color: #C4786A;
+          background: linear-gradient(135deg, #C59A60 0%, #A97C43 100%);
+          color: #ffffff;
+          border-color: var(--brass);
           transform: translateY(-2px);
-          box-shadow: 0 10px 28px rgba(168, 93, 80, 0.35);
+          box-shadow: 0 10px 28px rgba(169, 124, 67, 0.35);
         }
       }
     }
@@ -1519,14 +1519,14 @@ interface ReelItem {
         &.active {
           width: 18px;
           border-radius: 10px;
-          background: #C4786A;
+          background: var(--brass);
         }
       }
     }
 
     /* ── 8. REVIEWS SLIDER (ELEGANT LUXURY MINIMAL CAROUSEL) ── */
     .reviews-section {
-      background: #faf8f5;
+      background: var(--paper-2);
       padding: 36px 0 42px;
 
       @media (max-width: 767px) {
@@ -1553,7 +1553,7 @@ interface ReelItem {
         display: inline-block;
         width: 32px;
         height: 1px;
-        background: #D96B5A;
+        background: var(--brass);
       }
 
       .rev-eyebrow {
@@ -1561,13 +1561,13 @@ interface ReelItem {
         font-weight: 700;
         letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: #b45309;
+        color: var(--brass);
       }
 
       .rev-title {
         font-size: clamp(24px, 3.2vw, 32px);
         font-weight: 700;
-        color: #111827;
+        color: var(--navy-deep);
         margin: 0;
         line-height: 1.25;
         letter-spacing: -0.01em;
@@ -1575,7 +1575,7 @@ interface ReelItem {
 
       .rev-subtitle {
         font-size: 14px;
-        color: #6b7280;
+        color: var(--muted);
         margin: 6px 0 0;
       }
     }
@@ -1597,8 +1597,8 @@ interface ReelItem {
         height: 42px;
         border-radius: 50%;
         background: #fbf9f5;
-        border: 1px solid #ebdcc5;
-        color: #555555;
+        border: 1px solid var(--line);
+        color: var(--ink);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1615,11 +1615,11 @@ interface ReelItem {
         }
 
         &:hover {
-          background: #3D2B2B;
-          color: #F5DDD5;
-          border-color: #3D2B2B;
+          background: var(--navy-deep);
+          color: #ffffff;
+          border-color: var(--navy-deep);
           transform: translateY(-50%) scale(1.08);
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 6px 20px rgba(11, 42, 68, 0.25);
         }
 
         &:active {
@@ -1674,7 +1674,7 @@ interface ReelItem {
 
     .review-card {
       background: #ffffff;
-      border: 1px solid #ebdcc5;
+      border: 1px solid var(--line);
       border-radius: 16px;
       padding: 26px 22px 22px;
       display: flex;
@@ -1693,12 +1693,12 @@ interface ReelItem {
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(184, 138, 68, 0.12);
-        border-color: #D96B5A;
+        box-shadow: 0 8px 24px rgba(169, 124, 67, 0.15);
+        border-color: var(--brass);
       }
 
       .rev-quote-badge {
-        color: #c29b53;
+        color: var(--brass);
         margin-bottom: 14px;
         display: flex;
         align-items: center;
@@ -1712,7 +1712,7 @@ interface ReelItem {
       .rev-comment {
         font-style: italic;
         font-size: 13.5px;
-        color: #4b5563;
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0 0 22px;
         flex: 1;
@@ -1736,7 +1736,7 @@ interface ReelItem {
         height: 44px;
         border-radius: 50%;
         object-fit: cover;
-        border: 1.5px solid #ebdcc5;
+        border: 1.5px solid var(--line);
         display: block;
       }
 
@@ -1744,8 +1744,8 @@ interface ReelItem {
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        background: #3D2B2B;
-        color: #F5DDD5;
+        background: var(--navy-deep);
+        color: var(--brass-soft);
         font-weight: 700;
         font-size: 15px;
         display: flex;
@@ -2337,7 +2337,7 @@ interface ReelItem {
         font-size: 13px;
         color: #444;
         margin-bottom: 12px;
-        .star { color: #A85D50; }
+        .star { color: var(--brass, #A97C43); }
         .revs { color: #888; margin-left: 4px; }
       }
 

@@ -93,8 +93,8 @@ import { AuthService } from '../../core/services/auth.service';
       overflow: hidden;
       position: relative;
       background: #ffffff;
-      border: 1px solid #EDD5CA;
-      box-shadow: 0 2px 8px rgba(196, 120, 106, 0.05);
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 8px rgba(15, 30, 44, 0.04);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       height: 100%;
       padding: 8px;
@@ -107,8 +107,8 @@ import { AuthService } from '../../core/services/auth.service';
       &:hover,
       .pcard-img-wrap:hover {
         transform: translateY(-4px);
-        border-color: #C4A09A;
-        box-shadow: 0 12px 28px rgba(196, 120, 106, 0.12);
+        border-color: var(--brass);
+        box-shadow: 0 12px 28px rgba(15, 30, 44, 0.1);
 
         .primary-img { transform: scale(1.05); }
         .hover-img   { opacity: 1 !important; transform: scale(1.05); }
@@ -127,7 +127,7 @@ import { AuthService } from '../../core/services/auth.service';
       width: 100%;
       aspect-ratio: 1 / 1;
       border-radius: 12px;
-      background: #FBF0EC;
+      background: var(--paper-2);
       overflow: hidden;
 
       .pcard-img {
@@ -167,8 +167,8 @@ import { AuthService } from '../../core/services/auth.service';
     .badge-best {
       display: inline-flex;
       align-items: center;
-      background: #3D2B2B;
-      color: #E8A898;
+      background: var(--navy-deep);
+      color: var(--brass-soft);
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.3px;
@@ -184,7 +184,7 @@ import { AuthService } from '../../core/services/auth.service';
     .badge-off {
       display: inline-flex;
       align-items: center;
-      background: #C4786A;
+      background: var(--c-bad);
       color: #ffffff;
       font-size: 10px;
       font-weight: 700;
@@ -222,18 +222,18 @@ import { AuthService } from '../../core/services/auth.service';
       .rating-stars {
         display: inline-flex;
         gap: 1px;
-        color: #eab308;
+        color: var(--c-warn);
         font-size: 11px;
       }
 
       .rnum {
         font-weight: 700;
-        color: #222222;
+        color: var(--ink);
         font-size: 12px;
       }
 
       .rcount {
-        color: #888888;
+        color: var(--muted);
         font-size: 11.5px;
       }
     }
@@ -246,7 +246,7 @@ import { AuthService } from '../../core/services/auth.service';
     .pcard-name {
       font-size: 14.5px;
       font-weight: 600;
-      color: #1a1a1a;
+      color: var(--ink);
       line-height: 1.3;
       margin: 0 0 3px;
       display: -webkit-box;
@@ -261,14 +261,14 @@ import { AuthService } from '../../core/services/auth.service';
       }
 
       &:hover {
-        color: #C4786A;
+        color: var(--navy);
       }
     }
 
     /* Subtitle / Description */
     .pcard-desc {
       font-size: 12px;
-      color: #777777;
+      color: var(--muted);
       line-height: 1.35;
       margin: 0 0 8px;
       display: -webkit-box;
@@ -298,7 +298,7 @@ import { AuthService } from '../../core/services/auth.service';
       .price-now {
         font-size: 16.5px;
         font-weight: 700;
-        color: #C4786A;
+        color: var(--navy);
         letter-spacing: -0.01em;
 
         @media (max-width: 480px) {
@@ -317,7 +317,7 @@ import { AuthService } from '../../core/services/auth.service';
       }
     }
 
-    /* Add to Cart Button — Metallic Rose Gold */
+    /* Add to Cart Button — Luxury Warm Brass */
     .pcard-add-btn {
       width: 100%;
       height: 32px;
@@ -325,8 +325,8 @@ import { AuthService } from '../../core/services/auth.service';
       align-items: center;
       justify-content: center;
       gap: 7px;
-      background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
-      color: #2C1A1A;
+      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      color: #FFFFFF;
       border: none;
       border-radius: 6px;
       font-size: 12px;
@@ -360,9 +360,9 @@ import { AuthService } from '../../core/services/auth.service';
       }
 
       &:hover {
-        background: linear-gradient(135deg, #D4A898 0%, #A85D50 50%, #8C4A3E 100%);
+        background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%);
         transform: translateY(-1px);
-        box-shadow: 0 4px 14px rgba(196, 120, 106, 0.35);
+        box-shadow: 0 4px 14px rgba(169, 124, 67, 0.35);
       }
 
       &:active {

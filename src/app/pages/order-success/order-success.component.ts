@@ -383,10 +383,10 @@ export interface GiftParticle {
       }
 
       &:hover {
-        background: #C4786A;
-        border-color: #C4786A;
+        background: var(--brass);
+        border-color: var(--brass);
         color: #FFFFFF;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        box-shadow: 0 4px 12px rgba(169, 124, 67, 0.25);
 
         svg {
           transform: translateX(3px);
@@ -494,29 +494,29 @@ export interface GiftParticle {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #F1F5F9;
-      border: 1px solid #E2E8F0;
+      background: var(--navy-soft, #E4EDF4);
+      border: 1px solid rgba(2, 74, 123, 0.18);
       border-radius: 8px;
       padding: 5px 10px;
       cursor: pointer;
       transition: all 0.15s ease;
 
       &:hover {
-        background: #E2E8F0;
-        border-color: #CBD5E1;
+        background: #D5E4F0;
+        border-color: rgba(2, 74, 123, 0.3);
       }
 
       .chip-label {
         font-size: 10px;
         font-weight: 700;
-        color: #64748B;
+        color: var(--navy);
         letter-spacing: 0.5px;
       }
 
       .chip-id {
         font-size: 11.5px;
         font-weight: 800;
-        color: #0F172A;
+        color: var(--ink);
         font-family: monospace;
       }
 
@@ -853,15 +853,15 @@ export interface GiftParticle {
     }
 
     .action-btn-primary {
-      background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
+      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
       color: #FFFFFF;
       border: none;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+      box-shadow: 0 4px 14px rgba(169, 124, 67, 0.28);
 
       &:hover {
-        background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+        background: linear-gradient(135deg, #0B2A44 0%, #024A7B 100%);
         transform: translateY(-1px);
-        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+        box-shadow: 0 6px 16px rgba(2, 74, 123, 0.25);
       }
 
       &:active {

@@ -51,19 +51,19 @@ type AuthStep = 'phone' | 'pin' | 'register';
             <div class="brand-logo-frame">
               <svg viewBox="0 0 170 48" fill="none" xmlns="http://www.w3.org/2000/svg" height="42" width="auto">
                 <g transform="translate(0, 3)">
-                  <path d="M16 7 Q20 3 24 7" stroke="#C4786A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                  <path d="M24 7 Q28 3 32 7" stroke="#C4786A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                  <circle cx="24" cy="7" r="2" fill="#C4786A"/>
-                  <rect x="11" y="8" width="26" height="6" rx="1.5" fill="#C4786A"/>
-                  <rect x="23" y="8" width="2.8" height="6" fill="#A85D50"/>
-                  <rect x="12" y="15" width="24" height="17" rx="2" fill="#3D2B2B"/>
-                  <rect x="23" y="15" width="2.8" height="17" fill="#C4786A"/>
-                  <circle cx="8" cy="6" r="1.2" fill="#C4786A" opacity="0.8"/>
-                  <circle cx="40" cy="4" r="1.1" fill="#C4786A" opacity="0.7"/>
+                  <path d="M16 7 Q20 3 24 7" stroke="#A97C43" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                  <path d="M24 7 Q28 3 32 7" stroke="#A97C43" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                  <circle cx="24" cy="7" r="2" fill="#A97C43"/>
+                  <rect x="11" y="8" width="26" height="6" rx="1.5" fill="#A97C43"/>
+                  <rect x="23" y="8" width="2.8" height="6" fill="#0B2A44"/>
+                  <rect x="12" y="15" width="24" height="17" rx="2" fill="#0B2A44"/>
+                  <rect x="23" y="15" width="2.8" height="17" fill="#A97C43"/>
+                  <circle cx="8" cy="6" r="1.2" fill="#A97C43" opacity="0.8"/>
+                  <circle cx="40" cy="4" r="1.1" fill="#A97C43" opacity="0.7"/>
                 </g>
-                <text x="44" y="29" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="22" fill="#2C1A1A" letter-spacing="-0.5">GIFT</text>
-                <text x="94" y="29" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="22" fill="#C4786A" letter-spacing="-0.5">AURA</text>
-                <text x="44" y="41" font-family="'Outfit', Arial, sans-serif" font-weight="700" font-size="6.8" fill="#A8847E" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
+                <text x="44" y="29" font-family="'Libre Caslon Text', Georgia, serif" font-weight="700" font-size="22" fill="#0B2A44" letter-spacing="-0.5">GIFT</text>
+                <text x="96" y="29" font-family="'Libre Caslon Text', Georgia, serif" font-weight="700" font-size="22" fill="#A97C43" letter-spacing="-0.5">AURA</text>
+                <text x="44" y="41" font-family="'Inter', sans-serif" font-weight="700" font-size="6.8" fill="#6A7480" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
               </svg>
             </div>
           </div>
@@ -639,13 +639,13 @@ type AuthStep = 'phone' | 'pin' | 'register';
       box-sizing: border-box;
 
       &.has-focus {
-        border-color: #C4786A;
+        border-color: var(--navy);
         background: #FFFFFF;
-        box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.16);
+        box-shadow: 0 0 0 4px rgba(2, 74, 123, 0.12);
       }
 
       &.is-valid {
-        border-color: #C4786A;
+        border-color: var(--navy);
       }
     }
 
@@ -750,11 +750,11 @@ type AuthStep = 'phone' | 'pin' | 'register';
     .primary-submit-btn {
       width: 100%;
       height: 50px;
-      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-      color: #0F172A;
+      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+      color: #FFFFFF;
       border: none;
       border-radius: 14px;
-      font-family: 'Outfit', sans-serif;
+      font-family: inherit;
       font-size: 15.5px;
       font-weight: 800;
       cursor: pointer;
@@ -762,7 +762,7 @@ type AuthStep = 'phone' | 'pin' | 'register';
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 6px 18px rgba(217, 119, 6, 0.32);
+      box-shadow: 0 6px 18px rgba(169, 124, 67, 0.32);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
       .btn-arrow {
@@ -770,8 +770,8 @@ type AuthStep = 'phone' | 'pin' | 'register';
       }
 
       &:hover:not(:disabled) {
-        background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%);
-        box-shadow: 0 8px 24px rgba(217, 119, 6, 0.44);
+        background: linear-gradient(135deg, #0B2A44 0%, #024A7B 100%);
+        box-shadow: 0 8px 24px rgba(2, 74, 123, 0.35);
         transform: translateY(-1.5px);
 
         .btn-arrow {
@@ -890,15 +890,15 @@ type AuthStep = 'phone' | 'pin' | 'register';
       font-family: inherit;
 
       &:focus {
-        border-color: #C4786A;
+        border-color: var(--navy);
         background: #FFFFFF;
-        box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.18);
+        box-shadow: 0 0 0 4px rgba(2, 74, 123, 0.14);
         transform: scale(1.05);
       }
 
       &.filled {
-        border-color: #C4786A;
-        background: #FFFDF5;
+        border-color: var(--navy);
+        background: var(--navy-soft, #E4EDF4);
       }
     }
 
@@ -976,9 +976,9 @@ type AuthStep = 'phone' | 'pin' | 'register';
       transition: all 0.2s ease;
 
       &:focus-within {
-        border-color: #C4786A;
+        border-color: var(--navy);
         background: #FFFFFF;
-        box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
+        box-shadow: 0 0 0 3px rgba(2, 74, 123, 0.12);
       }
     }
 

@@ -249,9 +249,9 @@ import { ConfettiService } from '../../core/services/confetti.service';
       text-align: center;
       gap: 12px;
       .empty-icon { font-size: 72px; }
-      h3 { font-size: 20px; font-weight: 700; }
-      p { color: #999; font-size: 14px; }
-      .btn-primary { margin-top: 8px; padding: 14px 36px; background: #2E7D32; color: #fff; border-radius: 999px; font-weight: 600; font-size: 15px; text-decoration: none; display: inline-block; }
+      h3 { font-size: 20px; font-weight: 700; color: var(--navy-deep); }
+      p { color: var(--muted); font-size: 14px; }
+      .btn-primary { margin-top: 8px; padding: 14px 36px; background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%); color: #fff; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-block; box-shadow: 0 4px 14px rgba(169, 124, 67, 0.3); }
     }
 
     /* CART ITEMS */
@@ -269,7 +269,8 @@ import { ConfettiService } from '../../core/services/confetti.service';
       display: flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 8px rgba(15, 30, 44, 0.04);
     }
 
     .item-img {
@@ -283,9 +284,9 @@ import { ConfettiService } from '../../core/services/confetti.service';
     .item-info {
       flex: 1;
       min-width: 0;
-      .item-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: #1A1A1A; }
-      .item-customs { font-size: 11px; color: #999; margin-bottom: 5px; }
-      .item-price { font-size: 15px; font-weight: 700; color: #2E7D32; }
+      .item-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: var(--ink); }
+      .item-customs { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+      .item-price { font-size: 15px; font-weight: 700; color: var(--navy); }
     }
 
     .item-actions {
@@ -310,16 +311,16 @@ import { ConfettiService } from '../../core/services/confetti.service';
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #F1F8E9;
+      background: var(--paper-2);
       border-radius: 8px;
       padding: 4px 8px;
-      border: 1.5px solid #4CAF50;
+      border: 1.5px solid var(--brass);
     }
 
     .step-btn {
       width: 24px; height: 24px;
       border-radius: 6px;
-      background: #2E7D32;
+      background: var(--navy);
       color: #fff;
       border: none;
       font-size: 16px;
@@ -328,10 +329,10 @@ import { ConfettiService } from '../../core/services/confetti.service';
       transition: all 0.15s;
       line-height: 1;
       font-family: inherit;
-      &:hover { background: #1B5E20; }
+      &:hover { background: var(--navy-deep); }
     }
 
-    .step-val { font-weight: 700; font-size: 14px; color: #2E7D32; min-width: 16px; text-align: center; }
+    .step-val { font-weight: 700; font-size: 14px; color: var(--navy); min-width: 16px; text-align: center; }
 
     /* COUPON */
     .coupon-section {
@@ -339,8 +340,8 @@ import { ConfettiService } from '../../core/services/confetti.service';
       background: #fff;
       border-radius: 14px;
       padding: 12px 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      border: 1px dashed #C8E6C9;
+      box-shadow: 0 2px 8px rgba(15,30,44,0.04);
+      border: 1px dashed var(--line);
     }
 
     .coupon-applied-box {
@@ -348,8 +349,8 @@ import { ConfettiService } from '../../core/services/confetti.service';
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      background: #F1F8E9;
-      border: 1.5px solid #A5D6A7;
+      background: var(--navy-soft);
+      border: 1.5px solid rgba(2, 74, 123, 0.25);
       padding: 10px 14px;
       border-radius: 10px;
     }
@@ -369,12 +370,12 @@ import { ConfettiService } from '../../core/services/confetti.service';
     .coupon-badge {
       font-size: 10px;
       font-weight: 800;
-      color: #1B5E20;
+      color: var(--navy);
       letter-spacing: 0.5px;
     }
 
     .coupon-code-pill {
-      background: #2E7D32;
+      background: var(--brass);
       color: #fff;
       font-size: 11px;
       font-weight: 800;
@@ -388,12 +389,12 @@ import { ConfettiService } from '../../core/services/confetti.service';
     }
 
     .coupon-saving-text {
-      color: #2E7D32;
+      color: var(--c-ok);
       font-weight: 700;
     }
 
     .coupon-pending-text {
-      color: #E65100;
+      color: var(--c-warn);
       font-weight: 600;
       font-size: 11px;
     }
@@ -401,7 +402,7 @@ import { ConfettiService } from '../../core/services/confetti.service';
     .remove-coupon-btn {
       background: #FFEBEE;
       border: 1px solid #FFCDD2;
-      color: #C62828;
+      color: var(--c-bad);
       font-size: 11px;
       font-weight: 700;
       cursor: pointer;
@@ -434,7 +435,7 @@ import { ConfettiService } from '../../core/services/confetti.service';
         font-family: inherit;
         font-size: 13px;
         font-weight: 600;
-        color: #1A1A1A;
+        color: var(--ink);
         background: transparent;
 
         &::placeholder {
@@ -445,7 +446,7 @@ import { ConfettiService } from '../../core/services/confetti.service';
 
       .apply-btn {
         flex-shrink: 0;
-        background: #2E7D32;
+        background: var(--brass);
         border: none;
         color: #fff;
         font-size: 11px;
@@ -456,12 +457,12 @@ import { ConfettiService } from '../../core/services/confetti.service';
         font-family: inherit;
         padding: 7px 15px;
         border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(46,125,50,0.25);
+        box-shadow: 0 2px 6px rgba(169, 124, 67, 0.25);
         transition: all 0.2s;
 
         &:hover {
-          background: #1B5E20;
-          box-shadow: 0 3px 8px rgba(46,125,50,0.35);
+          background: var(--color-accent-hover);
+          box-shadow: 0 3px 8px rgba(169, 124, 67, 0.35);
         }
 
         &:active {
@@ -473,13 +474,13 @@ import { ConfettiService } from '../../core/services/confetti.service';
     .quick-coupon-hint {
       margin-top: 10px;
       padding-top: 8px;
-      border-top: 1px dashed #E0E0E0;
+      border-top: 1px dashed var(--line);
       display: flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
       font-size: 11px;
-      color: #555;
+      color: var(--muted);
       transition: all 0.2s;
 
       &:hover {
@@ -487,12 +488,12 @@ import { ConfettiService } from '../../core/services/confetti.service';
       }
 
       .hint-pill {
-        background: #FFF9C4;
-        border: 1px solid #FFF176;
+        background: var(--brass-soft);
+        border: 1px solid rgba(169, 124, 67, 0.3);
         padding: 2px 6px;
         border-radius: 4px;
         font-weight: 800;
-        color: #F57F17;
+        color: var(--brass);
         font-size: 10px;
         display: inline-flex;
         align-items: center;
@@ -505,7 +506,7 @@ import { ConfettiService } from '../../core/services/confetti.service';
       }
 
       .tap-apply {
-        color: #2E7D32;
+        color: var(--navy);
         font-weight: 800;
         flex-shrink: 0;
       }
@@ -523,12 +524,12 @@ import { ConfettiService } from '../../core/services/confetti.service';
 
       &.error {
         background: #FFEBEE;
-        color: #C62828;
+        color: var(--c-bad);
       }
 
       &.success {
-        background: #E8F5E9;
-        color: #2E7D32;
+        background: rgba(76, 138, 119, 0.12);
+        color: var(--c-ok);
       }
     }
 
@@ -538,10 +539,11 @@ import { ConfettiService } from '../../core/services/confetti.service';
       background: #fff;
       border-radius: 14px;
       padding: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 8px rgba(15,30,44,0.04);
     }
 
-    .bill-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+    .bill-title { font-size: 15px; font-weight: 700; color: var(--navy-deep); margin-bottom: 14px; }
 
     .bill-rows { display: flex; flex-direction: column; gap: 10px; }
 
@@ -549,30 +551,30 @@ import { ConfettiService } from '../../core/services/confetti.service';
       display: flex;
       justify-content: space-between;
       font-size: 14px;
-      color: #555;
+      color: var(--ink-2);
 
-      &.total { font-size: 16px; font-weight: 800; color: #1A1A1A; }
-      &.discount { color: #2E7D32; font-weight: 600; }
-      .discount-val { color: #2E7D32; font-weight: 700; }
-      .delivery-charge { color: #374151; font-weight: 600; }
-      .delivery-charge.delivery-pending { color: #9CA3AF; font-weight: 500; }
+      &.total { font-size: 16px; font-weight: 800; color: var(--ink); }
+      &.discount { color: var(--c-ok); font-weight: 600; }
+      .discount-val { color: var(--c-ok); font-weight: 700; }
+      .delivery-charge { color: var(--ink); font-weight: 600; }
+      .delivery-charge.delivery-pending { color: var(--muted); font-weight: 500; }
       .delivery-label-wrap { display: flex; flex-direction: column; gap: 1px; }
-      .delivery-note { font-size: 10px; color: #9CA3AF; font-weight: 400; }
+      .delivery-note { font-size: 10px; color: var(--muted); font-weight: 400; }
     }
 
-    .divider { height: 1px; background: #EEE; margin: 2px 0; }
+    .divider { height: 1px; background: var(--line); margin: 2px 0; }
 
     /* DELIVERY INFO */
     .delivery-info {
       margin-top: 12px;
-      background: #F1F8E9;
+      background: var(--navy-soft);
       border-radius: 12px;
       padding: 12px 16px;
       display: flex;
       align-items: center;
       gap: 10px;
       font-size: 13px;
-      color: #555;
+      color: var(--navy);
       margin-bottom: 100px;
       .delivery-icon { font-size: 20px; }
     }
@@ -583,7 +585,7 @@ import { ConfettiService } from '../../core/services/confetti.service';
       bottom: 80px;
       left: 0; right: 0;
       padding: 12px 20px;
-      background: linear-gradient(to top, #F8F9FA 80%, transparent);
+      background: linear-gradient(to top, var(--paper) 80%, transparent);
       @media (min-width: 768px) { bottom: 0; }
     }
 
@@ -592,18 +594,18 @@ import { ConfettiService } from '../../core/services/confetti.service';
       max-width: 480px;
       margin: 0 auto;
       display: block;
-      background: #2E7D32;
+      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
       color: #fff;
       border: none;
       border-radius: 14px;
       padding: 16px;
-      font-family: 'Poppins', sans-serif;
+      font-family: inherit;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
-      box-shadow: 0 6px 20px rgba(46,125,50,0.35);
-      &:hover { background: #1B5E20; transform: translateY(-2px); }
+      box-shadow: 0 6px 20px rgba(169, 124, 67, 0.35);
+      &:hover { background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%); transform: translateY(-2px); }
     }
 
     @keyframes fadeInUp {

@@ -31,29 +31,29 @@ import { Product } from '../../core/models/product.model';
               <!-- Gift box icon -->
               <g transform="translate(0, 2)">
                 <!-- ribbon top -->
-                <path d="M20 8 Q24 4 28 8" stroke="#C4786A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                <path d="M28 8 Q32 4 36 8" stroke="#C4786A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M20 8 Q24 4 28 8" stroke="#A97C43" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M28 8 Q32 4 36 8" stroke="#A97C43" stroke-width="1.8" fill="none" stroke-linecap="round"/>
                 <!-- bow center -->
-                <circle cx="28" cy="8" r="2" fill="#C4786A"/>
+                <circle cx="28" cy="8" r="2" fill="#A97C43"/>
                 <!-- lid -->
-                <rect x="14" y="9" width="28" height="7" rx="1.5" fill="#C4786A"/>
+                <rect x="14" y="9" width="28" height="7" rx="1.5" fill="#A97C43"/>
                 <!-- vertical ribbon on lid -->
-                <rect x="26.5" y="9" width="3" height="7" fill="#A85D50"/>
+                <rect x="26.5" y="9" width="3" height="7" fill="#8E6633"/>
                 <!-- box body -->
-                <rect x="15" y="17" width="26" height="19" rx="1.5" fill="#3D2B2B"/>
+                <rect x="15" y="17" width="26" height="19" rx="1.5" fill="#0B2A44"/>
                 <!-- vertical ribbon on box -->
-                <rect x="26.5" y="17" width="3" height="19" fill="#C4786A"/>
+                <rect x="26.5" y="17" width="3" height="19" fill="#A97C43"/>
                 <!-- sparkles -->
-                <circle cx="12" cy="7" r="1.2" fill="#C4786A" opacity="0.7"/>
-                <circle cx="44" cy="5" r="1" fill="#C4786A" opacity="0.6"/>
-                <circle cx="46" cy="14" r="0.8" fill="#C4786A" opacity="0.5"/>
+                <circle cx="12" cy="7" r="1.2" fill="#A97C43" opacity="0.7"/>
+                <circle cx="44" cy="5" r="1" fill="#A97C43" opacity="0.6"/>
+                <circle cx="46" cy="14" r="0.8" fill="#A97C43" opacity="0.5"/>
               </g>
               <!-- GIFT text -->
-              <text x="52" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#2C1A1A" letter-spacing="-0.5">GIFT</text>
-              <!-- AURA text in rose gold -->
-              <text x="103" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#C4786A" letter-spacing="-0.5">AURA</text>
+              <text x="52" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#0B2A44" letter-spacing="-0.5">GIFT</text>
+              <!-- AURA text in brass -->
+              <text x="103" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#A97C43" letter-spacing="-0.5">AURA</text>
               <!-- tagline -->
-              <text x="52" y="44" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="7.5" fill="#A8847E" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
+              <text x="52" y="44" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="7.5" fill="#6A7480" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
             </svg>
           </div>
         </a>
@@ -165,19 +165,19 @@ import { Product } from '../../core/models/product.model';
           <div class="brand-logo-svg">
             <svg viewBox="0 0 180 52" fill="none" xmlns="http://www.w3.org/2000/svg" height="42" width="auto">
               <g transform="translate(0, 2)">
-                <path d="M20 8 Q24 4 28 8" stroke="#C4786A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                <path d="M28 8 Q32 4 36 8" stroke="#C4786A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                <circle cx="28" cy="8" r="2" fill="#C4786A"/>
-                <rect x="14" y="9" width="28" height="7" rx="1.5" fill="#C4786A"/>
-                <rect x="26.5" y="9" width="3" height="7" fill="#A85D50"/>
-                <rect x="15" y="17" width="26" height="19" rx="1.5" fill="#3D2B2B"/>
-                <rect x="26.5" y="17" width="3" height="19" fill="#C4786A"/>
-                <circle cx="12" cy="7" r="1.2" fill="#C4786A" opacity="0.7"/>
-                <circle cx="44" cy="5" r="1" fill="#C4786A" opacity="0.6"/>
+                <path d="M20 8 Q24 4 28 8" stroke="#A97C43" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M28 8 Q32 4 36 8" stroke="#A97C43" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <circle cx="28" cy="8" r="2" fill="#A97C43"/>
+                <rect x="14" y="9" width="28" height="7" rx="1.5" fill="#A97C43"/>
+                <rect x="26.5" y="9" width="3" height="7" fill="#8E6633"/>
+                <rect x="15" y="17" width="26" height="19" rx="1.5" fill="#0B2A44"/>
+                <rect x="26.5" y="17" width="3" height="19" fill="#A97C43"/>
+                <circle cx="12" cy="7" r="1.2" fill="#A97C43" opacity="0.7"/>
+                <circle cx="44" cy="5" r="1" fill="#A97C43" opacity="0.6"/>
               </g>
-              <text x="52" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#2C1A1A" letter-spacing="-0.5">GIFT</text>
-              <text x="103" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#C4786A" letter-spacing="-0.5">AURA</text>
-              <text x="52" y="44" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="7.5" fill="#A8847E" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
+              <text x="52" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#0B2A44" letter-spacing="-0.5">GIFT</text>
+              <text x="103" y="32" font-family="'Outfit', 'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#A97C43" letter-spacing="-0.5">AURA</text>
+              <text x="52" y="44" font-family="'Outfit', Arial, sans-serif" font-weight="600" font-size="7.5" fill="#6A7480" letter-spacing="1.5">CUSTOM GIFTS &amp; PRINTING</text>
             </svg>
           </div>
           <button class="md-close" (click)="toggleMobileMenu()">✕</button>
@@ -285,10 +285,10 @@ import { Product } from '../../core/models/product.model';
       .nav-item {
         font-size: 13.5px;
         font-weight: 600;
-        color: #222222;
+        color: var(--ink);
         padding: 8px 0;
         position: relative;
-        white-space: nowrap; /* PREVENTS WRAPPING (UPAR NICHE) */
+        white-space: nowrap;
         transition: color 0.2s;
 
         &::after {
@@ -299,16 +299,16 @@ import { Product } from '../../core/models/product.model';
           transform: translateX(-50%);
           width: 0%;
           height: 3px;
-          background: var(--color-accent); /* Yellow underline like screenshot */
+          background: var(--brass);
           border-radius: 4px;
           transition: width 0.25s ease;
         }
 
         &:hover, &.active {
-          color: #111111;
+          color: var(--navy);
 
           &::after {
-            width: 80%; /* not full width, centered */
+            width: 80%;
           }
         }
       }
@@ -336,13 +336,13 @@ import { Product } from '../../core/models/product.model';
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #3D2B2B;
+      color: var(--ink);
       background: transparent;
       transition: all 0.2s;
 
       &:hover {
-        background: #FAF0EC;
-        color: #2C1A1A;
+        background: var(--navy-soft);
+        color: var(--navy);
       }
     }
 
@@ -354,7 +354,7 @@ import { Product } from '../../core/models/product.model';
       position: absolute;
       top: 4px;
       right: 4px;
-      background: #C4786A;
+      background: var(--brass);
       color: #ffffff;
       font-size: 10px;
       font-weight: 800;
@@ -371,7 +371,7 @@ import { Product } from '../../core/models/product.model';
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: #C4786A;
+      background: var(--navy);
       color: #ffffff;
       font-size: 13px;
       font-weight: 700;
@@ -381,7 +381,7 @@ import { Product } from '../../core/models/product.model';
     }
 
     .mobile-toggle-btn {
-      color: #3D2B2B;
+      color: var(--ink);
       padding: 6px;
       margin-right: 8px; /* space between hamburger and logo */
     }
@@ -466,12 +466,12 @@ import { Product } from '../../core/models/product.model';
       gap: 12px;
       padding: 10px;
       border-radius: 8px;
-      border: 1px solid #F5DDD5;
+      border: 1px solid var(--line);
       transition: all 0.2s;
 
       &:hover {
-        background: #FBF0EC;
-        border-color: #EDD5CA;
+        background: var(--navy-soft);
+        border-color: var(--brass);
         transform: translateX(4px);
       }
 
@@ -485,12 +485,12 @@ import { Product } from '../../core/models/product.model';
       .sm-prod-name {
         font-size: 13.5px;
         font-weight: 700;
-        color: #111111;
+        color: var(--ink);
       }
 
       .sm-price {
         font-weight: 700;
-        color: #111111;
+        color: var(--navy);
         font-size: 13.5px;
       }
 
@@ -518,8 +518,8 @@ import { Product } from '../../core/models/product.model';
       gap: 8px;
 
       .quick-pill {
-        background: #FAF0EC;
-        color: #3D2B2B;
+        background: var(--navy-soft);
+        color: var(--navy);
         font-size: 12.5px;
         font-weight: 600;
         padding: 6px 14px;
@@ -527,7 +527,7 @@ import { Product } from '../../core/models/product.model';
         transition: all 0.2s;
 
         &:hover {
-          background: #C4786A;
+          background: var(--navy);
           color: #ffffff;
         }
       }
@@ -537,7 +537,7 @@ import { Product } from '../../core/models/product.model';
     .mobile-drawer-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(8, 31, 51, 0.6);
       z-index: 99998;
     }
 
@@ -552,7 +552,7 @@ import { Product } from '../../core/models/product.model';
       z-index: 99999;
       display: flex;
       flex-direction: column;
-      box-shadow: 4px 0 20px rgba(196, 120, 106, 0.2);
+      box-shadow: 4px 0 24px rgba(8, 31, 51, 0.2);
       animation: slideInLeft 0.25s ease;
     }
 
@@ -563,14 +563,14 @@ import { Product } from '../../core/models/product.model';
 
     .md-header {
       padding: 18px 20px;
-      border-bottom: 1px solid #EDD5CA;
+      border-bottom: 1px solid var(--line);
       display: flex;
       align-items: center;
       justify-content: space-between;
 
       .md-close {
         font-size: 18px;
-        color: #7A5C58;
+        color: var(--muted);
       }
     }
 
@@ -589,15 +589,15 @@ import { Product } from '../../core/models/product.model';
         align-items: center;
         justify-content: space-between;
         padding: 14px 0;
-        border-bottom: 1px solid #FAF0EC;
+        border-bottom: 1px solid rgba(15, 30, 44, 0.07);
         font-size: 14.5px;
         font-weight: 600;
-        color: #2C1A1A;
+        color: var(--ink);
 
-        .md-arrow { color: #C4A09A; font-size: 18px; }
+        .md-arrow { color: var(--muted); font-size: 18px; }
 
         .md-tag {
-          background: #D96B5A;
+          background: var(--c-bad);
           color: #ffffff;
           font-size: 10px;
           font-weight: 700;
@@ -610,14 +610,15 @@ import { Product } from '../../core/models/product.model';
     .md-contact-box {
       margin-top: 30px;
       padding: 16px;
-      background: #FBF0EC;
+      background: var(--paper);
+      border: 1px solid var(--line);
       border-radius: 10px;
       font-size: 12.5px;
-      color: #7A5C58;
+      color: var(--muted);
 
       .md-contact-title {
         font-weight: 700;
-        color: #2C1A1A;
+        color: var(--navy-deep);
         margin-bottom: 6px;
       }
 

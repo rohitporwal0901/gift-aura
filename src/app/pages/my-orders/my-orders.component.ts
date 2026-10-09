@@ -247,10 +247,10 @@ import { AdminOrder } from '../../core/models/admin.model';
       font-family: inherit;
     }
     .of-pill.active {
-      background: #C4786A;
+      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
       color: #fff;
-      border-color: #C4786A;
-      box-shadow: 0 2px 8px rgba(15,23,42,0.25);
+      border-color: transparent;
+      box-shadow: 0 2px 10px rgba(169, 124, 67, 0.3);
     }
 
     .orders-list {
@@ -387,7 +387,7 @@ import { AdminOrder } from '../../core/models/admin.model';
     .veg-symbol {
       width: 13px;
       height: 13px;
-      border: 1.5px solid #C4786A;
+      border: 1.5px solid var(--brass, #A97C43);
       border-radius: 3px;
       display: flex;
       align-items: center;
@@ -398,7 +398,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       width: 5.5px;
       height: 5.5px;
       border-radius: 50%;
-      background: #C4786A;
+      background: var(--brass, #A97C43);
     }
     .soc-item-name {
       font-size: 12.5px;
@@ -465,7 +465,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       gap: 8px;
     }
     .soc-track-btn {
-      background: linear-gradient(135deg, #C4786A, #A85D50);
+      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
       color: #fff;
       font-size: 12px;
       font-weight: 700;
@@ -475,11 +475,12 @@ import { AdminOrder } from '../../core/models/admin.model';
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 3px 10px rgba(15,23,42,0.3);
+      box-shadow: 0 3px 10px rgba(169, 124, 67, 0.3);
       transition: all 0.2s ease;
       &:hover {
+        background: linear-gradient(135deg, #0B2A44 0%, #024A7B 100%);
         transform: translateY(-1px);
-        box-shadow: 0 5px 14px rgba(15,23,42,0.4);
+        box-shadow: 0 5px 14px rgba(2, 74, 123, 0.35);
       }
     }
     .track-scooter-icon { font-size: 14px; }
@@ -529,7 +530,7 @@ import { AdminOrder } from '../../core/models/admin.model';
       p { font-size: 13px; color: #666; margin-bottom: 18px; }
       .browse-menu-btn {
         display: inline-block;
-        background: #C4786A;
+        background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
         color: #fff;
         padding: 10px 22px;
         border-radius: 10px;
@@ -539,8 +540,9 @@ import { AdminOrder } from '../../core/models/admin.model';
         border: none;
         cursor: pointer;
         font-family: inherit;
-        transition: background 0.2s;
-        &:hover { background: #1E293B; }
+        box-shadow: 0 3px 10px rgba(169, 124, 67, 0.25);
+        transition: all 0.2s;
+        &:hover { background: linear-gradient(135deg, #0B2A44 0%, #024A7B 100%); }
       }
     }
 

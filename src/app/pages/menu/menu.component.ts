@@ -223,10 +223,10 @@ import { Product } from '../../core/models/product.model';
         }
 
         &.active {
-          background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
-          color: #2C1A1A;
+          background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+          color: #FFFFFF;
           border-color: transparent;
-          box-shadow: 0 4px 12px rgba(196, 120, 106, 0.25);
+          box-shadow: 0 4px 14px rgba(169, 124, 67, 0.28);
         }
       }
     }

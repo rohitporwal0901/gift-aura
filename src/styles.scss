@@ -1,37 +1,82 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
-/* =================== BLUSH ROSE GOLD DESIGN TOKENS =================== */
+/* =================== LUXURY NAVY & BRASS DESIGN TOKENS =================== */
 :root {
-  --font-family: 'Geist', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: 'Geist', 'Outfit', sans-serif;
+  --hdr: 96px;
+  --paper: #F6F3EC;
+  --paper-2: #EEE9DE;
+  --white: #FFFFFF;
+  --ink: #0F1E2C;
+  --ink-2: #34414E;
+  --muted: #6A7480;
+  --line: rgba(15, 30, 44, 0.12);
+  --line-2: rgba(15, 30, 44, 0.2);
 
-  --color-bg-canvas: #FDF6F0;
-  --color-bg-surface: #FFFFFF;
-  --color-bg-card: #FFFFFF;
-  --color-bg-secondary: #FBF0EC;
-  --color-bg-muted: #F5E6E0;
+  --navy: #024A7B;
+  --navy-deep: #0B2A44;
+  --navy-ink: #081F33;
+  --navy-soft: #E4EDF4;
 
-  --color-footer-bg: #3D2B2B; /* Deep rose-brown footer */
-  --color-footer-text: #f0e8e5;
+  --brass: #A97C43;
+  --brass-soft: #F0E5D4;
 
-  --color-text-main: #3D2B2B;
-  --color-text-heading: #2C1A1A;
-  --color-text-muted: #7A5C58;
-  --color-text-subtle: #A8847E;
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --wordmark: 'Libre Caslon Text', Georgia, serif;
 
-  --color-primary: #C4786A; /* Rose Gold — main CTA */
-  --color-primary-hover: #A85D50;
-  --color-accent: #E8A898; /* Soft Blush accent */
-  --color-accent-hover: #D4876F;
-  --color-accent-light: #FAD5CA;
+  --wrap: 1240px;
+  --gut: clamp(20px, 4vw, 48px);
+  --ease: cubic-bezier(.2, .7, .1, 1);
 
-  --color-sale: #D96B5A; /* Muted rose-red */
-  --color-success: #28a745;
+  /* component theme */
+  --c-ink: var(--ink);
+  --c-ink-2: var(--ink-2);
+  --c-muted: var(--muted);
+  --c-line: var(--line);
+  --c-surface: #ffffff;
+  --c-accent: var(--navy);
+  --c-accent-2: var(--brass);
+  --c-ok: #4C8A77;
+  --c-warn: #C9A15E;
+  --c-bad: #B45C47;
+  --c-pending: #E3DDD1;
+  --c-ph1: #7DB3DE;
+  --c-ph2: #D2AE72;
+  --c-ph3: #8EC3AE;
+  --c-ph4: #E9E1D2;
+
+  /* legacy & global tokens mapped to user palette */
+  --font-family: var(--sans);
+  --font-heading: 'Outfit', var(--sans);
+  --font-serif: var(--serif);
+
+  --color-bg-canvas: var(--paper);
+  --color-bg-surface: var(--white);
+  --color-bg-card: var(--white);
+  --color-bg-secondary: var(--paper-2);
+  --color-bg-muted: var(--navy-soft);
+
+  --color-footer-bg: var(--navy-ink);
+  --color-footer-text: #E4EDF4;
+
+  --color-text-main: var(--ink);
+  --color-text-heading: var(--navy-deep);
+  --color-text-muted: var(--muted);
+  --color-text-subtle: var(--ink-2);
+
+  --color-primary: var(--navy);
+  --color-primary-hover: var(--navy-deep);
+  --color-accent: var(--brass);
+  --color-accent-hover: #8E6633;
+  --color-accent-light: var(--brass-soft);
+
+  --color-sale: var(--c-bad);
+  --color-success: var(--c-ok);
   --color-whatsapp: #25D366;
 
-  --color-border: #EDD5CA;
-  --color-border-light: #FAF0EC;
-  --color-border-dark: #7A5C58;
+  --color-border: rgba(15, 30, 44, 0.12);
+  --color-border-light: rgba(15, 30, 44, 0.06);
+  --color-border-dark: rgba(15, 30, 44, 0.22);
 
   --radius-xs: 4px;
   --radius-sm: 8px;
@@ -40,12 +85,12 @@
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 2px 8px rgba(196, 120, 106, 0.06);
-  --shadow-md: 0 4px 12px rgba(196, 120, 106, 0.08);
-  --shadow-lg: 0 12px 24px rgba(196, 120, 106, 0.12);
-  --shadow-float: 0 20px 40px rgba(196, 120, 106, 0.16);
+  --shadow-sm: 0 2px 8px rgba(15, 30, 44, 0.04);
+  --shadow-md: 0 4px 14px rgba(15, 30, 44, 0.07);
+  --shadow-lg: 0 12px 28px rgba(15, 30, 44, 0.1);
+  --shadow-float: 0 20px 40px rgba(15, 30, 44, 0.15);
 
-  --container-max: 1280px;
+  --container-max: 1240px;
   --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -120,8 +165,8 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
-  color: #2C1A1A;
+  background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
+  color: #FFFFFF;
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 14px;
@@ -134,7 +179,7 @@ button {
   white-space: nowrap;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(196, 120, 106, 0.25);
+  box-shadow: 0 4px 14px rgba(169, 124, 67, 0.28);
 
   &::after {
     content: '';
@@ -154,9 +199,9 @@ button {
   }
 
   &:hover {
-    background: linear-gradient(135deg, #D4A898 0%, #A85D50 50%, #8C4A3E 100%);
+    background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(196, 120, 106, 0.4);
+    box-shadow: 0 6px 18px rgba(169, 124, 67, 0.38);
   }
 
   &:active {
@@ -169,8 +214,8 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, #F5DDD5 0%, #D4A898 50%, #C4786A 100%);
-  color: #2C1A1A;
+  background: linear-gradient(135deg, #024A7B 0%, #0B2A44 100%);
+  color: #FFFFFF;
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 14px;
@@ -183,7 +228,7 @@ button {
   white-space: nowrap;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(196, 120, 106, 0.2);
+  box-shadow: 0 4px 14px rgba(2, 74, 123, 0.28);
 
   &::after {
     content: '';
@@ -195,7 +240,7 @@ button {
     background: linear-gradient(
       to right,
       rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.4) 50%,
       rgba(255, 255, 255, 0) 100%
     );
     transform: skewX(-20deg);
@@ -203,9 +248,9 @@ button {
   }
 
   &:hover {
-    background: linear-gradient(135deg, #E6BDB5 0%, #C4786A 50%, #A85D50 100%);
+    background: linear-gradient(135deg, #0B2A44 0%, #081F33 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(196, 120, 106, 0.35);
+    box-shadow: 0 6px 18px rgba(2, 74, 123, 0.4);
   }
 
   &:active {
@@ -225,19 +270,19 @@ button {
   justify-content: center;
   gap: 8px;
   background: transparent;
-  color: var(--color-primary);
+  color: var(--brass);
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 14px;
   padding: 12px 28px;
   border-radius: var(--radius-full);
-  border: 1.5px solid var(--color-primary);
+  border: 1.5px solid var(--brass);
   cursor: pointer;
   transition: var(--transition-fast);
   white-space: nowrap;
 
   &:hover {
-    background: var(--color-primary);
+    background: var(--brass);
     color: #ffffff;
     transform: translateY(-2px);
   }
@@ -256,23 +301,23 @@ button {
 }
 
 .gl-badge-sale {
-  background: var(--color-sale);
+  background: var(--c-bad);
   color: #ffffff;
 }
 
 .gl-badge-hot {
-  background: #3D2B2B;
-  color: #ffffff;
+  background: var(--navy-deep);
+  color: var(--brass-soft);
 }
 
 .gl-badge-new {
-  background: var(--color-primary);
+  background: var(--brass);
   color: #ffffff;
 }
 
 .gl-badge-pill {
-  background: rgba(196, 120, 106, 0.1);
-  color: var(--color-primary);
+  background: rgba(169, 124, 67, 0.12);
+  color: var(--brass);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -285,14 +330,14 @@ button {
 .gl-card {
   background: var(--color-bg-surface);
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--line);
   overflow: hidden;
   transition: var(--transition-smooth);
 
   &:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
-    border-color: var(--color-border-light);
+    border-color: var(--brass);
   }
 }
 
@@ -339,11 +384,11 @@ button {
   background: var(--color-bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #D4A898;
+  background: #D2AE72;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #C4786A;
+  background: #A97C43;
 }
 
 /* =================== KEYFRAME ANIMATIONS =================== */

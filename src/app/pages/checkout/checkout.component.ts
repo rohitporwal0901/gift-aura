@@ -477,12 +477,12 @@ import { environment } from '../../../environments/environment';
     }
 
     .step.active .step-dot {
-      background: #C4786A;
+      background: var(--navy);
       color: #FFFFFF;
     }
 
     .step.done .step-dot {
-      background: #10B981;
+      background: var(--c-ok);
       color: #FFFFFF;
     }
 
@@ -496,7 +496,7 @@ import { environment } from '../../../environments/environment';
     }
 
     .step.active .step-name {
-      color: #0F172A;
+      color: var(--ink);
     }
 
     .step-line {
@@ -509,7 +509,7 @@ import { environment } from '../../../environments/environment';
       transition: background 0.25s;
     }
 
-    .step-line.active { background: #10B981; }
+    .step-line.active { background: var(--c-ok); }
 
     /* CONTENT */
     .content-scroll {
@@ -542,7 +542,7 @@ import { environment } from '../../../environments/environment';
     .step-icon-box {
       width: 26px;
       height: 26px;
-      background: #C4786A;
+      background: var(--navy);
       border-radius: 7px;
       display: flex;
       align-items: center;
@@ -600,9 +600,9 @@ import { environment } from '../../../environments/environment';
       box-sizing: border-box;
 
       &:focus {
-        border-color: #C4786A;
+        border-color: var(--navy);
         background: #FFFFFF;
-        box-shadow: 0 0 0 2.5px rgba(15,23,42,0.08);
+        box-shadow: 0 0 0 2.5px rgba(2, 74, 123, 0.12);
       }
 
       &.error {
@@ -616,7 +616,7 @@ import { environment } from '../../../environments/environment';
     /* SUMMARY COMPACT */
     .summary-compact {
       background: #FFFFFF;
-      border: 1px solid #E2E8F0;
+      border: 1px solid var(--line);
       border-radius: 12px;
       overflow: hidden;
     }
@@ -661,8 +661,8 @@ import { environment } from '../../../environments/environment';
       font-size: 12px;
       color: #64748B;
 
-      &.green { color: #10B981; font-weight: 700; }
-      &.grand { font-size: 14px; font-weight: 800; color: #0F172A; padding-top: 6px; border-top: 1.5px solid #E2E8F0; }
+      &.green { color: var(--c-ok); font-weight: 700; }
+      &.grand { font-size: 14px; font-weight: 800; color: var(--ink); padding-top: 6px; border-top: 1.5px solid var(--line); }
     }
 
     /* PAYMENT LIST */
@@ -677,7 +677,7 @@ import { environment } from '../../../environments/environment';
       align-items: center;
       gap: 10px;
       background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
+      border: 1.5px solid var(--line);
       border-radius: 10px;
       padding: 12px 14px;
       cursor: pointer;
@@ -685,8 +685,8 @@ import { environment } from '../../../environments/environment';
       position: relative;
 
       &.selected {
-        border-color: #C4786A;
-        background: #F8FAFC;
+        border-color: var(--brass);
+        background: rgba(169, 124, 67, 0.05);
       }
 
       &.disabled {
@@ -706,7 +706,7 @@ import { environment } from '../../../environments/environment';
       transition: all 0.15s;
 
       &.active {
-        border: 6px solid #C4786A;
+        border: 6px solid var(--brass);
       }
     }
 
@@ -722,7 +722,7 @@ import { environment } from '../../../environments/environment';
     .method-name {
       font-size: 13px;
       font-weight: 700;
-      color: #0F172A;
+      color: var(--ink);
       display: flex;
       align-items: center;
       gap: 6px;
@@ -747,7 +747,7 @@ import { environment } from '../../../environments/environment';
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: #C4786A;
+      background: var(--brass);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -840,7 +840,7 @@ import { environment } from '../../../environments/environment';
     }
 
     .btn-browse {
-      background: #C4786A;
+      background: var(--brass);
       color: #fff;
       border: none;
       border-radius: 10px;
@@ -849,13 +849,15 @@ import { environment } from '../../../environments/environment';
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
+      transition: background 0.15s;
+      &:hover { background: var(--color-accent-hover); }
     }
 
     /* CTA FOOTER */
     .cta-bar {
       padding: 12px 14px max(14px, env(safe-area-inset-bottom));
       background: #FFFFFF;
-      border-top: 1px solid #E2E8F0;
+      border-top: 1px solid var(--line);
       flex-shrink: 0;
     }
 
@@ -864,7 +866,7 @@ import { environment } from '../../../environments/environment';
       border: none;
       border-radius: 10px;
       padding: 13px;
-      font-family: 'Outfit', sans-serif;
+      font-family: inherit;
       font-size: 14.5px;
       font-weight: 800;
       cursor: pointer;
@@ -876,17 +878,17 @@ import { environment } from '../../../environments/environment';
     }
 
     .btn-continue {
-      background: #C4786A;
+      background: var(--navy);
       color: #FFFFFF;
-      &:hover { background: #1E293B; }
+      &:hover { background: var(--navy-deep); }
     }
 
     .btn-place {
-      background: linear-gradient(135deg, #C4786A 0%, #A85D50 100%);
+      background: linear-gradient(135deg, #C59A60 0%, #A97C43 50%, #8E6633 100%);
       color: #FFFFFF;
-      box-shadow: 0 4px 16px rgba(15,23,42,0.25);
+      box-shadow: 0 4px 16px rgba(169, 124, 67, 0.28);
       &:disabled { opacity: 0.65; cursor: not-allowed; }
-      &:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(15,23,42,0.35); }
+      &:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(169, 124, 67, 0.38); background: linear-gradient(135deg, #B58A50 0%, #8E6633 50%, #724E20 100%); }
     }
 
     .btn-spinner {
@@ -1084,7 +1086,7 @@ export class CheckoutComponent {
             contact: orderPayload.customerPhone,
             email: orderPayload.customerEmail || 'customer@giftaura.com'
           },
-          theme: { color: '#C4786A' },
+          theme: { color: '#024A7B' },
           handler: async (response: any) => {
             await finalizeOrder(response.razorpay_payment_id || ('RZP_' + Date.now()));
           },

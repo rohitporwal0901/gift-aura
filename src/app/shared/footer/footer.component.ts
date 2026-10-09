@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
           <div class="footer-col brand-col">
             <div class="footer-logo">
               <span class="logo-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C4786A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A97C43" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
               </span>
               <strong>GIFT AURA</strong>
             </div>
@@ -103,8 +103,8 @@ import { FormsModule } from '@angular/forms';
   `,
   styles: [`
     .gl-footer {
-      background-color: #3D2B2B;
-      color: #C9A8A0;
+      background-color: var(--navy-ink);
+      color: #A7B7C7;
       padding: 60px 0 30px;
       font-size: 13.5px;
 
@@ -137,8 +137,9 @@ import { FormsModule } from '@angular/forms';
     .footer-title {
       font-size: 14.5px;
       font-weight: 700;
-      color: #F5DDD5;
+      color: var(--brass-soft);
       margin-bottom: 20px;
+      letter-spacing: 0.3px;
     }
 
     .footer-logo {
@@ -155,18 +156,19 @@ import { FormsModule } from '@angular/forms';
 
       strong {
         font-size: 20px;
-        color: #F5DDD5;
+        color: #FFFFFF;
+        letter-spacing: -0.3px;
       }
       span {
         font-size: 11px;
-        color: #C9A8A0;
+        color: #A7B7C7;
         max-width: 80px;
         line-height: 1.2;
       }
     }
 
     .brand-desc {
-      color: #C9A8A0;
+      color: #A7B7C7;
       line-height: 1.6;
       margin-bottom: 20px;
     }
@@ -176,11 +178,11 @@ import { FormsModule } from '@angular/forms';
       gap: 12px;
 
       .social-btn {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
-        background: #5C3A36;
-        color: #C9A8A0;
+        background: rgba(228, 237, 244, 0.1);
+        color: #E4EDF4;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -189,8 +191,9 @@ import { FormsModule } from '@angular/forms';
         transition: all 0.25s;
 
         &:hover {
-          background: var(--color-accent);
-          color: #3D2B2B;
+          background: var(--brass);
+          color: #FFFFFF;
+          transform: translateY(-2px);
         }
       }
     }
@@ -202,20 +205,20 @@ import { FormsModule } from '@angular/forms';
       gap: 10px;
 
       li a {
-        color: #C9A8A0;
+        color: #A7B7C7;
         font-size: 14px;
         transition: all 0.2s;
         display: inline-block;
 
         &:hover {
-          color: #F5DDD5;
+          color: var(--brass-soft);
           transform: translateX(4px);
         }
       }
     }
 
     .newsletter-desc {
-      color: #C9A8A0;
+      color: #A7B7C7;
       font-size: 13.5px;
       line-height: 1.5;
       margin-bottom: 16px;
@@ -236,7 +239,7 @@ import { FormsModule } from '@angular/forms';
         background: transparent;
         border: none;
         padding: 11px 14px;
-        color: #111111;
+        color: var(--ink);
         font-size: 13.5px;
         outline: none;
 
@@ -246,7 +249,7 @@ import { FormsModule } from '@angular/forms';
       }
 
       .nl-btn {
-        background: #C4786A;
+        background: var(--brass);
         color: #ffffff;
         font-weight: 800;
         padding: 0 16px;
@@ -258,55 +261,21 @@ import { FormsModule } from '@angular/forms';
         cursor: pointer;
 
         &:hover {
-          background: #A85D50;
+          background: var(--color-accent-hover);
         }
       }
     }
 
     .nl-success {
       display: block;
-      color: #68d391;
+      color: var(--c-ok);
       font-size: 12px;
       margin-top: 8px;
     }
 
-    .social-block {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-
-      .social-label {
-        font-size: 13px;
-        color: #aaa;
-      }
-
-      .social-icons {
-        display: flex;
-        gap: 8px;
-      }
-
-      .social-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: #3e3e3e;
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.25s;
-
-        &:hover {
-          background: #ffffff;
-          color: #111111;
-          transform: translateY(-2px);
-        }
-      }
-    }
-
     .footer-divider {
       height: 1px;
-      background: #5C3A36;
+      background: rgba(228, 237, 244, 0.12);
       margin: 40px 0 24px;
     }
 
@@ -317,14 +286,14 @@ import { FormsModule } from '@angular/forms';
       justify-content: space-between;
       gap: 16px;
       font-size: 13px;
-      color: #999999;
+      color: #8E9EAE;
 
       @media (min-width: 768px) {
         flex-direction: row;
       }
 
       strong {
-        color: #F5DDD5;
+        color: var(--brass-soft);
       }
     }
 
@@ -334,14 +303,14 @@ import { FormsModule } from '@angular/forms';
       gap: 8px;
 
       .pay-badge {
-        background: #5C3A36;
-        color: #E8C8C0;
+        background: rgba(228, 237, 244, 0.08);
+        color: #E4EDF4;
         font-size: 10px;
         font-weight: 700;
         letter-spacing: 0.5px;
         padding: 4px 8px;
         border-radius: 4px;
-        border: 1px solid #7A4C44;
+        border: 1px solid rgba(228, 237, 244, 0.15);
       }
     }
   `]
